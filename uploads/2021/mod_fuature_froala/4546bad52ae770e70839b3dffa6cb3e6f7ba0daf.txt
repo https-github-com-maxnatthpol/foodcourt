@@ -1,0 +1,48 @@
+unodecks.com
+
+คลิป vdo โต๊ะ
+
+
+รหัส godaddy
+username : thanasangchai
+password : Rawich123#
+รหัส tnsgrand
+username : thanasangchai
+password : TnsGrand1234#
+
+ย้าย host ใหม่
+
+unogrand ย้ายมา unodecks
+
+Business modal
+
+TNS-Webserver - 192.168.12.11 .12 .13
+tns\admintns
+Support@TNS
+
+Tnsadmin
+Supp0rt@TNS
+
+TNS-Internal12 - Wifi
+192.168.12.240
+Support@TNS
+
+Backup - file
+\\192.168.12.249\Veeam_Backup_Server
+
+Created!
+You have successfully created a new database. The details are below.
+
+Username: o2dxZS10YS
+
+Database name: o2dxZS10YS
+
+Password: 16FqPlGsL8
+
+Server: remotemysql.com
+
+Port: 3306
+
+These are the username and password to log in to your database and phpMyAdmin
+
+Make sure you keep your password secure. Ensure you keep back ups of your database in case it gets deleted.
