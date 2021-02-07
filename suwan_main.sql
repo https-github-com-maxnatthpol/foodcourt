@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2021 at 12:03 PM
+-- Generation Time: Feb 07, 2021 at 12:42 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -349,6 +349,47 @@ CREATE TABLE `settings` (
   `value` text DEFAULT NULL,
   `updated_datetime` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `name`, `value`, `updated_datetime`) VALUES
+(1, 'telephon', '081-919-0276', NULL),
+(2, 'email', 'suwan@gmail.com', '2021-02-02 04:36:59'),
+(3, 'address', 'Thailand', NULL),
+(4, 'logo_img', NULL, '2021-01-26 04:58:24'),
+(5, 'scores_CE', NULL, '2020-02-27 01:44:15'),
+(6, 'veterinary_council', '1', '2020-02-27 01:44:15'),
+(7, 'partner', '1', '2020-02-27 01:44:15'),
+(8, 'lecturer', '2', '2020-02-27 01:44:15'),
+(9, 'longitude', '', '2020-02-27 01:44:15'),
+(10, 'latitude', '', '2020-02-27 01:44:15'),
+(11, 'keyworde_en', NULL, '2021-02-02 04:36:59'),
+(12, 'description_en', NULL, '2021-02-02 04:36:59'),
+(13, 'title_en', NULL, '2021-02-02 04:36:59'),
+(14, 'address_en', NULL, '2021-02-02 04:36:59'),
+(15, 'name_en', 'Suwan', '2021-02-02 04:36:59'),
+(16, 'email', 'suwan@gmail.com', '2021-02-02 04:36:59'),
+(17, 'keyworde_th', 'suwan', '2021-02-02 04:36:59'),
+(18, 'description_th', 'Suwan', '2021-02-02 04:36:59'),
+(19, 'title_th', 'Suwan', '2021-02-02 04:36:59'),
+(20, 'address_th', 'suwan', '2021-02-02 04:36:59'),
+(21, 'name_th', 'Suwan', '2021-02-02 04:36:59'),
+(22, 'name_th', 'Suwan', '2021-02-02 04:36:59'),
+(23, 'tax_id', '1245345678945', '2020-01-23 09:27:04'),
+(24, 'telephone', '0', '2021-02-02 04:36:59'),
+(25, 'random_banner', '0', '2021-02-02 04:36:59'),
+(26, 'head_title', 'suwan', '2021-02-02 04:36:59'),
+(27, 'head_title_mini', 'suwan', '2021-02-02 04:36:59'),
+(28, 'merchantid', '', '2020-02-27 01:44:15'),
+(29, 'google_map_key', 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7707.91046959502!2d102.107902!3d14.99519!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8d7dab9510666d4d!2z4Lia4Lij4Li04Lip4Lix4LiXIOC4l-C4teC5gOC4reC5h-C4meC5gOC4reC4qiDguYHguIHguKPguJnguJTguYwg4LiU4Li14LmE4LiL4LiZ4LmMIOC4iOC4s-C4geC4seC4lA!5e0!3m2!1sth!2sth!4v1602571637912!5m2!1sth!2sth', '2021-02-02 04:36:59'),
+(30, 'time_open_f', '90', NULL),
+(31, 'email2', '', '2021-01-25 07:02:11'),
+(32, 'telephone2', NULL, '2021-02-02 04:36:59'),
+(33, 'detail_th', NULL, '2021-02-02 04:36:59'),
+(34, 'detail_en', NULL, '2021-02-02 04:36:59'),
+(35, 'logo_img2', NULL, '2021-02-02 04:03:51');
 
 -- --------------------------------------------------------
 
@@ -779,7 +820,7 @@ ALTER TABLE `role_permissions`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `slide`
