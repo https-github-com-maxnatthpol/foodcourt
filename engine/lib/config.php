@@ -4,12 +4,12 @@ require_once 'lang.php';
 
 $system_config = '1';
 
-define('HEAD_LOGO_MINI', 'Unofence Co., Ltd.');
-define('HEAD_LOGO', 'Unofence Co., Ltd.');
+define('HEAD_LOGO_MINI', '');
+define('HEAD_LOGO', '');
 //define('LOGO', '../../images/logo.png');
 define('TEXT_LOGO', 'Admin');
-define('TITLE_TH', 'Unofence | ผู้ผลิตและจำหน่าย รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป');
-define('TITLE_EN', 'Unofence | manufacturer and distributor Prefabricated steel fence Finished balcony railing Finished railing Finished door');
+define('TITLE_TH', '');
+define('TITLE_EN', '');
 
 define('GOOGLE_MAP_KEY', '');
 
@@ -17,9 +17,9 @@ define('e_mail', 'tns.mikesuwan@gmail.com');
 define('pass_e_mail', 'Mikeaom06082539');
 define('from_e_mail', 'Unofence');
 define('Host_e_mail', 'smtp.gmail.com');
-define('link_e_mail', 'https://unofence.com');
-define('name_web_e_mail', 'www.unofence.com');
-define('facebook_e_mail', 'https://www.facebook.com/Founder0/?rf=170979466702707');
+define('link_e_mail', '');
+define('name_web_e_mail', '');
+define('facebook_e_mail', '');
 // require_once 'connect.php'
 define('CONTENT', 'Content');
 define('DESIGN', 'Design');
