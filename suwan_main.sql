@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2021 at 12:42 PM
+-- Generation Time: Feb 07, 2021 at 02:22 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -313,6 +313,28 @@ INSERT INTO `permissions` (`id_perm`, `name`, `del_flg`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `property`
+--
+
+CREATE TABLE `property` (
+  `id_property` int(11) NOT NULL,
+  `name_th` varchar(255) NOT NULL,
+  `name_en` varchar(255) NOT NULL,
+  `description_th` text DEFAULT NULL,
+  `description_en` text DEFAULT NULL,
+  `order` int(11) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  `directory` varchar(100) DEFAULT NULL,
+  `create_id` varchar(35) NOT NULL,
+  `create_datetime` datetime(6) NOT NULL,
+  `update_id` varchar(35) DEFAULT NULL,
+  `update_datetime` datetime(6) DEFAULT NULL,
+  `delete_datetime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -323,6 +345,14 @@ CREATE TABLE `roles` (
   `update_datetime` datetime NOT NULL,
   `delete_datetime` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id_role`, `name`, `tag`, `update_datetime`, `delete_datetime`) VALUES
+('o08f223d416f41274a85b5cc7f9bc6l777m', 'admin', 'mod_employee', '2020-01-24 09:37:00', NULL),
+('tecc7b75da4a064e697280w10c55d043cby', 'ลูกค้า', 'mod_customer', '2020-01-22 10:46:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -356,40 +386,40 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`id`, `name`, `value`, `updated_datetime`) VALUES
 (1, 'telephon', '081-919-0276', NULL),
-(2, 'email', 'suwan@gmail.com', '2021-02-02 04:36:59'),
-(3, 'address', 'Thailand', NULL),
-(4, 'logo_img', NULL, '2021-01-26 04:58:24'),
-(5, 'scores_CE', NULL, '2020-02-27 01:44:15'),
+(2, 'email', 'Unofence@gmail.com', '2021-02-02 04:36:59'),
+(3, 'address', '40 Street Thailand', NULL),
+(4, 'logo_img', '../../uploads/2021/logo/logo-2601218464.png', '2021-01-26 04:58:24'),
+(5, 'scores_CE', '85', '2020-02-27 01:44:15'),
 (6, 'veterinary_council', '1', '2020-02-27 01:44:15'),
 (7, 'partner', '1', '2020-02-27 01:44:15'),
 (8, 'lecturer', '2', '2020-02-27 01:44:15'),
 (9, 'longitude', '', '2020-02-27 01:44:15'),
 (10, 'latitude', '', '2020-02-27 01:44:15'),
-(11, 'keyworde_en', NULL, '2021-02-02 04:36:59'),
-(12, 'description_en', NULL, '2021-02-02 04:36:59'),
-(13, 'title_en', NULL, '2021-02-02 04:36:59'),
-(14, 'address_en', NULL, '2021-02-02 04:36:59'),
-(15, 'name_en', 'Suwan', '2021-02-02 04:36:59'),
-(16, 'email', 'suwan@gmail.com', '2021-02-02 04:36:59'),
-(17, 'keyworde_th', 'suwan', '2021-02-02 04:36:59'),
-(18, 'description_th', 'Suwan', '2021-02-02 04:36:59'),
-(19, 'title_th', 'Suwan', '2021-02-02 04:36:59'),
-(20, 'address_th', 'suwan', '2021-02-02 04:36:59'),
-(21, 'name_th', 'Suwan', '2021-02-02 04:36:59'),
-(22, 'name_th', 'Suwan', '2021-02-02 04:36:59'),
+(11, 'keyworde_en', 'Unofence, the manufacturer and distributor of Korat prefabricated steel fence products Finished balcony railing Finished railing Finished door Baked iron fence Colored iron fence with arrowhead Baked iron fence, buried in the ground Metal sheet fence Welded Mesh Fence Straight balcony railing Curved balcony railing Color slide baking door Curved slide door Double slide door Color swing oven door Baked door Finished door frame Painted steel pool fence Steel fence panels Unofence', '2021-02-02 04:36:59'),
+(12, 'description_en', 'Unofence, the manufacturer and distributor of Korat prefabricated steel fence products Finished balcony railing Finished railing Finished door Baked iron fence Colored iron fence with arrowhead Baked iron fence, buried in the ground Metal sheet fence Welded Mesh Fence Straight balcony railing Curved balcony railing Color slide baking door Curved slide door Double slide door Color swing oven door Baked door Finished door frame Painted steel pool fence Steel fence panels Unofence', '2021-02-02 04:36:59'),
+(13, 'title_en', 'Unofence | manufacturer and distributor Prefabricated steel fence Finished balcony railing Finished railing Finished door', '2021-02-02 04:36:59'),
+(14, 'address_en', 'Head office: 737 Sport Klang Road, Nai Mueang Subdistrict, Mueang District, Nakhon Ratchasima Province 30000', '2021-02-02 04:36:59'),
+(15, 'name_en', 'Unofence', '2021-02-02 04:36:59'),
+(16, 'email', 'Unofence@gmail.com', '2021-02-02 04:36:59'),
+(17, 'keyworde_th', 'Unofence ผู้ผลิตและจำหน่าย ผลิตภัณฑ์ โคราช รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป รั้วเหล็กอบสี รั้วเหล็กอบสีหัวลูกศร รั้วเหล็กอบสีฝังดิน รั้วเหล็กแผ่นเมทัลชีท รั้วเหล็กแผ่นตาข่ายถัก ราวระเบียงแบบตรง ราวระเบียงแบบโค้ง ประตูรั้วอบสีสไลด์ ประตูรั้วอบสีสไลด์โค้ง ประตูรั้วอบสีสไลด์ซ้อน ประตูรั้วอบสีบานสวิง ประตูรั้วอบสีบานเฟี้ยม โครงประตูสำเร็จรูป รั้วสระว่ายน้ำเหล็กอบสี รั้วเหล็กแผ่นฉลุลาย รั้วเหล็กแผ่นตะแกรงฉีก Unofence', '2021-02-02 04:36:59'),
+(18, 'description_th', 'Unofence ผู้ผลิตและจำหน่าย ผลิตภัณฑ์ โคราช รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป รั้วเหล็กอบสี รั้วเหล็กอบสีหัวลูกศร รั้วเหล็กอบสีฝังดิน รั้วเหล็กแผ่นเมทัลชีท รั้วเหล็กแผ่นตาข่ายถัก ราวระเบียงแบบตรง ราวระเบียงแบบโค้ง ประตูรั้วอบสีสไลด์ ประตูรั้วอบสีสไลด์โค้ง ประตูรั้วอบสีสไลด์ซ้อน ประตูรั้วอบสีบานสวิง ประตูรั้วอบสีบานเฟี้ยม โครงประตูสำเร็จรูป รั้วสระว่ายน้ำเหล็กอบสี รั้วเหล็กแผ่นฉลุลาย รั้วเหล็กแผ่นตะแกรงฉีก Unofence', '2021-02-02 04:36:59'),
+(19, 'title_th', 'Unofence | ผู้ผลิตและจำหน่าย รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป', '2021-02-02 04:36:59'),
+(20, 'address_th', 'สำนักงานใหญ่ : 737 ถ.กีฬากลาง ต.ในเมือง อ.เมือง จ.นครราชสีมา 30000', '2021-02-02 04:36:59'),
+(21, 'name_th', 'Unofence', '2021-02-02 04:36:59'),
+(22, 'name_th', 'Unofence', '2021-02-02 04:36:59'),
 (23, 'tax_id', '1245345678945', '2020-01-23 09:27:04'),
-(24, 'telephone', '0', '2021-02-02 04:36:59'),
+(24, 'telephone', '0996261408', '2021-02-02 04:36:59'),
 (25, 'random_banner', '0', '2021-02-02 04:36:59'),
-(26, 'head_title', 'suwan', '2021-02-02 04:36:59'),
-(27, 'head_title_mini', 'suwan', '2021-02-02 04:36:59'),
+(26, 'head_title', 'Unofence | ผู้ผลิตและจำหน่าย รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป', '2021-02-02 04:36:59'),
+(27, 'head_title_mini', 'UNOFENCE', '2021-02-02 04:36:59'),
 (28, 'merchantid', '', '2020-02-27 01:44:15'),
 (29, 'google_map_key', 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7707.91046959502!2d102.107902!3d14.99519!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8d7dab9510666d4d!2z4Lia4Lij4Li04Lip4Lix4LiXIOC4l-C4teC5gOC4reC5h-C4meC5gOC4reC4qiDguYHguIHguKPguJnguJTguYwg4LiU4Li14LmE4LiL4LiZ4LmMIOC4iOC4s-C4geC4seC4lA!5e0!3m2!1sth!2sth!4v1602571637912!5m2!1sth!2sth', '2021-02-02 04:36:59'),
 (30, 'time_open_f', '90', NULL),
 (31, 'email2', '', '2021-01-25 07:02:11'),
-(32, 'telephone2', NULL, '2021-02-02 04:36:59'),
-(33, 'detail_th', NULL, '2021-02-02 04:36:59'),
-(34, 'detail_en', NULL, '2021-02-02 04:36:59'),
-(35, 'logo_img2', NULL, '2021-02-02 04:03:51');
+(32, 'telephone2', '0812822424', '2021-02-02 04:36:59'),
+(33, 'detail_th', '&lt;p&gt;มุ่งมั่นสู่การพัฒนาคุณภาพและบริการ เพื่อให้ลูกค้าได้สินค้าที่มีดีไซน์ ทันสมัยสวยทน สมราคา ตามปรัชญา Modern Zen เรามุ่งหวังความสำเร็จระยะยาวด้วยทีมงานคุณภาพเราพร้อมแล้วที่จะบริการทุกท่านด้วยความรวดเร็ว สุภาพ อ่อนน้อม&lt;/p&gt;', '2021-02-02 04:36:59'),
+(34, 'detail_en', '&lt;p&gt;Committed to improving quality and service In order for our customers to get products with modern design, beautiful, durable, reasonable price according to the Modern Zen philosophy, we aim for long-term success with our quality team.We are ready to serve everyone with speed, courteousness.&lt;/p&gt;', '2021-02-02 04:36:59'),
+(35, 'logo_img2', '../../uploads/2021/logo/logo-0202214606.png', '2021-02-02 04:03:51');
 
 -- --------------------------------------------------------
 
@@ -419,25 +449,6 @@ CREATE TABLE `slide_image` (
   `size` int(11) NOT NULL,
   `date` date NOT NULL,
   `id_slide` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `social`
---
-
-CREATE TABLE `social` (
-  `id_social` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `icon` varchar(100) NOT NULL,
-  `directory` varchar(100) NOT NULL,
-  `create_id` varchar(35) NOT NULL,
-  `create_datetime` datetime(6) NOT NULL,
-  `update_id` varchar(35) DEFAULT NULL,
-  `update_datetime` datetime(6) DEFAULT NULL,
-  `delete_datetime` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -489,7 +500,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `user_name`, `user_password`, `user_email`, `id_role`, `create_datetime`, `last_login`, `last_logout`, `passwd_changed`, `update_datetime`, `delete_datetime`, `admin`, `status`, `token`, `id_data_role`) VALUES
-('q02bfd06ffs5f0819ec30a4fe572b67a73c', 'supadmin', '$2y$10$s6CqhypM9oPT6aDuHiITueWvm6P06oRsdHaHKiPhtob5FOQdlhgpy', NULL, 'o08f223d416f41274a85b5cc7f9bc6l777m', '2019-11-23 16:44:32', '2021-02-06 17:22:52', '2021-02-06 17:22:39', NULL, '0000-00-00 00:00:00', NULL, 1, 1, 'e8d38b02bd99ec1144579807e2618e26', '');
+('q02bfd06ffs5f0819ec30a4fe572b67a73c', 'supadmin', '$2y$10$s6CqhypM9oPT6aDuHiITueWvm6P06oRsdHaHKiPhtob5FOQdlhgpy', NULL, 'o08f223d416f41274a85b5cc7f9bc6l777m', '2019-11-23 16:44:32', '2021-02-07 20:21:54', '2021-02-07 20:21:46', NULL, '0000-00-00 00:00:00', NULL, 1, 1, '8003d10e33bc5828561aad9aedd6d9db', '');
 
 -- --------------------------------------------------------
 
@@ -654,6 +665,12 @@ ALTER TABLE `permissions`
   ADD PRIMARY KEY (`id_perm`);
 
 --
+-- Indexes for table `property`
+--
+ALTER TABLE `property`
+  ADD PRIMARY KEY (`id_property`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -684,12 +701,6 @@ ALTER TABLE `slide`
 ALTER TABLE `slide_image`
   ADD PRIMARY KEY (`id_image`),
   ADD KEY `id_slide` (`id_slide`);
-
---
--- Indexes for table `social`
---
-ALTER TABLE `social`
-  ADD PRIMARY KEY (`id_social`);
 
 --
 -- Indexes for table `system`
@@ -811,6 +822,12 @@ ALTER TABLE `permissions`
   MODIFY `id_perm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `property`
+--
+ALTER TABLE `property`
+  MODIFY `id_property` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
@@ -833,12 +850,6 @@ ALTER TABLE `slide`
 --
 ALTER TABLE `slide_image`
   MODIFY `id_image` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `social`
---
-ALTER TABLE `social`
-  MODIFY `id_social` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `system`
