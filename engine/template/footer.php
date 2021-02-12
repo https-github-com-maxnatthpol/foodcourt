@@ -123,7 +123,7 @@ $(function() {
                 {  
                   //console.log(data);
                   //alert(data.message);
-                location.href='../index.php'; 
+                location.href='../../home/'; 
 //				  location;	
                 }  
            });  

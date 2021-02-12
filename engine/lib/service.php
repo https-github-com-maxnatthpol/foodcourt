@@ -32,7 +32,7 @@ $sessionlifetime = 30; //กำหนดเป็นนาที
     }*/
     // ถ้าไม่มีการกำหนดค่า session id ก็จะ Redirect ไปยังหน้า Login อีกครั้ง
     if (!isset($_SESSION["user_id"])) {
-        header('Location: ../login.php');
+        header('Location: ../../home/');
         exit();
     } else {
 		
