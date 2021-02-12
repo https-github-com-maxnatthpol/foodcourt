@@ -52,7 +52,7 @@ $sessionlifetime = 30; //กำหนดเป็นนาที
 		
         $user_id = $db->clear($_SESSION["user_id"]);
         $str = "SELECT users.*,roles.tag FROM `users`
-        LEFT JOIN roles ON roles.id_role = users.id_role WHERE users.id_user = '" . $user_id . "' and users.delete_datetime is NULL and roles.tag != 'mod_customer'";
+        LEFT JOIN roles ON roles.id_role = users.id_role WHERE users.id_user = '" . $user_id . "' and users.delete_datetime is NULL";
         $result = $db->QueryFetchArray($str);
         
         if (!isset($result) || (isset($result) && $_SESSION["token"] != $result['token'])) {

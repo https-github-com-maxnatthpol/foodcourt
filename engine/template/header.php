@@ -49,7 +49,7 @@ $logo = $logo == ""?HEAD_LOGO_MINI:$logo;
     <!-- Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
-    <link href="../css/colors/blue.css" id="theme" rel="stylesheet">
+    <link href="../css/colors/purple.css" id="theme" rel="stylesheet">
 <!-- roon open -->
     <link href="../../plugins_b/gridstack/gridstack.css" rel="stylesheet">
 	<link rel="stylesheet" href="../../plugins_b/page_froala_b/css/froala_editor.pkgd.min.css">

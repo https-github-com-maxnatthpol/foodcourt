@@ -120,10 +120,18 @@ $(document).on('click', '#login', function() {
         },
         success: function(data) {
             //alert(data.message, 'Infomation:');
-            if (data.role_tag == 'mod_employee') {
+            if (data.role_tag == 'mod_customer') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
                 location.href = "../engine/mod_test/front_manage.php";
-            }     
+            }
+            else if (data.role_tag == 'mod_cashier') {
+                //swal('เข้าสู่ระบบสำเร็จ')	
+                location.href = "../engine/mod_cashier/front_manage.php";
+            } 
+            else if (data.role_tag == 'mod_employee') {
+                //swal('เข้าสู่ระบบสำเร็จ')	
+                location.href = "../engine/mod_employee/front_manage.php";
+            }    
              else if (data.status == 0) {
                 swal('คำเตือน',data.message,"warning")
 				$('#div_taxt_error').html(data.message);
