@@ -120,10 +120,12 @@ $(document).on('click', '#login', function() {
         },
         success: function(data) {
             //alert(data.message, 'Infomation:');
-            if (data.status == 1) {
+            if (data.role_tag == 'mod_employee') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/page_home/";
-            } else if (data.status == 0) {
+                location.href = "../engine/mod_test/front_manage.php";
+            }
+            
+             else if (data.status == 0) {
                 swal('คำเตือน',data.message,"warning")
 				$('#div_taxt_error').html(data.message);
                 $('.alert-massage').fadeIn();
