@@ -404,7 +404,7 @@ function doLogin()
 
 
 
-            echo json_encode(array('status' => '1', 'message' => 'ยินดีต้อนรับ ' . $name ));
+            echo json_encode(array('status' => '1', 'message' => 'ยินดีต้อนรับ ' . $name ,'role_tag' => $_SESSION['role_tag'] ));
         } else {
             echo json_encode(array('status' => '0', 'message' => 'รหัสผ่านไม่ถูกต้อง'));
         }
