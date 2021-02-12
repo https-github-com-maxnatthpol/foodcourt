@@ -68,3 +68,15 @@
     
 
 })(jQuery);
+
+//show pass	
+function showPass() {
+  var x = document.getElementById("txtPassword");
+  if (x.type === "password") {
+    x.type = "text";
+	document.getElementById("a_pass").innerHTML = "<i class='fa fa-eye'></i> แสดงรหัสผ่าน";  
+  } else {
+    x.type = "password";
+	document.getElementById("a_pass").innerHTML = "<i class='fa fa-eye-slash'></i> แสดงรหัสผ่าน";  
+  }
+}
