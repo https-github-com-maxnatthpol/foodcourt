@@ -122,7 +122,7 @@ $(document).on('click', '#login', function() {
             //alert(data.message, 'Infomation:');
             if (data.role_tag == 'mod_employee') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/mod_test/front_manage.php/";
+                location.href = "../engine/mod_test/front_manage.php";
             }     
              else if (data.status == 0) {
                 swal('คำเตือน',data.message,"warning")
