@@ -73,445 +73,655 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                 </li>
                 <li class="nav-devider"></li>
 
-                <!-- Dashboard -->
-                <li class="nav-small-cap"><h5>หน้าแรก</h5></li>
                 <?php
-                if ($cut_url[$num_fo] == 'page_home') {
-                    $active = 'active';
-                    $link = 'index.php';
-                } else {
+                if($_SESSION['role_tag'] == 'mod_employee') {
+                ?>
+                    <!-- Dashboard -->
+                    <li class="nav-small-cap"><h5>หน้าแรก</h5></li>
+                    <?php
+                    if ($cut_url[$num_fo] == 'page_home') {
+                        $active = 'active';
+                        $link = 'index.php';
+                    } else {
+                        $active = '';
+                        $link = '../page_home/index.php';
+                    }
+                    ?>
+                    <li class="<?php echo $active; ?>">
+                        <a class="waves-effect waves-dark" aria-expanded="false" href="<?php echo $link; ?>">
+                            <i class="mdi mdi-gauge"></i> <span class="hide-menu">แดชบอร์ด</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+
+                    <!-- End Dashboard-->
+                    <li class="nav-devider"></li>
+
+                    <!-- System -->
+                    <li class="nav-small-cap"><h5>จัดการระบบ</h5></li>
+                    <?php
                     $active = '';
-                    $link = '../page_home/index.php';
+                    $objQuery = getSystemMenu('1', '1', null);
+                    if ($objQuery) {
+                        while ($objResult = mysqli_fetch_array($objQuery)) {
+                            //check task_view in system of level 1
+                            if ($result_member['admin'] != '1') {
+                                if (!in_array($objResult['id_system'], $module)) {
+                                    continue;
+                                }
+                            }
+                            //------end check--------
+                            $link_b = $objResult['link_system'];
+                            $cut_link = explode('/', $link_b);
+                            if ($objResult['link_system'] == '#') {
+                                $link = '#';
+                                $tree = 'treeview';
+                                if ($folder == $cut_link[0]) {
+                                    $active = 'active';
+                                } else {
+                                    $active = '';
+                                }
+                            } else {
+                                if ($folder == $cut_link[0]) { //------------------------------mod_product == mod_product
+                                    $link = $cut_link[1];    //------------------------------front-add.php
+                                    if ($file == $cut_link[1]) {
+                                        $active = 'active';
+                                        $id_cookie = $objResult['id_system'];
+                                    } else {
+                                        $active = '';
+                                    }
+                                } else {
+                                    $link = '../' . $link_b;   //------------------------------mod_nmorder/front-add.php
+                                    $active = '';
+                                }
+
+                                $tree = '';
+                            }
+                            if ($objResult['icon'] == '') {
+                                $icon = '<i class="mdi mdi-library-books"></i>';
+                            } else {
+                                $icon = $objResult['icon'];
+                            } ?>
+                            <!-- System level1-->
+                            <li class="<?php echo $active; ?>">                             
+                                <?php
+                            $active = '';
+                            $objQuery1 = getSystemMenu('1', '2', $objResult['id_system']);
+                            $numQuery1 = mysqli_num_rows($objQuery1);
+                            if ($numQuery1 <= 0) {
+                                ?>
+                                <a class="setcookie check_system_level1
+                        check_top_level1-<?php echo $objResult['id_system']; ?> 
+                        <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
+                        data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
+                        <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
+                                </a>
+
+                                <?php
+                            } else {
+                                ?>
+                                <a class="has-arrow waves-effect waves-dark setcookie check_system_level1
+                        check_top_level1-<?php echo $objResult['id_system']; ?> 
+                        <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
+                        data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
+                        <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
+                                </a>
+                                <!-- System level2-->
+                                <ul aria-expanded="false" class="collapse">
+
+                                <?php
+                                while ($objResult1 = mysqli_fetch_array($objQuery1)) {
+                                    //check task_view in system of level 2
+                                    if ($result_member['admin'] != '1') {
+                                        if (!in_array($objResult1['id_system'], $module)) {
+                                            continue;
+                                        }
+                                    }
+                                    //------end check--------
+                                    $link_b1 = $objResult1['link_system'];
+                                    $cut_link1 = explode('/', $link_b1);
+                                    if ($objResult1['link_system'] == '#') {
+                                        $link1 = '#';
+                                        $tree1 = 'treeview';
+                                        if ($folder == $cut_link[0]) {
+                                            $active1 = 'active';
+                                        } else {
+                                            $active1 = '';
+                                        }
+                                    } else {
+                                        if ($folder == $cut_link1[0]) {
+                                            $link1 = $cut_link1[1];
+                                            if ($file == $cut_link1[1]) {
+                                                $active1 = 'active';
+                                                $id_cookie = $objResult1['id_system'];
+                                            } else {
+                                                $active1 = '';
+                                            }
+                                        } else {
+                                            $link1 = '../' . $link_b1;
+                                            $active1 = '';
+                                        }
+
+                                        $tree1 = '';
+                                    }
+                                    if ($objResult1['icon'] == '') {
+                                        $icon1 = '<i class="mdi mdi-folder-multiple"></i> ';
+                                    } else {
+                                        $icon1 = $objResult1['icon'];
+                                    } ?>
+
+                                    <li class="check_system_level2
+                            check_top_level2-<?php echo $objResult1['id_system']; ?> <?php echo $active1; ?>" data-top1="<?php echo $objResult['id_system']; ?>">
+                                        <a href="<?php echo $link1; ?>" data-link="<?php echo $link1; ?>" data-id="<?php echo $objResult1['id_system']; ?>" 
+                                        class="setcookie <?php echo $active1; ?>"><?php echo $icon1; ?><span> <?php echo $objResult1['name_system']; ?></span></a>
+                                        <!-- System level3-->
+                                        <?php
+                                        $active1 = '';
+                                    $objQuery2 = getSystemMenu('1', '3', $objResult1['id_system']);
+                                    $numQuery2 = mysqli_num_rows($objQuery2);
+                                    if ($numQuery2 > 0) {
+                                        ?>
+                                        <ul aria-expanded="false" class="collapse">
+
+                                        <?php
+                                        while ($objResult2 = mysqli_fetch_array($objQuery2)) {
+                                            //check task_view in system of level 3
+                                            if ($result_member['admin'] != '1') {
+                                                if (!in_array($objResult2['id_system'], $module)) {
+                                                    continue;
+                                                }
+                                            }
+                                            //------end check--------
+                                            $link_b2 = $objResult2['link_system'];
+                                            $cut_link2 = explode('/', $link_b2);
+                                            if ($objResult2['link_system'] == '#') {
+                                                $link2 = '#';
+                                                $tree2 = 'treeview';
+                                            } else {
+                                                if ($folder == $cut_link2[0]) {
+                                                    $link2 = $cut_link2[1];
+                                                } else {
+                                                    $link2 = '../' . $link_b2;
+                                                }
+
+                                                $tree2 = '';
+                                            }
+                                            if ($objResult2['icon'] == '') {
+                                                $icon2 = '<i class="mdi mdi-checkbox-blank-circle-outline"></i>';
+                                            } else {
+                                                $icon2 = $objResult2['icon'];
+                                            }
+
+                                            if ($folder == $cut_link2[0]) {
+                                                if ($file == $cut_link2[1]) {
+                                                    $active2 = 'active';
+                                                    $id_cookie = $objResult2['id_system'];
+                                                } else {
+                                                    $active2 = '';
+                                                }
+                                            } else {
+                                                $active2 = '';
+                                            } ?>
+                                        <!-- System level3-->
+                                        
+                                            <li class="check_system_level3 <?php echo $active2; ?> " data-top1="<?php echo $objResult['id_system']; ?>"
+                                data-top2="<?php echo $objResult1['id_system']; ?>">
+                                                <a href="<?php echo $link2 ?>" data-link="<?php echo $link2 ?>" data-id="<?php echo $objResult2['id_system']; ?>" class="setcookie <?php echo $active2; ?>">
+                                                <?php echo $icon2; ?><span > <?php echo $objResult2['name_system']; ?></span>
+                                                </a>
+                                            </li>
+
+                                        
+
+                                        <!-- End System level3-->
+
+                                        <?php
+                                        } ?>
+                                        </ul>
+                                        <?php
+                                    } ?>
+
+                                        <!-- End System level3-->
+
+                                    </li>
+                                
+                                <?php
+                                } ?>
+                                </ul>
+                                <!-- End System level2-->
+
+                                <?php
+                            } ?>
+                            
+
+                            </li>
+                            <!-- End System level1-->
+
+                    <?php
+                        }
+                    }?>
+
+                    
+                    
+
+                    
+                    <!-- End System-->
+                    <li class="nav-devider"></li>
+
+
+                    <!-- Design -->
+                    <li class="nav-small-cap"><h5>จัดการดีไซน์</h5></li>
+                    <?php
+                    $active = '';
+                    $objQuery = getSystemMenu('2', '1', null);
+                    if ($objQuery) {
+                        while ($objResult = mysqli_fetch_array($objQuery)) {
+                            //check task_view in system of level 1
+                            if ($result_member['admin'] != '1') {
+                                if (!in_array($objResult['id_system'], $module)) {
+                                    continue;
+                                }
+                            }
+                            //------end check--------
+                            $link_b = $objResult['link_system'];
+                            $cut_link = explode('/', $link_b);
+                            if ($objResult['link_system'] == '#') {
+                                $link = '#';
+                                $tree = 'treeview';
+                                if ($folder == $cut_link[0]) {
+                                    $active = 'active';
+                                } else {
+                                    $active = '';
+                                }
+                            } else {
+                                if ($folder == $cut_link[0]) { //------------------------------mod_product == mod_product
+                                    $link = $cut_link[1];    //------------------------------front-add.php
+                                    if ($file == $cut_link[1]) {
+                                        $active = 'active';
+                                        $id_cookie = $objResult['id_system'];
+                                    } else {
+                                        $active = '';
+                                    }
+                                } else {
+                                    $link = '../' . $link_b;   //------------------------------mod_nmorder/front-add.php
+                                    $active = '';
+                                }
+
+                                $tree = '';
+                            }
+                            if ($objResult['icon'] == '') {
+                                $icon = '<i class="mdi mdi-library-books"></i>';
+                            } else {
+                                $icon = $objResult['icon'];
+                            } ?>
+                            <!-- design level1-->
+                            <li class="<?php echo $active; ?>">                             
+                                <?php
+                                $active = '';
+                            $objQuery1 = getSystemMenu('2', '2', $objResult['id_system']);
+                            $numQuery1 = mysqli_num_rows($objQuery1);
+                            if ($numQuery1 <= 0) {
+                                ?>
+                                <a class="setcookie check_design_level1
+                        check_top_level1-<?php echo $objResult['id_system']; ?> 
+                        <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
+                        data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
+                        <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
+                                </a>
+
+                                <?php
+                            } else {
+                                ?>
+                                <a class="has-arrow waves-effect waves-dark setcookie check_design_level1
+                        check_top_level1-<?php echo $objResult['id_system']; ?> 
+                        <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
+                        data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
+                        <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
+                                </a>
+                                <!-- design level2-->
+                                <ul aria-expanded="false" class="collapse">
+
+                                <?php
+                                while ($objResult1 = mysqli_fetch_array($objQuery1)) {
+                                    //check task_view in system of level 2
+                                    if ($result_member['admin'] != '1') {
+                                        if (!in_array($objResult1['id_system'], $module)) {
+                                            continue;
+                                        }
+                                    }
+                                    //------end check--------
+                                    $link_b1 = $objResult1['link_system'];
+                                    $cut_link1 = explode('/', $link_b1);
+                                    if ($objResult1['link_system'] == '#') {
+                                        $link1 = '#';
+                                        $tree1 = 'treeview';
+                                        if ($folder == $cut_link[0]) {
+                                            $active1 = 'active';
+                                        } else {
+                                            $active1 = '';
+                                        }
+                                    } else {
+                                        if ($folder == $cut_link1[0]) {
+                                            $link1 = $cut_link1[1];
+                                            if ($file == $cut_link1[1]) {
+                                                $active1 = 'active';
+                                                $id_cookie = $objResult1['id_system'];
+                                            } else {
+                                                $active1 = '';
+                                            }
+                                        } else {
+                                            $link1 = '../' . $link_b1;
+                                            $active1 = '';
+                                        }
+
+                                        $tree1 = '';
+                                    }
+                                    if ($objResult1['icon'] == '') {
+                                        $icon1 = '<i class="mdi mdi-folder-multiple"></i> ';
+                                    } else {
+                                        $icon1 = $objResult1['icon'];
+                                    } ?>
+
+                                    <li class="check_design_level2
+                            check_top_level2-<?php echo $objResult1['id_system']; ?> <?php echo $active1; ?>" data-top1="<?php echo $objResult['id_system']; ?>">
+                                        <a href="<?php echo $link1; ?>" data-link="<?php echo $link1; ?>" data-id="<?php echo $objResult1['id_system']; ?>" 
+                                        class="setcookie <?php echo $active1; ?>"><?php echo $icon1; ?><span><?php echo $objResult1['name_system']; ?></span></a>
+                                        <!-- design level3-->
+                                        <?php
+                                        $active1 = '';
+                                    $objQuery2 = getSystemMenu('2', '3', $objResult1['id_system']);
+                                    $numQuery2 = mysqli_num_rows($objQuery2);
+                                    if ($numQuery2 > 0) {
+                                        ?>
+                                        <ul aria-expanded="false" class="collapse">
+
+                                        <?php
+                                        while ($objResult2 = mysqli_fetch_array($objQuery2)) {
+                                            //check task_view in system of level 3
+                                            if ($result_member['admin'] != '1') {
+                                                if (!in_array($objResult2['id_system'], $module)) {
+                                                    continue;
+                                                }
+                                            }
+                                            //------end check--------
+                                            $link_b2 = $objResult2['link_system'];
+                                            $cut_link2 = explode('/', $link_b2);
+                                            if ($objResult2['link_system'] == '#') {
+                                                $link2 = '#';
+                                                $tree2 = 'treeview';
+                                            } else {
+                                                if ($folder == $cut_link2[0]) {
+                                                    $link2 = $cut_link2[1];
+                                                } else {
+                                                    $link2 = '../' . $link_b2;
+                                                }
+
+                                                $tree2 = '';
+                                            }
+                                            if ($objResult2['icon'] == '') {
+                                                $icon2 = '<i class="mdi mdi-checkbox-blank-circle-outline"></i>';
+                                            } else {
+                                                $icon2 = $objResult2['icon'];
+                                            }
+
+                                            if ($folder == $cut_link2[0]) {
+                                                if ($file == $cut_link2[1]) {
+                                                    $active2 = 'active';
+                                                    $id_cookie = $objResult2['id_system'];
+                                                } else {
+                                                    $active2 = '';
+                                                }
+                                            } else {
+                                                $active2 = '';
+                                            } ?>
+                                        <!-- design level3-->
+                                        
+                                            <li class="check_design_level3 <?php echo $active2; ?> " data-top1="<?php echo $objResult['id_system']; ?>"
+                                data-top2="<?php echo $objResult1['id_system']; ?>">
+                                                <a href="<?php echo $link2 ?>" data-link="<?php echo $link2 ?>" data-id="<?php echo $objResult2['id_system']; ?>" class="setcookie <?php echo $active2; ?>">
+                                                <?php echo $icon2; ?><span ><?php echo $objResult2['name_system']; ?></span>
+                                                </a>
+                                            </li>
+
+                                        
+
+                                        <!-- End design level3-->
+
+                                        <?php
+                                        } ?>
+                                        </ul>
+                                        <?php
+                                    } ?>
+
+                                        <!-- End design level3-->
+
+                                    </li>
+                                
+                                <?php
+                                } ?>
+                                </ul>
+                                <!-- End design level2-->
+
+                                <?php
+                            } ?>
+                            
+
+                            </li>
+                            <!-- End System level1-->
+
+                    <?php
+                        }
+                    }?>
+
+                    <!-- End Design-->
+                <?php
+                } elseif ($_SESSION['role_tag'] == 'mod_cashier') {
+                ?>
+                    <!-- System -->
+                    <li class="nav-small-cap"><h5>เมนู</h5></li>
+                    <?php
+                    $active = '';
+                    $objQuery = getSystemMenu('1', '1', null);
+                    if ($objQuery) {
+                        while ($objResult = mysqli_fetch_array($objQuery)) {
+                            //check task_view in system of level 1
+                            if ($result_member['admin'] != '1') {
+                                if (!in_array($objResult['id_system'], $module)) {
+                                    continue;
+                                }
+                            }
+                            //------end check--------
+                            $link_b = $objResult['link_system'];
+                            $cut_link = explode('/', $link_b);
+                            if ($objResult['link_system'] == '#') {
+                                $link = '#';
+                                $tree = 'treeview';
+                                if ($folder == $cut_link[0]) {
+                                    $active = 'active';
+                                } else {
+                                    $active = '';
+                                }
+                            } else {
+                                if ($folder == $cut_link[0]) { //------------------------------mod_product == mod_product
+                                    $link = $cut_link[1];    //------------------------------front-add.php
+                                    if ($file == $cut_link[1]) {
+                                        $active = 'active';
+                                        $id_cookie = $objResult['id_system'];
+                                    } else {
+                                        $active = '';
+                                    }
+                                } else {
+                                    $link = '../' . $link_b;   //------------------------------mod_nmorder/front-add.php
+                                    $active = '';
+                                }
+
+                                $tree = '';
+                            }
+                            if ($objResult['icon'] == '') {
+                                $icon = '<i class="mdi mdi-library-books"></i>';
+                            } else {
+                                $icon = $objResult['icon'];
+                            } ?>
+                            <!-- System level1-->
+                            <li class="<?php echo $active; ?>">                             
+                                <?php
+                            $active = '';
+                            $objQuery1 = getSystemMenu('1', '2', $objResult['id_system']);
+                            $numQuery1 = mysqli_num_rows($objQuery1);
+                            if ($numQuery1 <= 0) {
+                                ?>
+                                <a class="setcookie check_system_level1
+                        check_top_level1-<?php echo $objResult['id_system']; ?> 
+                        <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
+                        data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
+                        <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
+                                </a>
+
+                                <?php
+                            } else {
+                                ?>
+                                <a class="has-arrow waves-effect waves-dark setcookie check_system_level1
+                        check_top_level1-<?php echo $objResult['id_system']; ?> 
+                        <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
+                        data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
+                        <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
+                                </a>
+                                <!-- System level2-->
+                                <ul aria-expanded="false" class="collapse">
+
+                                <?php
+                                while ($objResult1 = mysqli_fetch_array($objQuery1)) {
+                                    //check task_view in system of level 2
+                                    if ($result_member['admin'] != '1') {
+                                        if (!in_array($objResult1['id_system'], $module)) {
+                                            continue;
+                                        }
+                                    }
+                                    //------end check--------
+                                    $link_b1 = $objResult1['link_system'];
+                                    $cut_link1 = explode('/', $link_b1);
+                                    if ($objResult1['link_system'] == '#') {
+                                        $link1 = '#';
+                                        $tree1 = 'treeview';
+                                        if ($folder == $cut_link[0]) {
+                                            $active1 = 'active';
+                                        } else {
+                                            $active1 = '';
+                                        }
+                                    } else {
+                                        if ($folder == $cut_link1[0]) {
+                                            $link1 = $cut_link1[1];
+                                            if ($file == $cut_link1[1]) {
+                                                $active1 = 'active';
+                                                $id_cookie = $objResult1['id_system'];
+                                            } else {
+                                                $active1 = '';
+                                            }
+                                        } else {
+                                            $link1 = '../' . $link_b1;
+                                            $active1 = '';
+                                        }
+
+                                        $tree1 = '';
+                                    }
+                                    if ($objResult1['icon'] == '') {
+                                        $icon1 = '<i class="mdi mdi-folder-multiple"></i> ';
+                                    } else {
+                                        $icon1 = $objResult1['icon'];
+                                    } ?>
+
+                                    <li class="check_system_level2
+                            check_top_level2-<?php echo $objResult1['id_system']; ?> <?php echo $active1; ?>" data-top1="<?php echo $objResult['id_system']; ?>">
+                                        <a href="<?php echo $link1; ?>" data-link="<?php echo $link1; ?>" data-id="<?php echo $objResult1['id_system']; ?>" 
+                                        class="setcookie <?php echo $active1; ?>"><?php echo $icon1; ?><span> <?php echo $objResult1['name_system']; ?></span></a>
+                                        <!-- System level3-->
+                                        <?php
+                                        $active1 = '';
+                                    $objQuery2 = getSystemMenu('1', '3', $objResult1['id_system']);
+                                    $numQuery2 = mysqli_num_rows($objQuery2);
+                                    if ($numQuery2 > 0) {
+                                        ?>
+                                        <ul aria-expanded="false" class="collapse">
+
+                                        <?php
+                                        while ($objResult2 = mysqli_fetch_array($objQuery2)) {
+                                            //check task_view in system of level 3
+                                            if ($result_member['admin'] != '1') {
+                                                if (!in_array($objResult2['id_system'], $module)) {
+                                                    continue;
+                                                }
+                                            }
+                                            //------end check--------
+                                            $link_b2 = $objResult2['link_system'];
+                                            $cut_link2 = explode('/', $link_b2);
+                                            if ($objResult2['link_system'] == '#') {
+                                                $link2 = '#';
+                                                $tree2 = 'treeview';
+                                            } else {
+                                                if ($folder == $cut_link2[0]) {
+                                                    $link2 = $cut_link2[1];
+                                                } else {
+                                                    $link2 = '../' . $link_b2;
+                                                }
+
+                                                $tree2 = '';
+                                            }
+                                            if ($objResult2['icon'] == '') {
+                                                $icon2 = '<i class="mdi mdi-checkbox-blank-circle-outline"></i>';
+                                            } else {
+                                                $icon2 = $objResult2['icon'];
+                                            }
+
+                                            if ($folder == $cut_link2[0]) {
+                                                if ($file == $cut_link2[1]) {
+                                                    $active2 = 'active';
+                                                    $id_cookie = $objResult2['id_system'];
+                                                } else {
+                                                    $active2 = '';
+                                                }
+                                            } else {
+                                                $active2 = '';
+                                            } ?>
+                                        <!-- System level3-->
+                                        
+                                            <li class="check_system_level3 <?php echo $active2; ?> " data-top1="<?php echo $objResult['id_system']; ?>"
+                                data-top2="<?php echo $objResult1['id_system']; ?>">
+                                                <a href="<?php echo $link2 ?>" data-link="<?php echo $link2 ?>" data-id="<?php echo $objResult2['id_system']; ?>" class="setcookie <?php echo $active2; ?>">
+                                                <?php echo $icon2; ?><span > <?php echo $objResult2['name_system']; ?></span>
+                                                </a>
+                                            </li>
+
+                                        
+
+                                        <!-- End System level3-->
+
+                                        <?php
+                                        } ?>
+                                        </ul>
+                                        <?php
+                                    } ?>
+
+                                        <!-- End System level3-->
+
+                                    </li>
+                                
+                                <?php
+                                } ?>
+                                </ul>
+                                <!-- End System level2-->
+
+                                <?php
+                            } ?>
+                            
+
+                            </li>
+                            <!-- End System level1-->
+
+                    <?php
+                        }
+                    }
                 }
                 ?>
-                <li class="<?php echo $active; ?>">
-                    <a class="waves-effect waves-dark" aria-expanded="false" href="<?php echo $link; ?>">
-                        <i class="mdi mdi-gauge"></i> <span class="hide-menu">แดชบอร์ด</span>
-                        <span class="pull-right-container"></span>
-                    </a>
-                </li>
-
-                <!-- End Dashboard-->
-                <li class="nav-devider"></li>
-
-                <!-- System -->
-                <li class="nav-small-cap"><h5>จัดการระบบ</h5></li>
-                <?php
-                $active = '';
-                $objQuery = getSystemMenu('1', '1', null);
-                if ($objQuery) {
-                    while ($objResult = mysqli_fetch_array($objQuery)) {
-                        //check task_view in system of level 1
-                        if ($result_member['admin'] != '1') {
-                            if (!in_array($objResult['id_system'], $module)) {
-                                continue;
-                            }
-                        }
-                        //------end check--------
-                        $link_b = $objResult['link_system'];
-                        $cut_link = explode('/', $link_b);
-                        if ($objResult['link_system'] == '#') {
-                            $link = '#';
-                            $tree = 'treeview';
-                            if ($folder == $cut_link[0]) {
-                                $active = 'active';
-                            } else {
-                                $active = '';
-                            }
-                        } else {
-                            if ($folder == $cut_link[0]) { //------------------------------mod_product == mod_product
-                                $link = $cut_link[1];    //------------------------------front-add.php
-                                if ($file == $cut_link[1]) {
-                                    $active = 'active';
-                                    $id_cookie = $objResult['id_system'];
-                                } else {
-                                    $active = '';
-                                }
-                            } else {
-                                $link = '../' . $link_b;   //------------------------------mod_nmorder/front-add.php
-                                $active = '';
-                            }
-
-                            $tree = '';
-                        }
-                        if ($objResult['icon'] == '') {
-                            $icon = '<i class="mdi mdi-library-books"></i>';
-                        } else {
-                            $icon = $objResult['icon'];
-                        } ?>
-                        <!-- System level1-->
-                        <li class="<?php echo $active; ?>">                             
-                            <?php
-                        $active = '';
-                        $objQuery1 = getSystemMenu('1', '2', $objResult['id_system']);
-                        $numQuery1 = mysqli_num_rows($objQuery1);
-                        if ($numQuery1 <= 0) {
-                            ?>
-                            <a class="setcookie check_system_level1
-                       check_top_level1-<?php echo $objResult['id_system']; ?> 
-                       <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
-                       data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
-                       <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
-                            </a>
-
-                            <?php
-                        } else {
-                            ?>
-                            <a class="has-arrow waves-effect waves-dark setcookie check_system_level1
-                       check_top_level1-<?php echo $objResult['id_system']; ?> 
-                       <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
-                       data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
-                       <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
-                            </a>
-                            <!-- System level2-->
-                            <ul aria-expanded="false" class="collapse">
-
-                            <?php
-                            while ($objResult1 = mysqli_fetch_array($objQuery1)) {
-                                //check task_view in system of level 2
-                                if ($result_member['admin'] != '1') {
-                                    if (!in_array($objResult1['id_system'], $module)) {
-                                        continue;
-                                    }
-                                }
-                                //------end check--------
-                                $link_b1 = $objResult1['link_system'];
-                                $cut_link1 = explode('/', $link_b1);
-                                if ($objResult1['link_system'] == '#') {
-                                    $link1 = '#';
-                                    $tree1 = 'treeview';
-                                    if ($folder == $cut_link[0]) {
-                                        $active1 = 'active';
-                                    } else {
-                                        $active1 = '';
-                                    }
-                                } else {
-                                    if ($folder == $cut_link1[0]) {
-                                        $link1 = $cut_link1[1];
-                                        if ($file == $cut_link1[1]) {
-                                            $active1 = 'active';
-                                            $id_cookie = $objResult1['id_system'];
-                                        } else {
-                                            $active1 = '';
-                                        }
-                                    } else {
-                                        $link1 = '../' . $link_b1;
-                                        $active1 = '';
-                                    }
-
-                                    $tree1 = '';
-                                }
-                                if ($objResult1['icon'] == '') {
-                                    $icon1 = '<i class="mdi mdi-folder-multiple"></i> ';
-                                } else {
-                                    $icon1 = $objResult1['icon'];
-                                } ?>
-
-                                <li class="check_system_level2
-                           check_top_level2-<?php echo $objResult1['id_system']; ?> <?php echo $active1; ?>" data-top1="<?php echo $objResult['id_system']; ?>">
-                                    <a href="<?php echo $link1; ?>" data-link="<?php echo $link1; ?>" data-id="<?php echo $objResult1['id_system']; ?>" 
-                                    class="setcookie <?php echo $active1; ?>"><?php echo $icon1; ?><span> <?php echo $objResult1['name_system']; ?></span></a>
-                                    <!-- System level3-->
-                                    <?php
-                                    $active1 = '';
-                                $objQuery2 = getSystemMenu('1', '3', $objResult1['id_system']);
-                                $numQuery2 = mysqli_num_rows($objQuery2);
-                                if ($numQuery2 > 0) {
-                                    ?>
-                                    <ul aria-expanded="false" class="collapse">
-
-                                    <?php
-                                    while ($objResult2 = mysqli_fetch_array($objQuery2)) {
-                                        //check task_view in system of level 3
-                                        if ($result_member['admin'] != '1') {
-                                            if (!in_array($objResult2['id_system'], $module)) {
-                                                continue;
-                                            }
-                                        }
-                                        //------end check--------
-                                        $link_b2 = $objResult2['link_system'];
-                                        $cut_link2 = explode('/', $link_b2);
-                                        if ($objResult2['link_system'] == '#') {
-                                            $link2 = '#';
-                                            $tree2 = 'treeview';
-                                        } else {
-                                            if ($folder == $cut_link2[0]) {
-                                                $link2 = $cut_link2[1];
-                                            } else {
-                                                $link2 = '../' . $link_b2;
-                                            }
-
-                                            $tree2 = '';
-                                        }
-                                        if ($objResult2['icon'] == '') {
-                                            $icon2 = '<i class="mdi mdi-checkbox-blank-circle-outline"></i>';
-                                        } else {
-                                            $icon2 = $objResult2['icon'];
-                                        }
-
-                                        if ($folder == $cut_link2[0]) {
-                                            if ($file == $cut_link2[1]) {
-                                                $active2 = 'active';
-                                                $id_cookie = $objResult2['id_system'];
-                                            } else {
-                                                $active2 = '';
-                                            }
-                                        } else {
-                                            $active2 = '';
-                                        } ?>
-                                    <!-- System level3-->
-                                    
-                                        <li class="check_system_level3 <?php echo $active2; ?> " data-top1="<?php echo $objResult['id_system']; ?>"
-                            data-top2="<?php echo $objResult1['id_system']; ?>">
-                                            <a href="<?php echo $link2 ?>" data-link="<?php echo $link2 ?>" data-id="<?php echo $objResult2['id_system']; ?>" class="setcookie <?php echo $active2; ?>">
-                                            <?php echo $icon2; ?><span > <?php echo $objResult2['name_system']; ?></span>
-                                            </a>
-                                        </li>
-
-                                    
-
-                                    <!-- End System level3-->
-
-                                    <?php
-                                    } ?>
-                                    </ul>
-                                    <?php
-                                } ?>
-
-                                    <!-- End System level3-->
-
-                                </li>
-                            
-                            <?php
-                            } ?>
-                            </ul>
-                            <!-- End System level2-->
-
-                            <?php
-                        } ?>
-                         
-
-                        </li>
-                        <!-- End System level1-->
-
-                <?php
-                    }
-                }?>
-
-                
-                
-
-                
-                <!-- End System-->
-                <li class="nav-devider"></li>
-
-
-                <!-- Design -->
-                <li class="nav-small-cap"><h5>จัดการดีไซน์</h5></li>
-                <?php
-                $active = '';
-                $objQuery = getSystemMenu('2', '1', null);
-                if ($objQuery) {
-                    while ($objResult = mysqli_fetch_array($objQuery)) {
-                        //check task_view in system of level 1
-                        if ($result_member['admin'] != '1') {
-                            if (!in_array($objResult['id_system'], $module)) {
-                                continue;
-                            }
-                        }
-                        //------end check--------
-                        $link_b = $objResult['link_system'];
-                        $cut_link = explode('/', $link_b);
-                        if ($objResult['link_system'] == '#') {
-                            $link = '#';
-                            $tree = 'treeview';
-                            if ($folder == $cut_link[0]) {
-                                $active = 'active';
-                            } else {
-                                $active = '';
-                            }
-                        } else {
-                            if ($folder == $cut_link[0]) { //------------------------------mod_product == mod_product
-                                $link = $cut_link[1];    //------------------------------front-add.php
-                                if ($file == $cut_link[1]) {
-                                    $active = 'active';
-                                    $id_cookie = $objResult['id_system'];
-                                } else {
-                                    $active = '';
-                                }
-                            } else {
-                                $link = '../' . $link_b;   //------------------------------mod_nmorder/front-add.php
-                                $active = '';
-                            }
-
-                            $tree = '';
-                        }
-                        if ($objResult['icon'] == '') {
-                            $icon = '<i class="mdi mdi-library-books"></i>';
-                        } else {
-                            $icon = $objResult['icon'];
-                        } ?>
-                        <!-- design level1-->
-                        <li class="<?php echo $active; ?>">                             
-                            <?php
-                            $active = '';
-                        $objQuery1 = getSystemMenu('2', '2', $objResult['id_system']);
-                        $numQuery1 = mysqli_num_rows($objQuery1);
-                        if ($numQuery1 <= 0) {
-                            ?>
-                            <a class="setcookie check_design_level1
-                       check_top_level1-<?php echo $objResult['id_system']; ?> 
-                       <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
-                       data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
-                       <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
-                            </a>
-
-                            <?php
-                        } else {
-                            ?>
-                            <a class="has-arrow waves-effect waves-dark setcookie check_design_level1
-                       check_top_level1-<?php echo $objResult['id_system']; ?> 
-                       <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
-                       data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
-                       <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
-                            </a>
-                            <!-- design level2-->
-                            <ul aria-expanded="false" class="collapse">
-
-                            <?php
-                            while ($objResult1 = mysqli_fetch_array($objQuery1)) {
-                                //check task_view in system of level 2
-                                if ($result_member['admin'] != '1') {
-                                    if (!in_array($objResult1['id_system'], $module)) {
-                                        continue;
-                                    }
-                                }
-                                //------end check--------
-                                $link_b1 = $objResult1['link_system'];
-                                $cut_link1 = explode('/', $link_b1);
-                                if ($objResult1['link_system'] == '#') {
-                                    $link1 = '#';
-                                    $tree1 = 'treeview';
-                                    if ($folder == $cut_link[0]) {
-                                        $active1 = 'active';
-                                    } else {
-                                        $active1 = '';
-                                    }
-                                } else {
-                                    if ($folder == $cut_link1[0]) {
-                                        $link1 = $cut_link1[1];
-                                        if ($file == $cut_link1[1]) {
-                                            $active1 = 'active';
-                                            $id_cookie = $objResult1['id_system'];
-                                        } else {
-                                            $active1 = '';
-                                        }
-                                    } else {
-                                        $link1 = '../' . $link_b1;
-                                        $active1 = '';
-                                    }
-
-                                    $tree1 = '';
-                                }
-                                if ($objResult1['icon'] == '') {
-                                    $icon1 = '<i class="mdi mdi-folder-multiple"></i> ';
-                                } else {
-                                    $icon1 = $objResult1['icon'];
-                                } ?>
-
-                                <li class="check_design_level2
-                           check_top_level2-<?php echo $objResult1['id_system']; ?> <?php echo $active1; ?>" data-top1="<?php echo $objResult['id_system']; ?>">
-                                    <a href="<?php echo $link1; ?>" data-link="<?php echo $link1; ?>" data-id="<?php echo $objResult1['id_system']; ?>" 
-                                    class="setcookie <?php echo $active1; ?>"><?php echo $icon1; ?><span><?php echo $objResult1['name_system']; ?></span></a>
-                                    <!-- design level3-->
-                                    <?php
-                                    $active1 = '';
-                                $objQuery2 = getSystemMenu('2', '3', $objResult1['id_system']);
-                                $numQuery2 = mysqli_num_rows($objQuery2);
-                                if ($numQuery2 > 0) {
-                                    ?>
-                                    <ul aria-expanded="false" class="collapse">
-
-                                    <?php
-                                    while ($objResult2 = mysqli_fetch_array($objQuery2)) {
-                                        //check task_view in system of level 3
-                                        if ($result_member['admin'] != '1') {
-                                            if (!in_array($objResult2['id_system'], $module)) {
-                                                continue;
-                                            }
-                                        }
-                                        //------end check--------
-                                        $link_b2 = $objResult2['link_system'];
-                                        $cut_link2 = explode('/', $link_b2);
-                                        if ($objResult2['link_system'] == '#') {
-                                            $link2 = '#';
-                                            $tree2 = 'treeview';
-                                        } else {
-                                            if ($folder == $cut_link2[0]) {
-                                                $link2 = $cut_link2[1];
-                                            } else {
-                                                $link2 = '../' . $link_b2;
-                                            }
-
-                                            $tree2 = '';
-                                        }
-                                        if ($objResult2['icon'] == '') {
-                                            $icon2 = '<i class="mdi mdi-checkbox-blank-circle-outline"></i>';
-                                        } else {
-                                            $icon2 = $objResult2['icon'];
-                                        }
-
-                                        if ($folder == $cut_link2[0]) {
-                                            if ($file == $cut_link2[1]) {
-                                                $active2 = 'active';
-                                                $id_cookie = $objResult2['id_system'];
-                                            } else {
-                                                $active2 = '';
-                                            }
-                                        } else {
-                                            $active2 = '';
-                                        } ?>
-                                    <!-- design level3-->
-                                    
-                                        <li class="check_design_level3 <?php echo $active2; ?> " data-top1="<?php echo $objResult['id_system']; ?>"
-                            data-top2="<?php echo $objResult1['id_system']; ?>">
-                                            <a href="<?php echo $link2 ?>" data-link="<?php echo $link2 ?>" data-id="<?php echo $objResult2['id_system']; ?>" class="setcookie <?php echo $active2; ?>">
-                                            <?php echo $icon2; ?><span ><?php echo $objResult2['name_system']; ?></span>
-                                            </a>
-                                        </li>
-
-                                    
-
-                                    <!-- End design level3-->
-
-                                    <?php
-                                    } ?>
-                                    </ul>
-                                    <?php
-                                } ?>
-
-                                    <!-- End design level3-->
-
-                                </li>
-                            
-                            <?php
-                            } ?>
-                            </ul>
-                            <!-- End design level2-->
-
-                            <?php
-                        } ?>
-                         
-
-                        </li>
-                        <!-- End System level1-->
-
-                <?php
-                    }
-                }?>
-
-                <!-- End Design-->
-
 
             </ul>
         </nav>

@@ -126,7 +126,7 @@ $(document).on('click', '#login', function() {
             }
             else if (data.role_tag == 'mod_cashier') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/mod_cashier/index.php";
+                location.href = "../engine/mod_cashier/front_manage.php";
             } 
             else if (data.role_tag == 'mod_employee') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
