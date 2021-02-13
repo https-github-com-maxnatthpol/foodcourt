@@ -74,7 +74,7 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                 <li class="nav-devider"></li>
 
                 <?php
-                if($_SESSION['role_tag'] == 'mod_employee') {
+                if($_SESSION['role_tag'] == 'mod_employee' || $_SESSION['role_tag'] == 'mod_customer') {
                 ?>
                     <!-- Dashboard -->
                     <li class="nav-small-cap"><h5>หน้าแรก</h5></li>
