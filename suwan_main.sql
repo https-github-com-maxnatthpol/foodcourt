@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2021 at 02:22 PM
--- Server version: 10.4.14-MariaDB
+-- Generation Time: Feb 13, 2021 at 10:22 AM
+-- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -237,6 +237,13 @@ CREATE TABLE `mod_customer` (
   `delete_datetime` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ลูกค้า';
 
+--
+-- Dumping data for table `mod_customer`
+--
+
+INSERT INTO `mod_customer` (`id_customer`, `forename`, `surename`, `id_card`, `license_number`, `email`, `telephone`, `secondary_email`, `status`, `ticket_amount`, `ticket_expire`, `create_id`, `create_datetime`, `update_id`, `update_datetime`, `delete_datetime`) VALUES
+('p5154ceeef7d836777fu0958fd2a94e928x', 'ddd', 'ddddd', '1321465843654', '__-____/____', 'ttt@dfdfdf.com', '087-3580-651', NULL, 2, NULL, NULL, '', '2021-02-12 22:38:13.000000', NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -268,6 +275,14 @@ CREATE TABLE `mod_employee` (
   `province` varchar(255) NOT NULL,
   `zip_code` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `mod_employee`
+--
+
+INSERT INTO `mod_employee` (`id_employee`, `username`, `surname`, `username_en`, `surname_en`, `birthday`, `position`, `position_en`, `code_id`, `detail_employee`, `detail_employee_en`, `email`, `user_city`, `user_state`, `user_district`, `detail_city`, `tel`, `id_branch`, `address`, `district`, `amphures`, `province`, `zip_code`) VALUES
+('hd4cff774d6516542n451ce4dbd75c3513o', 'Natapatr', 'Suwanthanee', '', '', '1993-11-01', 'admin', '', '1309900973106', 'admin จัดๆ', '', 'tike.natthpol@gmail.com', '', '', '', '', '0873580651', '', '', '', '', '', ''),
+('r5ddf3e2505ad307ce509d1c8bb77f3662u', 'test', 'test', '', '', '2021-02-10', 'test', '', '1234589532164', 'test', '', 'test@gmail.com', '', '', '', '', '0846054014', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -351,8 +366,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id_role`, `name`, `tag`, `update_datetime`, `delete_datetime`) VALUES
-('o08f223d416f41274a85b5cc7f9bc6l777m', 'admin', 'mod_employee', '2020-01-24 09:37:00', NULL),
-('tecc7b75da4a064e697280w10c55d043cby', 'ลูกค้า', 'mod_customer', '2020-01-22 10:46:54', NULL);
+('o08f223d416f41274a85b5cc7f9bc6l777m', 'Back Office', 'mod_employee', '2021-02-12 22:30:40', NULL),
+('tecc7b75da4a064e697280w10c55d043cby', 'ร้านค้า', 'mod_customer', '2021-02-12 22:28:17', NULL),
+('vbjc0debfdecb8a769aa1d9d5fdcaca5dch', 'แคชเชียร์', 'mod_cashier', '2021-02-12 22:30:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -386,39 +402,39 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`id`, `name`, `value`, `updated_datetime`) VALUES
 (1, 'telephon', '081-919-0276', NULL),
-(2, 'email', 'Unofence@gmail.com', '2021-02-02 04:36:59'),
+(2, 'email', 'Unofence@gmail.com', '2021-02-13 07:52:40'),
 (3, 'address', '40 Street Thailand', NULL),
-(4, 'logo_img', '../../uploads/2021/logo/logo-2601218464.png', '2021-01-26 04:58:24'),
+(4, 'logo_img', '../../uploads/2021/logo/logo-1202212934.png', '2021-02-12 16:18:08'),
 (5, 'scores_CE', '85', '2020-02-27 01:44:15'),
 (6, 'veterinary_council', '1', '2020-02-27 01:44:15'),
 (7, 'partner', '1', '2020-02-27 01:44:15'),
 (8, 'lecturer', '2', '2020-02-27 01:44:15'),
 (9, 'longitude', '', '2020-02-27 01:44:15'),
 (10, 'latitude', '', '2020-02-27 01:44:15'),
-(11, 'keyworde_en', 'Unofence, the manufacturer and distributor of Korat prefabricated steel fence products Finished balcony railing Finished railing Finished door Baked iron fence Colored iron fence with arrowhead Baked iron fence, buried in the ground Metal sheet fence Welded Mesh Fence Straight balcony railing Curved balcony railing Color slide baking door Curved slide door Double slide door Color swing oven door Baked door Finished door frame Painted steel pool fence Steel fence panels Unofence', '2021-02-02 04:36:59'),
-(12, 'description_en', 'Unofence, the manufacturer and distributor of Korat prefabricated steel fence products Finished balcony railing Finished railing Finished door Baked iron fence Colored iron fence with arrowhead Baked iron fence, buried in the ground Metal sheet fence Welded Mesh Fence Straight balcony railing Curved balcony railing Color slide baking door Curved slide door Double slide door Color swing oven door Baked door Finished door frame Painted steel pool fence Steel fence panels Unofence', '2021-02-02 04:36:59'),
-(13, 'title_en', 'Unofence | manufacturer and distributor Prefabricated steel fence Finished balcony railing Finished railing Finished door', '2021-02-02 04:36:59'),
-(14, 'address_en', 'Head office: 737 Sport Klang Road, Nai Mueang Subdistrict, Mueang District, Nakhon Ratchasima Province 30000', '2021-02-02 04:36:59'),
-(15, 'name_en', 'Unofence', '2021-02-02 04:36:59'),
-(16, 'email', 'Unofence@gmail.com', '2021-02-02 04:36:59'),
-(17, 'keyworde_th', 'Unofence ผู้ผลิตและจำหน่าย ผลิตภัณฑ์ โคราช รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป รั้วเหล็กอบสี รั้วเหล็กอบสีหัวลูกศร รั้วเหล็กอบสีฝังดิน รั้วเหล็กแผ่นเมทัลชีท รั้วเหล็กแผ่นตาข่ายถัก ราวระเบียงแบบตรง ราวระเบียงแบบโค้ง ประตูรั้วอบสีสไลด์ ประตูรั้วอบสีสไลด์โค้ง ประตูรั้วอบสีสไลด์ซ้อน ประตูรั้วอบสีบานสวิง ประตูรั้วอบสีบานเฟี้ยม โครงประตูสำเร็จรูป รั้วสระว่ายน้ำเหล็กอบสี รั้วเหล็กแผ่นฉลุลาย รั้วเหล็กแผ่นตะแกรงฉีก Unofence', '2021-02-02 04:36:59'),
-(18, 'description_th', 'Unofence ผู้ผลิตและจำหน่าย ผลิตภัณฑ์ โคราช รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป รั้วเหล็กอบสี รั้วเหล็กอบสีหัวลูกศร รั้วเหล็กอบสีฝังดิน รั้วเหล็กแผ่นเมทัลชีท รั้วเหล็กแผ่นตาข่ายถัก ราวระเบียงแบบตรง ราวระเบียงแบบโค้ง ประตูรั้วอบสีสไลด์ ประตูรั้วอบสีสไลด์โค้ง ประตูรั้วอบสีสไลด์ซ้อน ประตูรั้วอบสีบานสวิง ประตูรั้วอบสีบานเฟี้ยม โครงประตูสำเร็จรูป รั้วสระว่ายน้ำเหล็กอบสี รั้วเหล็กแผ่นฉลุลาย รั้วเหล็กแผ่นตะแกรงฉีก Unofence', '2021-02-02 04:36:59'),
-(19, 'title_th', 'Unofence | ผู้ผลิตและจำหน่าย รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป', '2021-02-02 04:36:59'),
-(20, 'address_th', 'สำนักงานใหญ่ : 737 ถ.กีฬากลาง ต.ในเมือง อ.เมือง จ.นครราชสีมา 30000', '2021-02-02 04:36:59'),
-(21, 'name_th', 'Unofence', '2021-02-02 04:36:59'),
-(22, 'name_th', 'Unofence', '2021-02-02 04:36:59'),
+(11, 'keyworde_en', 'Unofence, the manufacturer and distributor of Korat prefabricated steel fence products Finished balcony railing Finished railing Finished door Baked iron fence Colored iron fence with arrowhead Baked iron fence, buried in the ground Metal sheet fence Welded Mesh Fence Straight balcony railing Curved balcony railing Color slide baking door Curved slide door Double slide door Color swing oven door Baked door Finished door frame Painted steel pool fence Steel fence panels Unofence', '2021-02-13 07:52:40'),
+(12, 'description_en', 'Unofence, the manufacturer and distributor of Korat prefabricated steel fence products Finished balcony railing Finished railing Finished door Baked iron fence Colored iron fence with arrowhead Baked iron fence, buried in the ground Metal sheet fence Welded Mesh Fence Straight balcony railing Curved balcony railing Color slide baking door Curved slide door Double slide door Color swing oven door Baked door Finished door frame Painted steel pool fence Steel fence panels Unofence', '2021-02-13 07:52:40'),
+(13, 'title_en', 'Unofence | manufacturer and distributor Prefabricated steel fence Finished balcony railing Finished railing Finished door', '2021-02-13 07:52:40'),
+(14, 'address_en', 'Head office: 737 Sport Klang Road, Nai Mueang Subdistrict, Mueang District, Nakhon Ratchasima Province 30000', '2021-02-13 07:52:40'),
+(15, 'name_en', 'Unofence', '2021-02-13 07:52:40'),
+(16, 'email', 'Unofence@gmail.com', '2021-02-13 07:52:40'),
+(17, 'keyworde_th', 'ระบบศูนย์อาหาร สหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 22', '2021-02-13 07:52:40'),
+(18, 'description_th', 'ระบบศูนย์อาหาร สหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 22', '2021-02-13 07:52:40'),
+(19, 'title_th', 'ระบบศูนย์อาหาร  สหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 22', '2021-02-13 07:52:40'),
+(20, 'address_th', 'สำนักงานใหญ่ : 737 ถ.กีฬากลาง ต.ในเมือง อ.เมือง จ.นครราชสีมา 30000', '2021-02-13 07:52:40'),
+(21, 'name_th', 'สหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 22', '2021-02-13 07:52:40'),
+(22, 'name_th', 'สหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 22', '2021-02-13 07:52:40'),
 (23, 'tax_id', '1245345678945', '2020-01-23 09:27:04'),
-(24, 'telephone', '0996261408', '2021-02-02 04:36:59'),
-(25, 'random_banner', '0', '2021-02-02 04:36:59'),
-(26, 'head_title', 'Unofence | ผู้ผลิตและจำหน่าย รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป', '2021-02-02 04:36:59'),
-(27, 'head_title_mini', 'UNOFENCE', '2021-02-02 04:36:59'),
+(24, 'telephone', '0996261408', '2021-02-13 07:52:40'),
+(25, 'random_banner', '0', '2021-02-13 07:52:40'),
+(26, 'head_title', 'ระบบศูนย์อาหาร  สหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 22รั้วเหล็กสำเร็จรูป ราวระเบียงสำเร็จรูป ราวบันไดสำเร็จรูป ประตูสำเร็จรูป', '2021-02-13 07:52:40'),
+(27, 'head_title_mini', 'สหกรณ์ออมทรัพย์', '2021-02-13 07:52:40'),
 (28, 'merchantid', '', '2020-02-27 01:44:15'),
-(29, 'google_map_key', 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7707.91046959502!2d102.107902!3d14.99519!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8d7dab9510666d4d!2z4Lia4Lij4Li04Lip4Lix4LiXIOC4l-C4teC5gOC4reC5h-C4meC5gOC4reC4qiDguYHguIHguKPguJnguJTguYwg4LiU4Li14LmE4LiL4LiZ4LmMIOC4iOC4s-C4geC4seC4lA!5e0!3m2!1sth!2sth!4v1602571637912!5m2!1sth!2sth', '2021-02-02 04:36:59'),
+(29, 'google_map_key', 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7707.91046959502!2d102.107902!3d14.99519!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8d7dab9510666d4d!2z4Lia4Lij4Li04Lip4Lix4LiXIOC4l-C4teC5gOC4reC5h-C4meC5gOC4reC4qiDguYHguIHguKPguJnguJTguYwg4LiU4Li14LmE4LiL4LiZ4LmMIOC4iOC4s-C4geC4seC4lA!5e0!3m2!1sth!2sth!4v1602571637912!5m2!1sth!2sth', '2021-02-13 07:52:40'),
 (30, 'time_open_f', '90', NULL),
 (31, 'email2', '', '2021-01-25 07:02:11'),
-(32, 'telephone2', '0812822424', '2021-02-02 04:36:59'),
-(33, 'detail_th', '&lt;p&gt;มุ่งมั่นสู่การพัฒนาคุณภาพและบริการ เพื่อให้ลูกค้าได้สินค้าที่มีดีไซน์ ทันสมัยสวยทน สมราคา ตามปรัชญา Modern Zen เรามุ่งหวังความสำเร็จระยะยาวด้วยทีมงานคุณภาพเราพร้อมแล้วที่จะบริการทุกท่านด้วยความรวดเร็ว สุภาพ อ่อนน้อม&lt;/p&gt;', '2021-02-02 04:36:59'),
-(34, 'detail_en', '&lt;p&gt;Committed to improving quality and service In order for our customers to get products with modern design, beautiful, durable, reasonable price according to the Modern Zen philosophy, we aim for long-term success with our quality team.We are ready to serve everyone with speed, courteousness.&lt;/p&gt;', '2021-02-02 04:36:59'),
+(32, 'telephone2', '0812822424', '2021-02-13 07:52:40'),
+(33, 'detail_th', '&lt;p&gt;ระบบศูนย์อาหาร สหกรณ์ออมทรัพย์ตำรวจตระเวนชายแดนที่ 22&lt;/p&gt;', '2021-02-13 07:52:40'),
+(34, 'detail_en', '&lt;p&gt;Committed to improving quality and service In order for our customers to get products with modern design, beautiful, durable, reasonable price according to the Modern Zen philosophy, we aim for long-term success with our quality team.We are ready to serve everyone with speed, courteousness.&lt;/p&gt;', '2021-02-13 07:52:40'),
 (35, 'logo_img2', '../../uploads/2021/logo/logo-0202214606.png', '2021-02-02 04:03:51');
 
 -- --------------------------------------------------------
@@ -471,6 +487,18 @@ CREATE TABLE `system` (
   `update_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `system`
+--
+
+INSERT INTO `system` (`id_system`, `name_system`, `name_system_en`, `link_system`, `type`, `groups`, `sort`, `level`, `icon`, `create_date`, `update_date`) VALUES
+(1, 'ข้อมูลส่วนกลาง', '', 'mod_central_information/front_manage.php', 2, 0, 0, 1, '', '2021-02-07', '2021-02-07'),
+(2, 'จัดการพนักงาน', '', 'mod_employee/front-manage.php', 1, 0, 0, 1, '', '2021-02-07', '2021-02-07'),
+(4, 'จัดการสิทธิ์การใช้งาน', '', 'mod_permission/front-manage.php', 1, 0, 0, 1, '', '2021-02-12', '2021-02-12'),
+(5, 'จัดการกลุ่มผู้ใช้งาน', '', 'mod_role/front-manage.php', 1, 0, 0, 1, '', '2021-02-12', '2021-02-12'),
+(6, 'ร้านค้า', '', 'mod_customer/front_manage.php', 1, 0, 0, 1, '', '2021-02-12', '2021-02-12'),
+(7, 'แคชเชียร์', '', 'mod_cashier/front_manage.php', 1, 0, 0, 1, '', '2021-02-13', '2021-02-13');
+
 -- --------------------------------------------------------
 
 --
@@ -500,7 +528,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `user_name`, `user_password`, `user_email`, `id_role`, `create_datetime`, `last_login`, `last_logout`, `passwd_changed`, `update_datetime`, `delete_datetime`, `admin`, `status`, `token`, `id_data_role`) VALUES
-('q02bfd06ffs5f0819ec30a4fe572b67a73c', 'supadmin', '$2y$10$s6CqhypM9oPT6aDuHiITueWvm6P06oRsdHaHKiPhtob5FOQdlhgpy', NULL, 'o08f223d416f41274a85b5cc7f9bc6l777m', '2019-11-23 16:44:32', '2021-02-07 20:21:54', '2021-02-07 20:21:46', NULL, '0000-00-00 00:00:00', NULL, 1, 1, '8003d10e33bc5828561aad9aedd6d9db', '');
+('j36316de91a255403f6e7d768c443dcb70m', '1111', '$2y$10$PKGrvTqxgx68EviJfTUCV.2ii6y5DMviPNVR0Ub7ju6LmermJS91S', NULL, 'tecc7b75da4a064e697280w10c55d043cby', '2021-02-12 23:28:35', '2021-02-12 23:35:08', '0000-00-00 00:00:00', NULL, '0000-00-00 00:00:00', NULL, 0, 1, '7305dcae2057dda43ebeea20c209dfe0', 'p5154ceeef7d836777fu0958fd2a94e928x'),
+('q02bfd06ffs5f0819ec30a4fe572b67a73c', 'supadmin', '$2y$10$s6CqhypM9oPT6aDuHiITueWvm6P06oRsdHaHKiPhtob5FOQdlhgpy', NULL, 'o08f223d416f41274a85b5cc7f9bc6l777m', '2019-11-23 16:44:32', '2021-02-12 22:37:01', '2021-02-12 22:40:56', NULL, '0000-00-00 00:00:00', NULL, 1, 1, 'be5eff2d70991f37cd94e2cffe263660', ''),
+('r7ef62dwc60eadf66e213249d4f7817f6ep', 'test', '$2y$10$NlIRsit.XkvMo/wY9CD6ROr4ay9WiVmWJaAIzXyyd7bHUQkDoeOxi', 'test@gmail.com', 'o08f223d416f41274a85b5cc7f9bc6l777m', '2021-02-12 21:45:31', '2021-02-12 23:33:36', '2021-02-12 23:27:32', NULL, '2021-02-12 21:52:13', NULL, 0, 1, 'b1279d5798ac2115845621a4cc614d17', 'r5ddf3e2505ad307ce509d1c8bb77f3662u'),
+('x2250d1337390f4ee4566f156fe83e6707k', 'maxnatapatr', '$2y$10$u2kCPXutUKL568m9SB7xfeWQ7AYoGCKZFlgdVkl548SU0eqA78B9m', 'tike.natthpol@gmail.com', 'o08f223d416f41274a85b5cc7f9bc6l777m', '2021-02-12 17:34:21', '2021-02-13 15:03:58', '2021-02-13 15:03:52', NULL, '2021-02-12 21:42:55', NULL, 1, 1, 'b1324dd61a75c5a726dded48c2a0c165', 'hd4cff774d6516542n451ce4dbd75c3513o');
 
 -- --------------------------------------------------------
 
@@ -544,6 +575,13 @@ CREATE TABLE `user_images` (
   `type` tinyint(1) DEFAULT NULL COMMENT '1 = customer,2 = tutor, 3 = employee,4 = Parter'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='รูปภาพ';
 
+--
+-- Dumping data for table `user_images`
+--
+
+INSERT INTO `user_images` (`id_image`, `id_user`, `name`, `size`, `date`, `directory`, `active`, `type`) VALUES
+(32, 'p5154ceeef7d836777fu0958fd2a94e928x', '', 0, '2021-02-12 22:38:13', '../../uploads/2021/mod_customer/', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -556,6 +594,16 @@ CREATE TABLE `user_permissions` (
   `permissions` text DEFAULT NULL,
   `id_user` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_permissions`
+--
+
+INSERT INTO `user_permissions` (`id_user_perm`, `id_system`, `permissions`, `id_user`) VALUES
+(6, 2, '1, 2, 3, 4, 5, 6, 7, 8', 'x2250d1337390f4ee4566f156fe83e6707k'),
+(7, 1, '1, 2, 3, 4, 5, 6, 7, 8', 'x2250d1337390f4ee4566f156fe83e6707k'),
+(9, 2, '1', 'r7ef62dwc60eadf66e213249d4f7817f6ep'),
+(10, 3, '1, 2, 3, 4, 5, 6, 7, 8', 'r7ef62dwc60eadf66e213249d4f7817f6ep');
 
 -- --------------------------------------------------------
 
@@ -855,7 +903,7 @@ ALTER TABLE `slide_image`
 -- AUTO_INCREMENT for table `system`
 --
 ALTER TABLE `system`
-  MODIFY `id_system` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_system` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user_address`
@@ -867,13 +915,13 @@ ALTER TABLE `user_address`
 -- AUTO_INCREMENT for table `user_images`
 --
 ALTER TABLE `user_images`
-  MODIFY `id_image` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_image` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `user_permissions`
 --
 ALTER TABLE `user_permissions`
-  MODIFY `id_user_perm` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user_perm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

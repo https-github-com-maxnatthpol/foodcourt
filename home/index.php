@@ -126,11 +126,11 @@ $(document).on('click', '#login', function() {
             }
             else if (data.role_tag == 'mod_cashier') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/mod_cashier/front_manage.php";
+                location.href = "../engine/mod_cashier/index.php";
             } 
             else if (data.role_tag == 'mod_employee') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/mod_employee/front_manage.php";
+                location.href = "../engine/page_home/index.php";
             }    
              else if (data.status == 0) {
                 swal('คำเตือน',data.message,"warning")
