@@ -97,59 +97,6 @@ $title = $title == ""?TITLE:$title;
 	<script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
 	<script src="../js/main.js"></script>
-	
-	<script>
-
-$(document).on('click', '#login', function() {
-
-    var username = $('#txtUserName').val();
-    var password = $('#txtPassword').val();
-    $.ajax({
-        beforeSend: function() {
-            $('#overlay').show();
-
-        },
-        complete: function() {
-            $('#overlay').fadeOut();
-        },
-        url: "../engine/lib/service.php",
-        method: "POST",
-        data: {
-            username: username,
-            password: password
-        },
-        success: function(data) {
-            //alert(data.message, 'Infomation:');
-            if (data.role_tag == 'mod_customer') {
-                //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/mod_test/front_manage.php";
-            }
-            else if (data.role_tag == 'mod_cashier') {
-                //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/mod_cashier/front_manage.php";
-            } 
-            else if (data.role_tag == 'mod_employee') {
-                //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/page_home/index.php";
-            }    
-             else if (data.status == 0) {
-                swal('คำเตือน',data.message,"warning")
-				$('#div_taxt_error').html(data.message);
-                $('.alert-massage').fadeIn();
-            } else {
-                $('.alert-massage-exist').fadeIn();
-            }
-        }
-    });
-});
-
-$('#txtPassword').keypress(function(event) {
-    if (event.keyCode === 13) {
-        $('#login').trigger('click');
-    }
-});
-</script>
-	
 
 </body>
 </html>
