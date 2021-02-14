@@ -106,7 +106,7 @@ $(document).on('click', '#login', function() {
                 location.href = "../engine/mod_cashier/front_manage.php";
             } else if (data.role_tag == 'mod_employee') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/page_home/index.php";
+                location.href = "../engine/page_home/";
             } else if (data.status == 0) {
                 swal('คำเตือน', data.message, "warning")
                 $('#div_taxt_error').html(data.message);

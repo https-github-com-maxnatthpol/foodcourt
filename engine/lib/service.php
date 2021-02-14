@@ -56,7 +56,7 @@ $sessionlifetime = 30; //กำหนดเป็นนาที
         $result = $db->QueryFetchArray($str);
         
         if (!isset($result) || (isset($result) && $_SESSION["token"] != $result['token'])) {
-            header('Location: ../login.php');
+            header('Location: ../../home/');
             exit();
         }
     }
@@ -332,17 +332,17 @@ function doLogin()
 
                     break;
 
-                    case "partner":
-                        $str_partner = 'SELECT * FROM `partner` WHERE `id_partner` = "' . $result['id_data_role'] . '" ';
-                        $query_partner = $db->Query($str_partner);
-                        if ($query_partner) {
-                            $fetch_partner = mysqli_fetch_array($query_partner);
-                            $name = $fetch_partner["name_th"] ;
+                    case "mod_cashier":
+                        $str_cashier = 'SELECT * FROM `mod_cashier` WHERE `id_cashier` = "' . $result['id_data_role'] . '" ';
+                        $query_cashier = $db->Query($str_cashier);
+                        if ($query_cashier) {
+                            $fetch_cashier = mysqli_fetch_array($query_cashier);
+                            $name = $fetch_cashier["forename"] . " " . $fetch_cashier["surename"];
                             $_SESSION['position'] = "";
-                            $_SESSION['email'] = $fetch_partner["email"];
+                            $_SESSION['email'] = $fetch_cashier["email"];
                             $_SESSION['name'] = $name;
 
-                            $str    = "SELECT * FROM user_images WHERE 	id_user = '" . $result['id_data_role'] . "' and type = 4";
+                            $str    = "SELECT * FROM user_images WHERE 	id_user = '" . $result['id_data_role'] . "' and type = 2";
                             $query = $db->Query($str);
                             $row    = mysqli_num_rows($query);
                             
@@ -350,7 +350,7 @@ function doLogin()
                                 $result_img = mysqli_fetch_array($query);
                                 $date_img  = $result_img['date'];
                                 $date_img = explode("-", $date_img);
-                                $image = "../../uploads/$date_img[0]/mod_partner/" . $result_img['name'];
+                                $image = "../../uploads/$date_img[0]/mod_cashier/" . $result_img['name'];
                                 if (@getimagesize($image)) {
                                     $_SESSION['avatar'] = $image;
                                 }
@@ -439,7 +439,7 @@ function doLogout()
 			echo json_encode(array('status' => '1', 'message' => 'ออกจากระบบสำเร็จ' ));
 			unset($_SESSION["id_facebook"],$_SESSION['user_id'],$_SESSION['permission'],$_SESSION['admin'],$_SESSION['user_member'],$_SESSION['task_view'],$_SESSION['task_authen'],$_SESSION['id_customer'],$_SESSION['id_partner']);
 			
-					header('Location: ../index.php');
+					header('Location: ../../home/');
         			exit;
 		}		
 }

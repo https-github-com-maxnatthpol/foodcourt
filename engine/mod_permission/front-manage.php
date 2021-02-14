@@ -72,18 +72,19 @@ if (isset($role_tag)) {
                 }
             }
         break;
-        case "mod_company":
-            $str_chk = "SELECT *,`roles`.name as role_name  ,`mod_company`.`name` AS member_name FROM `mod_company`";
-            $str_chk .= " INNER JOIN `users` ON `mod_company`.`id_company` = `users`.`id_data_role`";
+        case "mod_cashier":
+            $str_chk = "SELECT *,`roles`.name as role_name  ,CONCAT(`mod_cashier`.`forename`, ' ', `mod_cashier`.`surename`) AS member_name FROM `mod_cashier`";
+            $str_chk .= " INNER JOIN `users` ON `mod_cashier`.`id_cashier` = `users`.`id_data_role`";
             $str_chk .= " LEFT JOIN `roles` ON `users`.`id_role` = `roles`.`id_role`";
             $str_chk .= " WHERE `users`.`delete_datetime` IS NULL ";
-            $str_chk .= " AND `roles`.`tag` = 'mod_company'";
+            $str_chk .= " AND `roles`.`tag` = 'mod_cashier'";
+            //var_dump($str_chk);
 
             if (isset($per_id_edd) && $per_id_edd != 'none_data') {
                 $query_ed = $str_chk . " AND `users`.`id_user` = '" . $per_id_edd . "'";
                 $res_ed =  $db->QueryFetchArray($query_ed);
                 if (isset($res_ed)) {
-                    $user_name = $res_ed['name']  ;
+                    $user_name = $res_ed['forename'] . ' ' .$res_ed['surename'] ;
                 }
             }
         break;
@@ -299,12 +300,12 @@ if (isset($role_tag)) {
                                                         <?php
 
                                                     break;
-                                                    case "tutor":
-                                                        $str_us1 = "SELECT * FROM tutor  WHERE tutor.id_tutor NOT IN (SELECT  id_data_role  FROM users WHERE users.delete_datetime IS NULL)";
+                                                    case "mod_cashier":
+                                                        $str_us1 = "SELECT * FROM mod_cashier  WHERE mod_cashier.id_cashier NOT IN (SELECT  id_data_role  FROM users WHERE users.delete_datetime IS NULL)";
                                                         $query_us1 = $db->Query($str_us1);
                                                         ?>
                                                         <?php while ($result_us1 = mysqli_fetch_array($query_us1)) {?>
-                                                        <option value="<?=$result_us1['id_tutor']?>" ><?=$result_us1['forename_th']?> <?=$result_us1['surename_th']?></option>
+                                                        <option value="<?=$result_us1['id_cashier']?>" ><?=$result_us1['forename']?> <?=$result_us1['surename']?></option>
                                                         <?php } ?>
 
                                                         <?php

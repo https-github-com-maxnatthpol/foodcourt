@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
 require_once '../engine/lib/connect.php';
 require_once '../engine/lib/config.php';
 require_once '../engine/lib/service.php';
@@ -17,7 +18,11 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
             header('Location: page_home/');
             exit;
         }
+		else{
+			header('Location: ../engine/page_home/');
+		}
     }
+	
 } else {
     header('Location: formAdminlocal.php');
 }
