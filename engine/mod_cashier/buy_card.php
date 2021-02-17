@@ -34,10 +34,10 @@ $db = new DB();
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-5 col-8 align-self-center">
-                <h3 class="text-themecolor m-b-0 m-t-0">เติมเงิน</h3>
+                <h3 class="text-themecolor m-b-0 m-t-0">ซื้อบัตร / เติมเงิน</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active">เติมเงิน</li>
+                    <li class="breadcrumb-item active">ซื้อบัตร / เติมเงิน</li>
                 </ol>
             </div>
             <div class="col-md-7 col-4 align-self-center">
@@ -130,7 +130,7 @@ $db = new DB();
             <div class="col-md-6">
                 <div class="card card-body">
                     <h3 class="box-title m-b-0">ข้อมูลบัตร</h3>
-                    <p class="text-muted m-b-30 font-13"> *ตรวจสอบความถูกต้องของข้อมูลก่อนทำการเติมเงิน </p>
+                    <p class="text-muted m-b-30 font-13"> *ตรวจสอบความถูกต้องของข้อมูลก่อนยืนยัน </p>
                     <form class="form-horizontal" role="form">
                         <div class="form-body">
                             <hr class="m-t-0 m-b-40">
@@ -193,6 +193,7 @@ $db = new DB();
     </div>
 </div>
 <!-- End PAge Content -->
+
 
 <?php include('../template/footer.php'); ?>
 

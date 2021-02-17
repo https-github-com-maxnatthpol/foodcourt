@@ -34,10 +34,10 @@ $db = new DB();
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-5 col-8 align-self-center">
-                <h3 class="text-themecolor m-b-0 m-t-0">เติมเงิน</h3>
+                <h3 class="text-themecolor m-b-0 m-t-0">คืนบัตร</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active">เติมเงิน</li>
+                    <li class="breadcrumb-item active">คืนบัตร</li>
                 </ol>
             </div>
             <div class="col-md-7 col-4 align-self-center">
@@ -71,7 +71,7 @@ $db = new DB();
             <div class="col-md-6">
                 <div class="card card-body">
                     <h3 class="box-title m-b-0"> สแกนบาร์โค้ด </h3>
-                    <p class="text-muted m-b-30 font-13"> *สแกนบาร์โค้ดเพื่อเติมเงิน </p>
+                    <p class="text-muted m-b-30 font-13"> *สแกนบาร์โค้ดเพื่อคืนบัตร </p>
                     <hr class="m-t-0 m-b-40">
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
@@ -87,25 +87,7 @@ $db = new DB();
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">จำนวนเงิน </label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">รับเงิน </label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">เงินทอน </label>
+                                            <label class="control-label">จำนวนเงินที่ต้องคืน </label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
@@ -116,7 +98,7 @@ $db = new DB();
                                             <div class="input-group">
                                                 <label class="control-label">&nbsp;</label>
                                                 <div class="input-group">
-                                                <button type="submit" class="btn btn-info">ยืนยัน</button>
+                                                <button type="submit" class="btn btn-info">ยืนยันการคืนเงิน</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -130,7 +112,7 @@ $db = new DB();
             <div class="col-md-6">
                 <div class="card card-body">
                     <h3 class="box-title m-b-0">ข้อมูลบัตร</h3>
-                    <p class="text-muted m-b-30 font-13"> *ตรวจสอบความถูกต้องของข้อมูลก่อนทำการเติมเงิน </p>
+                    <p class="text-muted m-b-30 font-13"> *ตรวจสอบความถูกต้องของข้อมูลก่อนยืนยัน </p>
                     <form class="form-horizontal" role="form">
                         <div class="form-body">
                             <hr class="m-t-0 m-b-40">

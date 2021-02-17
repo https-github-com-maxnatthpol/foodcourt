@@ -22,7 +22,7 @@ function checkAdminUser()
 {
 	
 	//กำหนดเวลาที่สามารถอยู่ในระบบ
-$sessionlifetime = 30; //กำหนดเป็นนาที
+$sessionlifetime = 60; //กำหนดเป็นนาที
 	
     $db = new DB();
     /*if (isset($_SESSION["admin"])) {
