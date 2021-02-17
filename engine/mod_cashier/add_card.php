@@ -72,18 +72,18 @@ $db = new DB();
                 <div class="card card-body">
                     <h4 class="card-title">เพิ่มบัตร</h4>
                     <h6 class="card-subtitle">เพิ่มบัตร</h6>
-                    <form action="" name="form_add" id="form_add" method="post" class="form-horizontal m-t-40">
-                    <input type="hidden" name="form" value="form_add">
+                    <form action="" name="form_add_card" id="form_add_card" method="post" class="form-horizontal m-t-40">
+                    <input type="hidden" name="form" value="form_add_card">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="" value="640200010000001">
+                                <input type="text" class="form-control" name="card_number" placeholder="" value="640200010000001">
                                 <div class="input-group-append">
                                     <button class="btn btn-info" type="button">สุ่มบัตร</button>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info">ยืนยัน</button>
+                        <button type="button" class="btn btn-success  btnSendAddCard" id="btnSendAddCard" style="transition: 0.4s; margin-left: 5px;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;บันทึก</button>
                         </div>
                     </form>
                 </div>
