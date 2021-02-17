@@ -72,7 +72,8 @@ $db = new DB();
                 <div class="card card-body">
                     <h4 class="card-title">เพิ่มบัตร</h4>
                     <h6 class="card-subtitle">เพิ่มบัตร</h6>
-                    <form class="form-horizontal m-t-40">
+                    <form action="" name="form_add" id="form_add" method="post" class="form-horizontal m-t-40">
+                    <input type="hidden" name="form" value="form_add">
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="" value="640200010000001">
