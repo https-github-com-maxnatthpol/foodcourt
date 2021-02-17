@@ -85,6 +85,19 @@ $db = new DB();
                         <div class="form-group">
                         <button type="button" class="btn btn-success  btnSendAddCard" id="btnSendAddCard" style="transition: 0.4s; margin-left: 5px;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;บันทึก</button>
                         </div>
+                        <script>
+function keyEnter(even) {
+ 
+    if( even.keyCode == 13 ) {
+     
+        document.getElementById('text').value = "You Press Key Enter";
+     
+    }
+     
+}
+</script>
+ 
+<input type='text' id='text' onkeypress='return keyEnter(event)' />
                     </form>
                 </div>
             </div>

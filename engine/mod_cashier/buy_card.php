@@ -77,11 +77,9 @@ $db = new DB();
                         <div class="col-sm-12 col-xs-12">
                             <form>
                                 <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="เลขบัตร" autofocus>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-warning" type="button">ลบ</button>
-                                        </div>
+                                    <input type="text" id="card_number" name="card_number" class="form-control" maxlength="15" placeholder="<?= lang('เลขบัตรประชาชน :', 'ID card number :'); ?>" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
+                                    <div class="col-md-12" id="card_number_alert">
+                                        <small id="a_card_number" style="color: #fafafa;"></small>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -116,7 +114,7 @@ $db = new DB();
                                             <div class="input-group">
                                                 <label class="control-label">&nbsp;</label>
                                                 <div class="input-group">
-                                                <button type="submit" class="btn btn-info">ยืนยัน</button>
+                                                    <button id="confirm_btn" type="submit" class="btn btn-info">ยืนยัน</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -140,7 +138,7 @@ $db = new DB();
                                     <div class="form-group row">
                                         <label class="control-label text-right col-md-3">ID:</label>
                                         <div class="col-md-9">
-                                            <p class="form-control-static"> 0001 </p>
+                                            <p id="number" class="form-control-static"> - </p>
                                         </div>
                                     </div>
                                 </div>
