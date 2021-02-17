@@ -98,7 +98,14 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                     <li class="nav-devider"></li>
 
                     <!-- System -->
+					<?php if ($_SESSION['role_tag'] != 'mod_customer'){ ?>
                     <li class="nav-small-cap"><h5>จัดการระบบ</h5></li>
+					<?php } ?>
+				
+					<?php if ($_SESSION['role_tag'] == 'mod_customer'){ ?>
+                    <li class="nav-small-cap"><h5>จัดการร้านค้า</h5></li>
+					<?php } ?>
+				
                     <?php
                     $active = '';
                     $objQuery = getSystemMenu('1', '1', null);
@@ -308,7 +315,7 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                     <!-- End System-->
                     <li class="nav-devider"></li>
 
-
+					<?php if ($_SESSION['role_tag'] != 'mod_customer') { ?>
                     <!-- Design -->
                     <li class="nav-small-cap"><h5>จัดการดีไซน์</h5></li>
                     <?php
@@ -512,7 +519,7 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                     <?php
                         }
                     }?>
-
+					<?php } ?>
                     <!-- End Design-->
                 <?php
                 } elseif ($_SESSION['role_tag'] == 'mod_cashier') {
