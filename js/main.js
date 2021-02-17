@@ -100,7 +100,7 @@ $(document).on('click', '#login', function() {
             //alert(data.message, 'Infomation:');
             if (data.role_tag == 'mod_customer') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
-                location.href = "../engine/mod_test/front_manage.php";
+                location.href = "../engine/mod_shopmenu/front_manage.php";
             } else if (data.role_tag == 'mod_cashier') {
                 //swal('เข้าสู่ระบบสำเร็จ')	
                 location.href = "../engine/mod_cashier/front_manage.php";
@@ -108,7 +108,7 @@ $(document).on('click', '#login', function() {
                 //swal('เข้าสู่ระบบสำเร็จ')	
                 location.href = "../engine/page_home/";
             } else if (data.status == 0) {
-                swal('คำเตือน', data.message, "warning")
+                swal.fire('คำเตือน', data.message, "warning")
                 $('#div_taxt_error').html(data.message);
                 $('.alert-massage').fadeIn();
             } else {
