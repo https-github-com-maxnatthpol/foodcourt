@@ -130,7 +130,7 @@ if (isset($_SESSION["id_data"])) {
 
 	$id = $db->clear($_POST["id"]);
 
-	$str = "UPDATE `product` SET `delete_datetime`='".$date_regdate."' WHERE `id_product`='".$id."' ";
+	$str = "UPDATE `mod_customer` SET `delete_datetime`='".$date_regdate."' WHERE `id_customer`='".$id."' ";
 	$objQuery = $db->Query($str);
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));

@@ -612,3 +612,23 @@ function getFreedomPage($link)
 	
 	
 }
+
+ function DateThai($strDate)
+ {
+     $strYear = date("Y", strtotime($strDate)) + 543;
+     $strMonth = date("n", strtotime($strDate));
+     $strDay = date("j", strtotime($strDate));
+     $strMonthCut = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+     $strMonthThai = $strMonthCut[$strMonth];
+     return "$strDay $strMonthThai $strYear";
+ }
+
+  function DateEng($strDate)
+ {
+     $strYear = date("Y", strtotime($strDate));
+     $strMonth = date("n", strtotime($strDate));
+     $strDay = date("j", strtotime($strDate));
+     $strMonthCut = array("", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+     $strMonthThai = $strMonthCut[$strMonth];
+     return "$strDay $strMonthThai $strYear";
+ }
