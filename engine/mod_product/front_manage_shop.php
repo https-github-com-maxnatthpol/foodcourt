@@ -64,43 +64,27 @@ $db = new DB();
               		<h3 class="box-title">จัดการ สินค้าของเรา</h3>
             	</div>
             		<div class="col-md-6" align="right">
-                    <?php
-                      if (isset($_GET["id_customer"])) {
-                          $id_customer = $_GET["id_customer"];
-                      } else {
-                          $id_customer = '';
-                      }
-                        
-                              $strSQL = "";
-                              $strSQL .= "SELECT *
-                              FROM mod_customer
-                              WHERE id_customer = '".$id_customer."'
-                              ";
 
-                              //echo $strSQL;
-                              $objQuery = $db->Query($strSQL);
-                              $row      = mysqli_num_rows($objQuery);
-                              if($row > 0)
-                              { ?>
-                                  <?php
+                     <?php
 						if ($button_create=='') {
 					?>
                 		<a href="front_product_manage.php"  style="transition: 0.4s;<?php echo $button_create ?>"  class="btn btn-success pull-right"    ><i class="mdi mdi-plus"></i> เพิ่มสินค้าใหม่</a> 
 					<?php
 						  }
 					?>
-                             <?php }
-                              else { ?>
-                                 <script>
-                                     location.replace("../mod_product/front_manage.php");
-                                 </script>
-                            <?php  }
-                    ?>     
+  
 
 					</div>
 			</div>
           </div>
           <div class="box-body" style="padding: 0;">
+              <?php
+                if (isset($_GET["id_customer"])) {
+                    $id_customer = $_GET["id_customer"];
+                } else {
+                    $id_customer = '';
+                }
+                ?>
             <form action="" name="frmMain" id="frmMain" method="post">   
               <input type="hidden" name="form" value="Multi_del_product_shop">
               <input type="hidden" name="change" id="changeMulti_shop">
@@ -237,5 +221,47 @@ $db = new DB();
         })
     });
 </script>
+            
+<script>
+    
+    <?php
+                      if (isset($_GET["id_customer"])) {
+                          $id_customer = $_GET["id_customer"];
+                      } else {
+                          $id_customer = '';
+                      }
+                        
+                              $strSQL = "";
+                              $strSQL .= "SELECT *
+                              FROM mod_customer
+                              WHERE id_customer = '".$id_customer."'
+                              ";
 
+                              //echo $strSQL;
+                              $objQuery = $db->Query($strSQL);
+                              $row      = mysqli_num_rows($objQuery);
+                              if($row > 0)
+                              { ?>
+                        
+	
+	<?php
+                              } else {
+	?>
+
+
+							swal.fire({
+							title: 'ไม่พบข้อมูลร้านค้านี้',
+							icon: 'warning',
+							confirmButtonColor: '#3085d6',
+							cancelButtonColor: '#d33',
+							allowEscapeKey : false,
+							allowOutsideClick: false,
+							confirmButtonText: 'ตกลง',
+							onClose: () => {
+									   window.location.href = "../mod_product/front_manage.php";
+								 }
+						  })
+
+	<?php } ?>
+</script>
 
