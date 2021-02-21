@@ -165,7 +165,7 @@ function doLogin()
 
     $str = "SELECT users.*,roles.name,roles.tag 
     FROM users 
-    LEFT JOIN roles ON users.id_role = roles.id_role  WHERE user_name = '" . $username . "' AND users.delete_datetime IS NULL";
+    LEFT JOIN roles ON users.id_role = roles.id_role  WHERE user_name = '" . $username . "' AND users.delete_datetime IS NULL AND users.status = '1' ";
     $result = $db->QueryFetchArray($str);
     //var_dump($str);
 

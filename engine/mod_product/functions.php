@@ -102,10 +102,13 @@ for ($i=0; $i < count($_POST["Chk_course"]); $i++) {
 	
 	$id = $db->clear($_POST["Chk_course"][$i]);
 
-	$str = "UPDATE `product` SET `delete_datetime`='".$date_regdate."' WHERE `id_product`='".$id."' ";
+	$str = "UPDATE `mod_customer` SET `delete_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_customer`='".$id."' ";
 	$objQuery = $db->Query($str);
+    
+    $str_cus = "UPDATE `users` SET `delete_datetime`='".$date_regdate."' WHERE `id_data_role`='".$id."' ";
+	$objQuery_cus = $db->Query($str_cus);
 
-}
+    }
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
@@ -130,8 +133,12 @@ if (isset($_SESSION["id_data"])) {
 
 	$id = $db->clear($_POST["id"]);
 
-	$str = "UPDATE `mod_customer` SET `delete_datetime`='".$date_regdate."' WHERE `id_customer`='".$id."' ";
+	$str = "UPDATE `mod_customer` SET `delete_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_customer`='".$id."' ";
 	$objQuery = $db->Query($str);
+    
+    $str_cus = "UPDATE `users` SET `delete_datetime`='".$date_regdate."' WHERE `id_data_role`='".$id."' ";
+	$objQuery_cus = $db->Query($str_cus);
+    
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
@@ -157,8 +164,12 @@ if (isset($_SESSION["id_data"])) {
 	$id = $db->clear($_POST["id"]);
 	$data_val = $db->clear($_POST["data_val"]);
 
-	$str = "UPDATE `mod_customer` SET `status`='".$data_val."',`update_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_customer`='".$id."' ";
+	$str = "UPDATE `users` SET `status`='".$data_val."',`update_datetime`='".$date_regdate."' WHERE `id_data_role`='".$id."' ";
 	$objQuery = $db->Query($str);
+    
+    $str_cus = "UPDATE `mod_customer` SET `update_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_customer`='".$id."' ";
+	$objQuery_cus = $db->Query($str_cus);
+    
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
