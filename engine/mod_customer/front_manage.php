@@ -298,7 +298,7 @@ function chk_pic(){
 }
 
 function chk_pic_edit(){
-  var file=document.form_add.name_img.value;
+  var file=document.form_edit.name_img.value;
   var patt=/(.jpg|.png|.jpeg)/;
   var result=patt.test(file);
         if(!result){
