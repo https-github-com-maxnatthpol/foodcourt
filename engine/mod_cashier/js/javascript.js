@@ -132,3 +132,10 @@ $('#card_number').keyup(function () {
   });
 
 });
+
+$('#receive_money').keyup(function () {
+  var sum_amount_f = document.getElementById("amount_f").value;
+  var sum_receive_money = document.getElementById("receive_money").value;
+
+  document.getElementById("change").value = sum_receive_money - sum_amount_f;
+});

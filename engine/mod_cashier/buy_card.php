@@ -106,7 +106,7 @@ $db = new DB();
                                         <div class="form-group">
                                             <label class="control-label">เงินทอน </label>
                                             <div class="input-group">
-                                                <input type="number"  class="form-control" placeholder="">
+                                                <input type="number" id="change" name="change"  class="form-control" placeholder="">
                                             </div>
                                         </div>
                                     </div>
