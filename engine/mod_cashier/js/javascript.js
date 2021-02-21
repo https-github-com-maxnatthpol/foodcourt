@@ -1,5 +1,5 @@
-$(document).on('click', '#btnSendAddCard', function () {
-  var formData = new FormData($('#form_add_card')[0]);
+$(document).on('click', '#btnSendฺBuyCard', function () {
+  var formData = new FormData($('#form_buy_card')[0]);
   swal.fire({
     title: "ยืนยัน?",
     text: "ยืนยันการบันทึกหรือไม่?",
@@ -23,7 +23,10 @@ $(document).on('click', '#btnSendAddCard', function () {
         success: function (data) {
           if (data.status == '0') {
             swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
-            document.getElementById("form_add_card").reset();
+            document.getElementById("form_buy_card").reset();
+            setTimeout(function () {
+              location.reload();
+            }, 1000);
           } else {
             swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
           }
@@ -36,7 +39,13 @@ $(document).on('click', '#btnSendAddCard', function () {
 });
 
 
-
+function leftPad(number, targetLength) {
+  var output = number + '';
+  while (output.length < targetLength) {
+    output = '0' + output;
+  }
+  return output;
+}
 
 
 
@@ -69,9 +78,14 @@ $('#card_number').keyup(function () {
         $("#card_number").attr("style", "border-color: #28a745; border-width: 2px; background-color: #28a74585;");
         $("#card_number_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #28a745; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number").innerHTML = "<i style='color:#fafafa;' class='fa fa-check-circle'></i>  เลขบัตรถูกต้อง";
-        document.getElementById('confirm_btn').disabled = false;
+        document.getElementById('btnSendฺBuyCard').disabled = false;
         $("#a_card_number").attr("style", "color: #fafafa;");
-        document.getElementById("number").innerHTML = response.message[2];
+
+        document.getElementById("number").innerHTML = leftPad(response.message[0], 7);
+        document.getElementById("amount").innerHTML = response.message[1];
+        document.getElementById("Issue_date").innerHTML = response.deta;
+        document.getElementById("employee").innerHTML = response.message[3] + " " + response.message[4];
+        document.getElementById("status").innerHTML = response.message[5];
 
         setTimeout(function () {
           $("#card_number").attr("style", "");
@@ -82,9 +96,13 @@ $('#card_number').keyup(function () {
         $("#card_number").attr("style", "border-color: #dd4b39; border-width: 2px; background-color: #ff000038;");
         $("#card_number_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #dd4b39; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number").innerHTML = "<i style='color:#fafafa;' class='fa fa-times-circle'></i>  ไม่พบข้อมูล";
-        document.getElementById('confirm_btn').disabled = true;
+        document.getElementById('btnSendฺBuyCard').disabled = true;
         $("#a_card_number").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
+        document.getElementById("amount").innerHTML = "-";
+        document.getElementById("Issue_date").innerHTML = "-";
+        document.getElementById("employee").innerHTML = "-";
+        document.getElementById("status").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
@@ -95,9 +113,13 @@ $('#card_number').keyup(function () {
         $("#card_number").attr("style", "border-color: #ffc107; border-width: 2px; background-color: #ffc10745;");
         $("#card_number_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #ffc107; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number").innerHTML = "<i style='color:#fafafa;' class='fa fa-exclamation-triangle'></i>  กำหนดไม่ต่ำกว่า 15 ตัวเลข";
-        document.getElementById('confirm_btn').disabled = true;
+        document.getElementById('btnSendฺBuyCard').disabled = true;
         $("#a_card_number").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
+        document.getElementById("amount").innerHTML = "-";
+        document.getElementById("Issue_date").innerHTML = "-";
+        document.getElementById("employee").innerHTML = "-";
+        document.getElementById("status").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");

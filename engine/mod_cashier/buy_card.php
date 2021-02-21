@@ -75,9 +75,10 @@ $db = new DB();
                     <hr class="m-t-0 m-b-40">
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
-                            <form>
+                        <form action="" name="form_buy_card" id="form_buy_card" method="post">
+                        <input type="hidden" name="form" value="form_buy_card">
                                 <div class="form-group">
-                                    <input type="text" id="card_number" name="card_number" class="form-control" maxlength="15" placeholder="<?= lang('เลขบัตรประชาชน :', 'ID card number :'); ?>" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
+                                    <input type="text" id="card_number" name="card_number" class="form-control" maxlength="15" placeholder="" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
                                     <div class="col-md-12" id="card_number_alert">
                                         <small id="a_card_number" style="color: #fafafa;"></small>
                                     </div>
@@ -87,7 +88,7 @@ $db = new DB();
                                         <div class="form-group">
                                             <label class="control-label">จำนวนเงิน </label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="number" id="amount_f" name="amount_f" class="form-control" placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -95,7 +96,7 @@ $db = new DB();
                                         <div class="form-group">
                                             <label class="control-label">รับเงิน </label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="number" id="receive_money" name="receive_money" class="form-control" placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -105,7 +106,7 @@ $db = new DB();
                                         <div class="form-group">
                                             <label class="control-label">เงินทอน </label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="number"  class="form-control" placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +115,7 @@ $db = new DB();
                                             <div class="input-group">
                                                 <label class="control-label">&nbsp;</label>
                                                 <div class="input-group">
-                                                    <button id="confirm_btn" type="submit" class="btn btn-info">ยืนยัน</button>
+                                                    <button type="button" class="btn btn-success  btnSendฺBuyCard" id="btnSendฺBuyCard" style="transition: 0.4s; margin-left: 5px;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ยืนยัน</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +137,7 @@ $db = new DB();
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">ID:</label>
+                                        <label class="control-label text-right col-md-3">หมายเลขบัตร:</label>
                                         <div class="col-md-9">
                                             <p id="number" class="form-control-static"> - </p>
                                         </div>
@@ -148,21 +149,9 @@ $db = new DB();
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">จำนวนเงิน:</label>
+                                        <label class="control-label text-right col-md-3">เงินคงเหลือ:</label>
                                         <div class="col-md-9">
-                                            <p class="form-control-static"> 7,150 บาท </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/row-->
-                            <!--row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">สถานะ:</label>
-                                        <div class="col-md-9">
-                                            <p class="form-control-static"> ระงับการใช้งาน </p>
+                                            <p id="amount" class="form-control-static"> - </p>
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +163,31 @@ $db = new DB();
                                     <div class="form-group row">
                                         <label class="control-label text-right col-md-3">วันที่ออกบัตร:</label>
                                         <div class="col-md-9">
-                                            <p class="form-control-static"> 01/11/2564 </p>
+                                            <p id="Issue_date" class="form-control-static"> - </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/row-->
+                            <!--row-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label class="control-label text-right col-md-3">ผู้ออกบัตร:</label>
+                                        <div class="col-md-9">
+                                            <p id="employee" class="form-control-static"> - </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/row-->
+                            <!--row-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label class="control-label text-right col-md-3">สถานะบัตร:</label>
+                                        <div class="col-md-9">
+                                            <p id="status" class="form-control-static"> - </p>
                                         </div>
                                     </div>
                                 </div>
