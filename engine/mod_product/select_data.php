@@ -147,6 +147,18 @@ if (isset($_POST['form'])) {
         </td>
         <td>
           <?php echo DateThai($objResult["create_datetime"]); ?>
+		  <?php
+            if ($objResult["view"] == '1') { ?>
+			
+			          <button type="button" class="btn btn-success btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_product'] ?>" data-val="0"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;แสดงผล</button>
+                
+            <?php } elseif ($objResult["view"] == '0') { ?>
+			
+                      <button type="button" class="btn btn-danger btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_product'] ?>" data-val="1"><i class="mdi mdi-close-circle-outline" style="color: #FFFFFF;"></i>&nbsp;ยังไม่แสดง</button>
+			
+			<?php }
+		  
+			?>
         </td>
         <td>
           <a href="front_product_manage.php?id_product=<?php echo $objResult['id_customer'] ?>"  style="<?php echo $button_update ?>"  class="btn btn-warning  btn-sm edit_btn_course" data-id="<?php echo $objResult['id_customer'] ?>"><i class="fa fa-edit"></i> แก้ไข</a>
