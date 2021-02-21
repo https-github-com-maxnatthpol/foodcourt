@@ -3181,7 +3181,7 @@ $(document).on("click", ".approval_btn_product", function() {
   swal
     .fire({
       title: "ยืนยัน?",
-      text: "ยืนยันการเปลี่ยนสถานะ สินค้า หรือไม่?",
+      text: "ยืนยันการเปลี่ยนสถานะ ร้านค้า หรือไม่?",
       icon: "info",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -3202,7 +3202,7 @@ $(document).on("click", ".approval_btn_product", function() {
           },
           success: function(data) {
             if (data.status == "0") {
-              swal.fire("สำเร็จ", "เปลี่ยนสถานะ สินค้า เรียบร้อยแล้ว", "success");
+              swal.fire("สำเร็จ", "เปลี่ยนสถานะ ร้านค้า เรียบร้อยแล้ว", "success");
               div_table_list_course();
               
             } else {

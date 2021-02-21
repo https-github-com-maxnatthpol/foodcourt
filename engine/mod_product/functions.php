@@ -157,7 +157,7 @@ if (isset($_SESSION["id_data"])) {
 	$id = $db->clear($_POST["id"]);
 	$data_val = $db->clear($_POST["data_val"]);
 
-	$str = "UPDATE `product` SET `view`='".$data_val."',`date_edit`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_product`='".$id."' ";
+	$str = "UPDATE `mod_customer` SET `status`='".$data_val."',`update_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_customer`='".$id."' ";
 	$objQuery = $db->Query($str);
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
