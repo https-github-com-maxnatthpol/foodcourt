@@ -34,10 +34,10 @@ $db = new DB();
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-5 col-8 align-self-center">
-                <h3 class="text-themecolor m-b-0 m-t-0">เพิ่มบัตร</h3>
+                <h3 class="text-themecolor m-b-0 m-t-0">จัดการบัตร</h3>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">บัตร</a></li>
-                    <li class="breadcrumb-item active">เพิ่มบัตร</li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">หน้าหลัก</a></li>
+                    <li class="breadcrumb-item active">จัดการบัตร</li>
                 </ol>
             </div>
             <div class="col-md-7 col-4 align-self-center">
@@ -76,7 +76,7 @@ $db = new DB();
                     <input type="hidden" name="form" value="form_add_card">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="card_number" placeholder="" value="640200010000001">
+                                <input type="text" class="form-control" name="card_number" placeholder="" value="">
                                 <div class="input-group-append">
                                     <button class="btn btn-info" type="button">สุ่มบัตร</button>
                                 </div>
