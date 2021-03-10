@@ -3,18 +3,18 @@ $year = date("Y");
 
 
 if( file_exists("../../uploads/".$year) ){
-  if( file_exists("../../uploads/".$year."/mod_courese_froala") ){
+  if( file_exists("../../uploads/".$year."/mod_product_froala") ){
   }else{ 
-    mkdir("../../uploads/".$year."/mod_courese_froala");
+    mkdir("../../uploads/".$year."/mod_product_froala");
   }
 
   
 
 }else{ 
   mkdir("../../uploads/".$year);
-  if( file_exists("../../uploads/".$year."/mod_courese_froala") ){
+  if( file_exists("../../uploads/".$year."/mod_product_froala") ){
   }else{ 
-    mkdir("../../uploads/".$year."/mod_courese_froala");
+    mkdir("../../uploads/".$year."/mod_product_froala");
   }
 
   
@@ -23,7 +23,7 @@ if( file_exists("../../uploads/".$year) ){
 
 try {
   // File Route.
-  $fileRoute = "../../uploads/".$year."/mod_courese_froala/";
+  $fileRoute = "../../uploads/".$year."/mod_product_froala/";
   // Create file route if not file route.
   if(!is_dir($fileRoute)){
     mkdir($fileRoute);

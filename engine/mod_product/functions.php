@@ -11,58 +11,81 @@ require_once '../lib/functions.php';
 if (isset($_POST['form'])) {
 	if ($_POST['form']=="form_add_detail") {
 		form_add_detail();
+		exit;
 	}else if ($_POST['form']=="form_edit_detail") {
 		form_edit_detail();
+		exit;
 	}else if ($_POST['form']=="del_one") {
 		del_one();
+		exit;
 	}else if ($_POST['form']=="Multi_del") {
 		Multi_del();
+		exit;
 	}else if ($_POST['form']=="form_add_class_schedule") {
 		form_add_class_schedule();
+		exit;
 	}else if ($_POST['form']=="form_add_content") {
 		form_add_content();
+		exit;
 	}else if ($_POST['form']=="del_one_content") {
 		del_one_content();
+		exit;
 	}else if ($_POST['form']=="Multi_del_content") {
 		Multi_del_content();
+		exit;
 	}else if ($_POST['form']=="form_add_quiz") {
 		form_add_quiz();
+		exit;
 	}else if ($_POST['form']=="del_one_quiz") {
 		del_one_quiz();
+		exit;
 	}else if ($_POST['form']=="Multi_del_course_quiz") {
 		Multi_del_course_quiz();
+		exit;
 	}else if ($_POST['form']=="quiz_question_pic") {
 		quiz_question_pic();
+		exit;
 	}else if ($_POST['form']=="form_add_quiz_question") {
 		form_add_quiz_question();
+		exit;
 	}else if ($_POST['form']=="del_one_question") {
 		del_one_question();
+		exit;
 	}else if ($_POST['form']=="Multi_del_course_question") {
 		Multi_del_course_question();
+		exit;
 	}else if ($_POST['form']=="question_edit") {
 		question_edit();
-	}else if ($_POST['form']=="del_one_course") {
-		del_one_course();
-	}else if ($_POST['form']=="Multi_del_course") {
-		Multi_del_course();
+		exit;
+	}else if ($_POST['form']=="del_one_product") {
+		del_one_product();
+		exit;
+	}else if ($_POST['form']=="Multi_del_product") {
+		Multi_del_product();
+		exit;
 	}else if ($_POST['form']=="btn_del_reviwe") {
 		btn_del_reviwe();
-	}else if ($_POST['form']=="approval_one_course") {
-		approval_one_course();
+		exit;
+	}else if ($_POST['form']=="approval_one_product") {
+		approval_one_product();
+		exit;
+	} else if ($_POST['form']=='CHECK_ID') {
+	  	CHECK_ID();
+		exit;
 	}
 }else{
-	if ($_GET['form']=="order_chanhe") {
-		order_chanhe();
-	}else if ($_GET['form']=="order_chanhe_content") {
-		order_chanhe_content();
-	}else if ($_GET['form']=="order_chanhe_question") {
-		order_chanhe_question();
-	}
+//	if ($_GET['form']=="order_chanhe") {
+//		order_chanhe();
+//	}else if ($_GET['form']=="order_chanhe_content") {
+//		order_chanhe_content();
+//	}else if ($_GET['form']=="order_chanhe_question") {
+//		order_chanhe_question();
+//	}
 }
 
 
 
-function Multi_del_course(){
+function Multi_del_product(){
 	$db = new DB();
 
 if (isset($_SESSION["id_data"])) {
@@ -79,10 +102,13 @@ for ($i=0; $i < count($_POST["Chk_course"]); $i++) {
 	
 	$id = $db->clear($_POST["Chk_course"][$i]);
 
-	$str = "UPDATE `course` SET `delete_datetime`='".$date_regdate."' WHERE `id_course`='".$id."' ";
+	$str = "UPDATE `mod_customer` SET `delete_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_customer`='".$id."' ";
 	$objQuery = $db->Query($str);
+    
+    $str_cus = "UPDATE `users` SET `delete_datetime`='".$date_regdate."' WHERE `id_data_role`='".$id."' ";
+	$objQuery_cus = $db->Query($str_cus);
 
-}
+    }
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
@@ -91,7 +117,7 @@ for ($i=0; $i < count($_POST["Chk_course"]); $i++) {
 
 }
 
-function del_one_course(){
+function del_one_product(){
 	$db = new DB();
 
 if (isset($_SESSION["id_data"])) {
@@ -107,8 +133,12 @@ if (isset($_SESSION["id_data"])) {
 
 	$id = $db->clear($_POST["id"]);
 
-	$str = "UPDATE `course` SET `delete_datetime`='".$date_regdate."' WHERE `id_course`='".$id."' ";
+	$str = "UPDATE `mod_customer` SET `delete_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_customer`='".$id."' ";
 	$objQuery = $db->Query($str);
+    
+    $str_cus = "UPDATE `users` SET `delete_datetime`='".$date_regdate."' WHERE `id_data_role`='".$id."' ";
+	$objQuery_cus = $db->Query($str_cus);
+    
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
@@ -117,7 +147,7 @@ if (isset($_SESSION["id_data"])) {
 
 }
 
-function approval_one_course(){
+function approval_one_product(){
 	$db = new DB();
 
 if (isset($_SESSION["id_data"])) {
@@ -134,8 +164,12 @@ if (isset($_SESSION["id_data"])) {
 	$id = $db->clear($_POST["id"]);
 	$data_val = $db->clear($_POST["data_val"]);
 
-	$str = "UPDATE `course` SET `status_approval`='".$data_val."',`update_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_course`='".$id."' ";
+	$str = "UPDATE `users` SET `status`='".$data_val."',`update_datetime`='".$date_regdate."' WHERE `id_data_role`='".$id."' ";
 	$objQuery = $db->Query($str);
+    
+    $str_cus = "UPDATE `mod_customer` SET `update_datetime`='".$date_regdate."',`update_id`='".$id_data."' WHERE `id_customer`='".$id."' ";
+	$objQuery_cus = $db->Query($str_cus);
+    
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
@@ -1056,128 +1090,90 @@ if (isset($_SESSION["id_data"])) {
 }
 
 if( file_exists("../../uploads/".$year) ){
-	if( file_exists("../../uploads/".$year."/mod_courese") ){
+	if( file_exists("../../uploads/".$year."/mod_product") ){
 	}else{ 
-		mkdir("../../uploads/".$year."/mod_courese");
+		mkdir("../../uploads/".$year."/mod_product");
 	}
 
 }else{ 
 	mkdir("../../uploads/".$year);
-	if( file_exists("../../uploads/".$year."/mod_courese") ){
+	if( file_exists("../../uploads/".$year."/mod_product") ){
 	}else{ 
-		mkdir("../../uploads/".$year."/mod_courese");
+		mkdir("../../uploads/".$year."/mod_product");
 	}
 
 }
 
-$directory = "../../uploads/".$year."/mod_courese/";	
-	
-	
+$directory = "../../uploads/".$year."/mod_product/";	
 
-	$date_start_end = explode("-", $_POST["start_to_end__date"]);
-	$date_start_arr = explode("/", $date_start_end[0]);
-	$date_start = $date_start_arr[2].'/'.$date_start_arr[1].'/'.$date_start_arr[0];
-
-	$date_end_arr = explode("/", $date_start_end[1]);
-	$date_end = $date_end_arr[2].'/'.$date_end_arr[1].'/'.$date_end_arr[0];
-
-	$date_start1  = $db->clear($date_start);
-	$date_end1  = $db->clear($date_end);
-$date_start_clear = preg_replace('/[[:space:]]+/','', trim($date_start1));
-$date_end_clear = preg_replace('/[[:space:]]+/','', trim($date_end1));
+//	$date_start_end = explode("-", $_POST["start_to_end__date"]);
+//	$date_start_arr = explode("/", $date_start_end[0]);
+//	$date_start = $date_start_arr[2].'/'.$date_start_arr[1].'/'.$date_start_arr[0];
+//
+//	$date_end_arr = explode("/", $date_start_end[1]);
+//	$date_end = $date_end_arr[2].'/'.$date_end_arr[1].'/'.$date_end_arr[0];
+//
+//	$date_start1  = $db->clear($date_start);
+//	$date_end1  = $db->clear($date_end);
+//	$date_start_clear = preg_replace('/[[:space:]]+/','', trim($date_start1));
+//	$date_end_clear = preg_replace('/[[:space:]]+/','', trim($date_end1));
 
 	$name_th = $db->clear($_POST["name_th"]);
-	$describe_th = $db->clear($_POST["describe_th"]);
-	$description_th = $db->clear($_POST["description_th"]);
-	$tag_title_th = $db->clear($_POST["tag_title_th"]);
-	$tag_description_th = $db->clear($_POST["tag_description_th"]);
-	$id_category = $db->clear($_POST["id_category"]);
-	$id_tutor = $db->clear($_POST["id_tutor"]);
-	$id_partner = $db->clear($_POST["id_partner"]);
-	$age = $db->clear($_POST["age"]);
-	$age_unit = $db->clear($_POST["age_unit"]);
-	$price = $db->clear($_POST["price"]);
-	$pay_rate = $db->clear($_POST["pay_rate"]);
-	if (isset($_POST["assess_flg"])) {
-		$assess = $_POST["assess_flg"];
-	}else{
-		$assess = 0;
-	}
-	$assess_flg = $db->clear($assess);
-	$assess_rate = $db->clear($_POST["assess_rate"]);
-	if (isset($_POST["suggest_flg"])) {
-		$suggest = $_POST["suggest_flg"];
-	}else{
-		$suggest = 0;
-	}
-	$suggest_flg = $db->clear($suggest);
-	if (isset($_POST["popular_flg"])) {
-		$popular = $_POST["popular_flg"];
-	}else{
-		$popular = 0;
-	}
-	$popular_flg = $db->clear($popular);
-	$study_time = $db->clear($_POST["study_time"]);
-	$study_rate = $db->clear($_POST["study_rate"]);
-	$quiz_min = $db->clear($_POST["quiz_min"]);
-	$quiz_rate = $db->clear($_POST["quiz_rate"]);
-	if (isset($_POST["order_lesson_flg"])) {
-		$order_lesson = $_POST["order_lesson_flg"];
-	}else{
-		$order_lesson = 0;
-	}
-	$order_lesson_flg = $db->clear($order_lesson);
-
 	$name_en = $db->clear($_POST["name_en"]);
-	$describe_en = $db->clear($_POST["describe_en"]);
+	$product_code = $db->clear($_POST["product_code"]);
+	$material_th = $db->clear($_POST["material_th"]);
+	$material_en = $db->clear($_POST["material_en"]);
+	$surface_th = $db->clear($_POST["surface_th"]);
+	$surface_en = $db->clear($_POST["surface_en"]);
+	$description_th = $db->clear($_POST["description_th"]);
 	$description_en = $db->clear($_POST["description_en"]);
-	$tag_title_en = $db->clear($_POST["tag_title_en"]);
-	$tag_description_en = $db->clear($_POST["tag_description_en"]);
-	$id_certificate = $db->clear($_POST["id_certificate"]);
-	$id_edit = $db->clear($_POST["id_courese"]);
+	$id_category = $db->clear($_POST["id_category"]);
+	
+	if (isset($_POST["view_show"])) {
+		$view = $_POST["view_show"];
+	}else{
+		$view = 0;
+	}
+	$view_show = $db->clear($view).' ';
+	
+//	$view_portfolio = $db->clear($_POST["view_portfolio"]);
+	if (isset($_POST["view_portfolio"])) {
+		$view_port = $_POST["view_portfolio"];
+	}else{
+		$view_port = 0;
+	}
+	$view_portfolio = $db->clear($view_port);
 
-
-
+	$id_edit = $db->clear($_POST["id_product"]);
 
 $str = "";
-$str .="UPDATE `course` SET ";
-$str .="  `name_th` = '".$name_th."' ";
-$str .=",`name_en`='".$name_en."' ";
-$str .=",`describe_th`='".$describe_th."' ";
-$str .=",`describe_en`='".$describe_en."' ";
-$str .=",`description_th`='".$description_th."' ";
-$str .=",`description_en`='".$description_en."' ";
-$str .=",`tag_title_th`='".$tag_title_th."' ";
-$str .=",`tag_title_en`='".$tag_title_en."' ";
-$str .=",`tag_description_th`='".$tag_description_th."' ";
-$str .=",`tag_description_en`='".$tag_description_en."' ";
-$str .=",`id_category`='".$id_category."' ";
-$str .=",`id_tutor`='".$id_tutor."' ";
-$str .=",`id_partner`='".$id_partner."' ";
-$str .=",`age`='".$age."' ";
-$str .=",`age_unit`='".$age_unit."' ";
-$str .=",`price`='".$price."' ";
-$str .=",`pay_rate`='".$pay_rate."' ";
-$str .=",`assess_flg`='".$assess_flg."' ";
-$str .=",`assess_rate`='".$assess_rate."' ";
-$str .=",`suggest_flg`='".$suggest_flg."' ";
-$str .=",`popular_flg`='".$popular_flg."' ";
-$str .=",`start_date`='".$date_start_clear."' ";
-$str .=",`end_date`='".$date_end_clear."' ";
-$str .=",`study_time`='".$study_time."' ";
-$str .=",`study_rate`='".$study_rate."' ";
-$str .=",`quiz_min`='".$quiz_min."' ";
-$str .=",`quiz_rate`='".$quiz_rate."' ";
-$str .=",`order_lesson_flg`='".$order_lesson_flg."' ";
-$str .=",`id_certificate`='".$id_certificate."' ";
+$str .="UPDATE `product` SET ";
+$str .="  `name_product` = '".$name_th."' ";
+$str .=",`name_product_en`='".$name_en."' ";
+$str .=",`product_code`='".$product_code."' ";
+$str .=",`material`='".$material_th."' ";
+$str .=",`material_en`='".$material_en."' ";
+$str .=",`surface`='".$surface_th."' ";
+$str .=",`surface_en`='".$surface_en."' ";	
+$str .=",`detail_product`='".$description_th."' ";
+$str .=",`detail_product_en`='".$description_en."' ";
+	
+$str .=",`id_catagory`='".$id_category."' ";
+	
+$str .=",`view`='".$view_show."' ";
+$str .=",`view_portfolio`='".$view_portfolio."' ";
+
 $str .=",`update_id`='".$id_data."' ";
-$str .=",`update_datetime`='".$date_regdate."' ";
-$str .=" WHERE `id_course` = '".$id_edit."' ";
+$str .=",`date_edit`='".$date_regdate."' ";
+$str .=" WHERE `id_product` = '".$id_edit."' ";
 $objQuery = $db->Query($str);
 
 
-	if($objQuery){
+if($objQuery){
 $sur='';
+	
+$id_img_ed = $db->clear($_POST["id_img_ed"]);
+	
 if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
 
   $fieldname = $_FILES['name_img']['name'];
@@ -1205,7 +1201,7 @@ if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
   }else{
 				$namefile = $_FILES["name_img"]["name"];
 				$sur = strrchr($namefile, "."); //ตัดนามสกุลไฟล์เก็บไว้
-				$name = "detail-".(Date("dmy").rand('1000','9999').$sur); //ผมตั้งเป็น วันที่_เวลา.นามสกุล
+				$name = "product-".(Date("dmy").rand('1000','9999').$sur); //ผมตั้งเป็น วันที่_เวลา.นามสกุล
 				$target = $directory.$name;
 				$newname = $name;
 
@@ -1224,33 +1220,31 @@ if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
 				copy($_FILES["name_img"]["tmp_name"],iconv('UTF-8','windows-874',$directory.$newname));
 				if ($_POST["name_img_ed"] !='') {
 					if (isset($_POST["name_img_ed"]) && $_POST["name_img_ed"] != '') {
+$strSQL = "SELECT date_image,id_product
+FROM `product_image` 
+WHERE id_image = '".$id_img_ed."' ";
+	$objQuery = $db->Query($strSQL);
+	$objResult = mysqli_fetch_array($objQuery, MYSQLI_ASSOC);
 						
-						if( file_exists($_POST["directory_ed"].$_POST["name_img_ed"]) ){
-							unlink ($_POST["directory_ed"].$_POST["name_img_ed"]);
+						if(file_exists($objResult["date_image"].$_POST["name_img_ed"]) ){
+							unlink ($objResult["date_image"].$_POST["name_img_ed"]);
 						}
 					}
-				}
-				
-		
-$id_img_ed = $db->clear($_POST["id_img_ed"]);
+				}	
+
 
 $sql = "";
-$sql .="UPDATE `course_images` SET ";
-$sql .="  `name` = '".$newname."' ";
-$sql .=",`size`='".$_FILES["name_img"]["size"]."' ";
-$sql .=",`directory`='".$directory."' ";
-$sql .=",`file_type`='".$sur."' ";
-$sql .=",`date`='".$date_regdate."' ";
+$sql .="UPDATE `product_image` SET ";
+$sql .="  `name_image` = '".$newname."' ";
+$sql .=",`size_image`='".$_FILES["name_img"]["size"]."' ";
+$sql .=",`date_image`='".$directory."' ";
 $sql .=" WHERE `id_image`= '".$id_img_ed."' ";
 $query = $db->Query($sql);
 
 	}	
 }
-
-
 	
-	
-		echo json_encode(array('status' => '0','message'=> 'สำเร็จ','id_course'=>$id_edit));
+		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
 		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
 	}
@@ -1258,6 +1252,8 @@ $query = $db->Query($sql);
 
 
 }
+
+// -----------------------------------------------------------------------------------------------------------------
 
 function form_add_detail(){
 	$db = new DB();
@@ -1267,104 +1263,66 @@ function form_add_detail(){
 	$date_regdate = date("Y-m-d H:i:s");
 	$year = date("Y");
 
-if (isset($_SESSION["id_data"])) {
-	$id_data = $_SESSION["id_data"];
-}else{
-	$id_data = '';
-}
-
-if( file_exists("../../uploads/".$year) ){
-	if( file_exists("../../uploads/".$year."/mod_courese") ){
-	}else{ 
-		mkdir("../../uploads/".$year."/mod_courese");
+	if (isset($_SESSION["id_data"])) {
+		$id_data = $_SESSION["id_data"];
+	}else{
+		$id_data = '';
 	}
+
+	if( file_exists("../../uploads/".$year) ){
+		if( file_exists("../../uploads/".$year."/mod_product") ){
+		}else{ 
+			mkdir("../../uploads/".$year."/mod_product");
+		}
 
 }else{ 
 	mkdir("../../uploads/".$year);
-	if( file_exists("../../uploads/".$year."/mod_courese") ){
+	if( file_exists("../../uploads/".$year."/mod_product") ){
 	}else{ 
-		mkdir("../../uploads/".$year."/mod_courese");
+		mkdir("../../uploads/".$year."/mod_product");
 	}
 
 }
 
-$directory = "../../uploads/".$year."/mod_courese/";	
-	
-	
-
-	$date_start_end = explode("-", $_POST["start_to_end__date"]);
-
-	$date_start_arr = explode("/", $date_start_end[0]);
-	$date_start = $date_start_arr[2].'/'.$date_start_arr[1].'/'.$date_start_arr[0];
-
-	$date_end_arr = explode("/", $date_start_end[1]);
-	$date_end = $date_end_arr[2].'/'.$date_end_arr[1].'/'.$date_end_arr[0];
-
-	$date_start1  = $db->clear($date_start);
-	$date_end1  = $db->clear($date_end);
-$date_start_clear = preg_replace('/[[:space:]]+/','', trim($date_start1));
-$date_end_clear = preg_replace('/[[:space:]]+/','', trim($date_end1));
-
+	$directory = "../../uploads/".$year."/mod_product/";	
 
 	$name_th = $db->clear($_POST["name_th"]);
-	$describe_th = $db->clear($_POST["describe_th"]);
+	$product_code = $db->clear($_POST["product_code"]);
+	$material_th = $db->clear($_POST["material_th"]);
+	$surface_th = $db->clear($_POST["surface_th"]);
 	$description_th = $db->clear($_POST["description_th"]);
-	$tag_title_th = $db->clear($_POST["tag_title_th"]);
-	$tag_description_th = $db->clear($_POST["tag_description_th"]);
-	$id_category = $db->clear($_POST["id_category"]);
-	$id_tutor = $db->clear($_POST["id_tutor"]);
-	$id_partner = $db->clear($_POST["id_partner"]);
-	$age = $db->clear($_POST["age"]);
-	$age_unit = $db->clear($_POST["age_unit"]);
-	$price = $db->clear($_POST["price"]);
-	$pay_rate = $db->clear($_POST["pay_rate"]);
-	if (isset($_POST["assess_flg"])) {
-		$assess = $_POST["assess_flg"];
-	}else{
-		$assess = 0;
-	}
-	$assess_flg = $db->clear($assess);
-	$assess_rate = $db->clear($_POST["assess_rate"]);
-	if (isset($_POST["suggest_flg"])) {
-		$suggest = $_POST["suggest_flg"];
-	}else{
-		$suggest = 0;
-	}
-	$suggest_flg = $db->clear($suggest);
-	if (isset($_POST["popular_flg"])) {
-		$popular = $_POST["popular_flg"];
-	}else{
-		$popular = 0;
-	}
-	$popular_flg = $db->clear($popular);
-	$study_time = $db->clear($_POST["study_time"]);
-	$study_rate = $db->clear($_POST["study_rate"]);
-	$quiz_min = $db->clear($_POST["quiz_min"]);
-	$quiz_rate = $db->clear($_POST["quiz_rate"]);
-	if (isset($_POST["order_lesson_flg"])) {
-		$order_lesson = $_POST["order_lesson_flg"];
-	}else{
-		$order_lesson = 0;
-	}
-	$order_lesson_flg = $db->clear($order_lesson);
-
+	
 	$name_en = $db->clear($_POST["name_en"]);
-	$describe_en = $db->clear($_POST["describe_en"]);
+	$material_en = $db->clear($_POST["material_en"]);
+	$surface_en = $db->clear($_POST["surface_en"]);
 	$description_en = $db->clear($_POST["description_en"]);
-	$tag_title_en = $db->clear($_POST["tag_title_en"]);
-	$tag_description_en = $db->clear($_POST["tag_description_en"]);
-	$id_certificate = $db->clear($_POST["id_certificate"]);
-
 	
-
+	$id_category = $db->clear($_POST["id_category"]);
 	
-$id_course = setMD5();
-$str = "INSERT INTO `course`(`id_course`, `name_th`, `name_en`, `describe_th`, `describe_en`, `description_th`, `description_en`, `tag_title_th`, `tag_title_en`, `tag_description_th`, `tag_description_en`, `id_category`, `id_tutor`, `id_partner`, `age`, `age_unit`, `price`, `pay_rate`, `assess_flg`, `assess_rate`, `suggest_flg`, `popular_flg`, `create_id`, `create_datetime`, `start_date`, `end_date`, `study_time`, `study_rate`, `quiz_min`, `quiz_rate`, `order_lesson_flg`, `id_certificate`) VALUES ('".$id_course."','".$name_th."','".$name_en."','".$describe_th."','".$describe_en."','".$description_th."','".$description_en."','".$tag_title_th."','".$tag_title_en."','".$tag_description_th."','".$tag_description_en."','".$id_category."','".$id_tutor."','".$id_partner."','".$age."','".$age_unit."','".$price."','".$pay_rate."','".$assess_flg."','".$assess_rate."','".$suggest_flg."','".$popular_flg."','".$id_data."','".$date_regdate."','".$date_start_clear."','".$date_end_clear."','".$study_time."','".$study_rate."','".$quiz_min."','".$quiz_rate."','".$order_lesson_flg."','".$id_certificate."')";
-$objQuery = $db->Query($str);
+	if (isset($_POST["view_show"])) {
+		$view = $_POST["view_show"];
+	}else{
+		$view = 0;
+	}
+	$view_show = $db->clear($view);
+	
+//	$view_portfolio = $db->clear($_POST["view_portfolio"]);
+	if (isset($_POST["view_portfolio"])) {
+		$view_port = $_POST["view_portfolio"];
+	}else{
+		$view_port = 0;
+	}
+	$view_portfolio = $db->clear($view_port);
+	
+	$id_product = setMD5();
+	
+	$str = "INSERT INTO `product`(`id_product`, `name_product`, `name_product_en`, `product_code`, `material`, `material_en`, `surface`, `surface_en`, `detail_product`, `detail_product_en`, `date_add`, `id_catagory`, `view`, `view_portfolio`, `create_id`) VALUES ('".$id_product."','".$name_th."','".$name_en."','".$product_code."','".$material_th."','".$material_en."','".$surface_th."','".$surface_en."','".$description_th."','".$description_en."','".$date_regdate."','".$id_category."','".$view_show."','".$view_portfolio."','".$id_data."')";
+	
+	$objQuery = $db->Query($str);
 
 
-	if($objQuery){
-if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
+if($objQuery){
+  if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
 
   $fieldname = $_FILES['name_img']['name'];
   // Get filename.
@@ -1393,7 +1351,7 @@ if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
   }else{
 				$namefile = $_FILES["name_img"]["name"];
 				$sur = strrchr($namefile, "."); //ตัดนามสกุลไฟล์เก็บไว้
-				$name = "detail-".(Date("dmy").rand('1000','9999').$sur); //ผมตั้งเป็น วันที่_เวลา.นามสกุล
+				$name = "product-".(Date("dmy").rand('1000','9999').$sur); //ผมตั้งเป็น วันที่_เวลา.นามสกุล
 				$target = $directory.$name;
 				$newname = $name;
 
@@ -1419,25 +1377,42 @@ if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
   	$sur='';
 }
 
-
-$sql = "INSERT INTO  `course_images`(`id_course`, `name`, `size`, `date`, `directory`, `file_type`, `type`) VALUES ('".$id_course."','".$newname_img."','".$tmp_size."','".$date_regdate."','".$directory."','".$sur."','1')";
+$id_image = setMD5();
+	
+$sql = "INSERT INTO `product_image`(`id_image`, `name_image`, `size_image`, `date_image`, `id_product`) VALUES ('".$id_image."','".$newname_img."','".$tmp_size."','".$directory."','".$id_product."')";
 $query = $db->Query($sql);
 	
 	if($query){
-		echo json_encode(array('status' => '0','message'=> 'สำเร็จ','id_course'=>$id_course));
+//		echo json_encode(array('status' => '0','message'=> 'สำเร็จ','id_product'=>$id_product));
+		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
 		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
 	}
-
-
 		
 	}else{
 		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
 	}
-
 }
 
+// -----------------------------------------------------------------------------------------------------------------
 
+function CHECK_ID(){	
+	$db = new DB();
+	
+	header('Content-Type: application/json');
+	date_default_timezone_set("Asia/Bangkok");
+	$date = date("Y-m-d H:i:s");
+	$year = date("Y");
+
+	$sql = 'SELECT product_code FROM product WHERE product_code = "'.$_POST['product_code'].'" AND delete_datetime IS NULL ';
+	$query = $db->Query($sql);
+	$num = mysqli_num_rows($query);
+	if($num>0){
+		echo json_encode(array('status' => '1', 'message' => 'มีข้อมูล'));
+	}else{
+		echo json_encode(array('status' => '0', 'message' => 'ไม่มีข้อมูล'));
+	}
+}
 
 
 ?>

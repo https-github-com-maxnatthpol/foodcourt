@@ -95,7 +95,7 @@ function select_div_edit_front_manage()
 												
 												<?php if($level == '1') { ?>
 												
-                                          		<option value="0" selected="selected" <?=$disabled;?>>-- หมวดหมู่หลัก --</option>
+                                          		<option value="0" selected="selected" >-- หมวดหมู่หลัก --</option>
 												
 												<?php 
 												 $strSQL01 = "SELECT `id_catagory`,`name_catagory_th`,`name_catagory_en`,`order`,`group_sub`,`level` FROM `product_catagory` WHERE `level` = '1' AND `delete_datetime` IS null";
@@ -138,7 +138,7 @@ function select_div_edit_front_manage()
 													 
 												if($objResult01['id_catagory'] == $objResult02["group_sub"]){
 													$selected = 'selected';
-													$disabled = 'disabled';
+													$disabled = '';
 												}	
 												else{
 													$selected = '';
@@ -187,7 +187,7 @@ function select_div_edit_front_manage()
 														 if($objResult2['id_catagory'] == $group_sub)
 														 {
 															 $selected2 = 'selected';
-															 $disabled = 'disabled';
+															 $disabled = '';
 														 }
 														 else
 														 {

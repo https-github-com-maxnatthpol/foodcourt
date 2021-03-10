@@ -24,7 +24,91 @@ function div_table_list_course() {
         scrollY: true,
         scrollCollapse: true,
         scrollX: true,
-        order: [[0, "asc"]]
+        order: [[5, "DESC"]],
+		  
+		        language: {
+                sEmptyTable: "ไม่มีข้อมูลในตาราง",
+				sInfo: "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+				sInfoEmpty: "แสดง 0 ถึง 0 จาก 0 แถว",
+				sInfoFiltered: "(กรองข้อมูล _MAX_ ทุกแถว)",
+				sInfoPostFix: "",
+				sInfoThousands: ",",
+				sLengthMenu: "แสดง _MENU_ แถว",
+				sLoadingRecords: "กำลังโหลดข้อมูล...",
+				sProcessing: "กำลังดำเนินการ...",
+				sSearch: "ค้นหา: ",
+				sZeroRecords: "ไม่พบข้อมูล",
+				oPaginate: {
+				sFirst: "หน้าแรก",
+				sPrevious: "ก่อนหน้า",
+				sNext: "ถัดไป",
+				sLast: "หน้าสุดท้าย",	
+				},
+				oAria: {
+				sSortAscending: ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
+				sSortDescending: ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย",
+				},
+            }
+		  
+      });
+    }
+  });
+}
+
+
+div_table_list_course_shop();
+function div_table_list_course_shop() {
+  var button_update = $("#per_button_edit").val();
+  var button_delete = $("#per_button_del").val();
+  var button_create = $("#per_button_open").val();
+  var button_view = $("#per_input_read").val();
+  var button_approval = $("#per_input_approval").val();
+  var id_customer = $("#id_customer").val();    
+
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: "div_table_list_course_shop",
+      button_update: button_update,
+      button_delete: button_delete,
+      button_create: button_create,
+      button_view: button_view,
+      button_approval:button_approval,
+      id_customer:id_customer    
+    },
+    success: function(data) {
+      $("#div_table_list_course_shop").html(data);
+      $("#table_list_course_shop").DataTable({
+        scrollY: true,
+        scrollCollapse: true,
+        scrollX: true,
+        order: [[5, "DESC"]],
+		  
+		        language: {
+                sEmptyTable: "ไม่มีข้อมูลในตาราง",
+				sInfo: "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+				sInfoEmpty: "แสดง 0 ถึง 0 จาก 0 แถว",
+				sInfoFiltered: "(กรองข้อมูล _MAX_ ทุกแถว)",
+				sInfoPostFix: "",
+				sInfoThousands: ",",
+				sLengthMenu: "แสดง _MENU_ แถว",
+				sLoadingRecords: "กำลังโหลดข้อมูล...",
+				sProcessing: "กำลังดำเนินการ...",
+				sSearch: "ค้นหา: ",
+				sZeroRecords: "ไม่พบข้อมูล",
+				oPaginate: {
+				sFirst: "หน้าแรก",
+				sPrevious: "ก่อนหน้า",
+				sNext: "ถัดไป",
+				sLast: "หน้าสุดท้าย",	
+				},
+				oAria: {
+				sSortAscending: ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
+				sSortDescending: ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย",
+				},
+            }
+		  
       });
     }
   });
@@ -117,7 +201,8 @@ $(document).on("click", ".btn_del_reviwe", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -242,10 +327,34 @@ $(document).on("click", "#btn_search", function() {
         scrollY: true,
         scrollCollapse: true,
         scrollX: true,
-        order: [[0, "asc"]]
+        order: [[4, "DESC"]],
+		  		        language: {
+                sEmptyTable: "ไม่มีข้อมูลในตาราง",
+				sInfo: "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+				sInfoEmpty: "แสดง 0 ถึง 0 จาก 0 แถว",
+				sInfoFiltered: "(กรองข้อมูล _MAX_ ทุกแถว)",
+				sInfoPostFix: "",
+				sInfoThousands: ",",
+				sLengthMenu: "แสดง _MENU_ แถว",
+				sLoadingRecords: "กำลังโหลดข้อมูล...",
+				sProcessing: "กำลังดำเนินการ...",
+				sSearch: "ค้นหา: ",
+				sZeroRecords: "ไม่พบข้อมูล",
+				oPaginate: {
+				sFirst: "หน้าแรก",
+				sPrevious: "ก่อนหน้า",
+				sNext: "ถัดไป",
+				sLast: "หน้าสุดท้าย",	
+				},
+				oAria: {
+				sSortAscending: ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
+				sSortDescending: ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย",
+				},
+            }
       });
     }
   });
+swal.fire("ค้นหาสำเร็จ", "", "success");
 });
 
 fetch_data_table();
@@ -309,10 +418,10 @@ function fetch_data_table_course_quiz() {
   });
 }
 
-fetch_pang_front_courese_manage();
-function fetch_pang_front_courese_manage() {
-  var id_courese = $("#id_courese").val();
-  if (id_courese != "") {
+fetch_pang_front_product_manage();
+function fetch_pang_front_product_manage() {
+  var id_product = $("#id_product").val();
+  if (id_product != "") {
     $("#btnSendedit_detail").show();
     $("#btnSendAdd_detail").hide();
 
@@ -320,136 +429,166 @@ function fetch_pang_front_courese_manage() {
       url: "select_data.php",
       method: "POST",
       data: {
-        form: "fetch_pang_front_courese_manage",
-        id_course: id_courese
+        form: "fetch_pang_front_product_manage",
+        id_product: id_product
       },
       success: function(data) {
         $("#name_th").val(data.name_th);
         $("#name_en").val(data.name_en);
-        $("#describe_th").val(data.describe_th);
-        $("#describe_en").val(data.describe_en);
-
-        // $('#description_th').val(data.description_th);
-        // $('#description_en').val(data.description_en);
+		$("#product_code").val(data.product_code);  
+        $("#material_th").val(data.material);
+        $("#material_en").val(data.material_en);
+		$("#surface_th").val(data.surface);
+		$("#surface_en").val(data.surface_en);  
+//        $('#description_th').val(data.description_th);
+//        $('#description_en').val(data.detail_product_en);
+		  
         $text = "";
-        $text += '<label for="example-email">คำอธิบายราายวิชา </label>';
+        $text += '<label for="example-email">รายละเอียดสินค้า </label>';
         $text +=
           '<textarea rows="5" class="edit" style="overflow-y: auto;"  id="description_th" name="description_th">';
-        $text += "" + data.description_th;
+        $text += "" + data.detail_product;
         $text += "</textarea>    ";
         document.getElementById("editor").innerHTML = $text;
 
         $text = "";
-        $text += '<label for="example-email">คำอธิบายราายวิชา </label>';
+        $text += '<label for="example-email">รายละเอียดสินค้า </label>';
         $text +=
-          ' <textarea class="edit"   style="margin-top: 20px;max-height: 250px; overflow-y: auto;"  id="description_en" name="description_en">';
-        $text += "" + data.description_en;
-        $text += "</textarea>    ";
+          '<textarea class="edit" style="margin-top: 20px;max-height: 250px; overflow-y: auto;"  id="description_en" name="description_en">';
+        $text += "" + data.detail_product_en;
+        $text += "</textarea>";
         document.getElementById("editor_en").innerHTML = $text;
-        $(".edit").froalaEditor();
+		  
+          $(function() {
+          $('.edit').froalaEditor({
+            language: 'th',
+            heightMin: 150,
+            heightMax: 400,
+            imageUploadURL:"froala_upload_image.php",
+            imageUploadParam:"fileName",
+            imageManagerLoadMethod:"GET",
+            imageManagerLoadURL:"../../plugins_b/page_froala/select.php",
+            imageManagerDeleteURL:"page_froala/froala_delete_image.php",
+            imageManagerDeleteMethod:"POST",
+            // video
+            videoUploadURL: 'froala_upload_video.php',
+            videoUploadParam: 'fileName',
+            videoUploadMethod: 'POST',
+            videoMaxSize: 50 * 1024 * 1024,
+            videoAllowedTypes: ['mp4', 'webm', 'jpg', 'ogg'],
 
-        $("#tag_title_th").val(data.tag_title_th);
-        $("#tag_title_en").val(data.tag_title_en);
-        $("#tag_description_th").val(data.tag_description_th);
-        $("#tag_description_en").val(data.tag_description_en);
+            fileUploadURL: 'froala_upload_file.php',
+            fileUploadParam: 'fileName',
+            fileUploadMethod: 'POST',
+            fileMaxSize: 20 * 1024 * 1024,
+            fileAllowedTypes: ['*'],
+          });
 
-        $("#id_category").val(data.id_category);
+      });
+
+        $("#id_category").val(data.id_catagory);
         $("#id_category")
           .select2()
           .trigger("change");
-
-        $("#id_tutor").val(data.id_tutor);
-        $("#id_tutor")
-          .select2()
-          .trigger("change");
-
-        $("#id_partner").val(data.id_partner);
-        $("#id_partner")
-          .select2()
-          .trigger("change");
-
-        $("#age").val(data.age);
-        $("#age_unit").val(data.age_unit);
-        $("#age_unit").select2().trigger("change");
-        $("#price").val(data.price);
-        $("#pay_rate").val(data.pay_rate);
-
-        $("#assess_flg").val(data.assess_flg);
-        if (data.assess_flg == "1") {
-          document.getElementById("assess_flg").checked = true;
-        }
-
-        $("#assess_rate").val(data.assess_rate);
-        document.getElementById("div_assess_rate").innerHTML =
-          '<input type="range" name="assess_rate" id="assess_rate" value="' +
-          data.assess_rate +
-          '">';
-        $("#assess_rate").ionRangeSlider({
-          grid: true,
-          min: 0,
-          max: 100,
-          postfix: "%"
-        });
-
-        $("#suggest_flg").val(data.suggest_flg);
-        if (data.suggest_flg == "1") {
-          document.getElementById("div_suggest_flg").innerHTML =
-            '<input checked name="suggest_flg" id="suggest_flg" value="1" type="checkbox"  data-off-color="danger" data-on-color="success" data-off-text="<i class=' +
-            "'mdi mdi-close'" +
+		  
+		$(".select2").select2({
+		  width : '100%'
+		});
+//
+//        $("#age").val(data.age);
+//        $("#age_unit").val(data.age_unit);
+//        $("#age_unit").select2().trigger("change");
+//        $("#price").val(data.price);
+//        $("#pay_rate").val(data.pay_rate);
+//
+//        $("#assess_flg").val(data.assess_flg);
+//        if (data.assess_flg == "1") {
+//          document.getElementById("assess_flg").checked = true;
+//        }
+//
+//        $("#assess_rate").val(data.assess_rate);
+//        document.getElementById("div_assess_rate").innerHTML =
+//          '<input type="range" name="assess_rate" id="assess_rate" value="' +
+//          data.assess_rate +
+//          '">';
+//        $("#assess_rate").ionRangeSlider({
+//          grid: true,
+//          min: 0,
+//          max: 100,
+//          postfix: "%"
+//        });
+//
+        $("#view_show").val(data.view_show);
+        if (data.view_show == "1") {
+          document.getElementById("div_view_show").innerHTML =
+            '<input checked name="view_show" id="view_show" value="1" type="checkbox"  data-off-color="danger" data-on-color="success" data-off-text="<i class=' +
+            "'mdi mdi-eye-off'" +
             '></i>" data-on-text="<i class=' +
-            "'mdi mdi-check'" +
+            "'mdi mdi-eye'" +
             '></i>"> ';
           $(
             ".bt-switch input[type='checkbox'], .bt-switch input[type='radio']"
           ).bootstrapSwitch();
         }
-
-        $("#popular_flg").val(data.popular_flg);
-        if (data.popular_flg == "1") {
-          document.getElementById("div_popular_flg").innerHTML =
-            '<input checked name="popular_flg" id="popular_flg" value="1" type="checkbox"  data-off-color="danger" data-on-color="success" checked data-off-text="<i class=' +
-            "'mdi mdi-close'" +
+		 else{
+		  document.getElementById("div_view_show").innerHTML =
+            '<input name="view_show" id="view_show" value="1" type="checkbox"  data-off-color="danger" data-on-color="success" data-off-text="<i class=' +
+            "'mdi mdi-eye-off'" +
             '></i>" data-on-text="<i class=' +
-            "'mdi mdi-check'" +
+            "'mdi mdi-eye'" +
+            '></i>"> ';
+          $(
+            ".bt-switch input[type='checkbox'], .bt-switch input[type='radio']"
+          ).bootstrapSwitch();
+		 }
+
+        $("#view_portfolio").val(data.view_portfolio);
+        if (data.view_portfolio == "1") {
+          document.getElementById("div_view_portfolio").innerHTML =
+            '<input checked name="view_portfolio" id="view_portfolio" value="1" type="checkbox"  data-off-color="danger" data-on-color="success" checked data-off-text="<i class=' +
+            "'mdi mdi-eye-off'" +
+            '></i>" data-on-text="<i class=' +
+            "'mdi mdi-eye'" +
             '></i>"> ';
           $(
             ".bt-switch input[type='checkbox'], .bt-switch input[type='radio']"
           ).bootstrapSwitch();
         }
-
-        $("#start_date").val(data.start_date);
-        $("#end_date").val(data.end_date);
-        $("#study_time").val(data.study_time);
-        $("#study_rate").val(data.study_rate);
-        $("#quiz_min").val(data.quiz_min);
-        $("#quiz_rate").val(data.quiz_rate);
-
-        $("#order_lesson_flg").val(data.order_lesson_flg);
-        if (data.order_lesson_flg == "1") {
-          document.getElementById("order_lesson_flg").checked = true;
-        }
-
-        $("#id_certificate").val(data.id_certificate);
-        $("#id_certificate").select2();
-
-        directory_name_img =
-          'data-default-file="' + data.directory + data.name_img + '"';
+		  else{
+			document.getElementById("div_view_portfolio").innerHTML =
+            '<input name="view_portfolio" id="view_portfolio" value="1" type="checkbox"  data-off-color="danger" data-on-color="success" data-off-text="<i class=' +
+            "'mdi mdi-eye-off'" +
+            '></i>" data-on-text="<i class=' +
+            "'mdi mdi-eye'" +
+            '></i>"> ';
+          $(
+            ".bt-switch input[type='checkbox'], .bt-switch input[type='radio']"
+          ).bootstrapSwitch();
+		  }
+	
+		if(data.name_image == ''){
+		   	   directory_name_img = 'data-default-file=""';
+		   }
+		  else {
+			   directory_name_img =
+          		'data-default-file="' + data.date_image + data.name_image + '"';
+		  }
+		  
         document.getElementById("div_img").innerHTML =
-          '<input accept="image/*" type="file" id="name_img" class="dropify" name="name_img" ' +
+          '<input onchange="chk_pic()" accept="image/*" type="file" id="name_img" class="dropify" name="name_img" ' +
           directory_name_img +
           " />";
-        $(".dropify").dropify({
-          messages: {
-            default: "Drag and drop a file here or click",
-            replace: "Drag and drop or click to replace",
-            remove: "Remove",
-            error: "Ooops, something wrong happended."
-          },
-          tpl: {
-            message:
-              '<div class="dropify-message" ><span class="file-icon" /> <p style="text-align: center;">{{ default }}</p></div>'
-          }
-        });
+			 $('.dropify').dropify({
+					  messages: {
+					'default': '<span style="font-size: 16px; font-family: Sarabun, sans-serif;">ลากและวางไฟล์ที่นี่หรือคลิก</span>',
+					'replace': '<span style="font-size: 14px; font-family: Sarabun, sans-serif;">ลากและวางหรือคลิกเพื่อแทนที่</span>',
+					'remove':  '<span style="font-size: 13px; font-family: Sarabun, sans-serif;">ลบออก</span>',
+					'error':   'อ๊ะมีบางอย่างผิดปกติเกิดขึ้น'
+				},
+				tpl: {
+				message:     '<div class="dropify-message" ><span class="file-icon" /> <p style="text-align: center;">{{ default }}</p></div>',
+			}     
+			});
 
         // Used events
         var drEvent = $("#input-file-events").dropify();
@@ -481,21 +620,21 @@ function fetch_pang_front_courese_manage() {
 
         document.getElementById("div_img_ed").innerHTML =
           '<input type="hidden" name="directory_ed" value="' +
-          data.directory +
+          data.date_image +
           '"> <input type="hidden" name="name_img_ed" value="' +
-          data.name_img +
+          data.name_image +
           '"> <input type="hidden" name="id_img_ed" value="' +
           data.id_image +
           '">';
 
-        $(".daterange").daterangepicker({
-          showDropdowns: true,
-          locale: {
-            format: "DD/MM/YYYY"
-          },
-          startDate: data.start_date,
-          endDate: data.end_date
-        });
+//        $(".daterange").daterangepicker({
+//          showDropdowns: true,
+//          locale: {
+//            format: "DD/MM/YYYY"
+//          },
+//          startDate: data.start_date,
+//          endDate: data.end_date
+//        });
 
         disabled_btn_add_detail();
         fetch_data_table();
@@ -592,7 +731,8 @@ $(document).on("click", ".delete_btn", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons:true
     })
     .then(result => {
       if (result.value) {
@@ -683,7 +823,8 @@ $(document).on("click", "#btnSendedit_detail", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons:true
     })
     .then(result => {
       if (result.value) {
@@ -703,16 +844,13 @@ $(document).on("click", "#btnSendedit_detail", function() {
                   icon: "success"
                 })
                 .then(result => {
-                  fetch_data_table();
-                  document.getElementById("form_add_detail").reset();
-                  var tagButton = document.getElementsByClassName(
-                    "dropify-clear"
-                  )[0];
-                  tagButton.click();
-                  disabled_btn_add_detail();
-                  $("#id_course").val(data.id_course);
-                  window.location.href =
-                    "front_courese_manage.php?id_course=" + data.id_course;
+                  if (result.value) {
+                    fetch_data_table();
+                    window.location.href =
+                      "front_manage.php";
+                  } else {
+                    window.location.href = "front_manage.php";
+                  }
                 });
             } else {
               swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
@@ -727,15 +865,23 @@ $(document).on("click", "#btnSendedit_detail", function() {
 });
 
 $(document).on("click", "#btnSendAdd_detail", function() {
-  id_certificate = $("#id_certificate").val();
-  if (id_certificate == '0') {
-    swal.fire("คำเตือน", "กรุณาเลือก 'รูปแบบใบรับรอง' ", "warning");
-    document.getElementById("lable_id_certificate").style.color = "red";
-    document.getElementById("lable_id_certificate").focus();
+  product_code = $("#product_code").val();
+  id_category = $("#id_category").val();	
+  if (product_code == '') {
+    swal.fire("คำเตือน", "กรุณากรอกรหัสสินค้า!", "warning");
+    document.getElementById("product_code_text").style.color = "red";
+    document.getElementById("product_code").focus();
     return false
   }else{
-    document.getElementById("lable_id_certificate").style = "none";
+    document.getElementById("product_code").style = "none";
   }
+	
+  if (id_category == '0' || id_category == '') {
+    swal.fire("คำเตือน", "กรุณาเลือกหมวดหมู่สินค้า!", "warning");
+    document.getElementById("id_category").focus();
+    return false
+  }
+	
   var formData = new FormData($("#form_add_detail")[0]);
   swal
     .fire({
@@ -746,7 +892,8 @@ $(document).on("click", "#btnSendAdd_detail", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -761,29 +908,17 @@ $(document).on("click", "#btnSendAdd_detail", function() {
             if (data.status == "0") {
               swal
                 .fire({
-                  title: "บันทึกสำเร็จ ",
-                  text: "คุณต้องการเพิ่มเนื้อหา / ข้อสอบของคอร์ส ?",
-                  icon: "success",
-                  showCancelButton: true,
-                  confirmButtonColor: "#3085d6",
-                  cancelButtonColor: "#d33",
-                  confirmButtonText: "Yes, แก้ไขรายการ!",
-                  cancelButtonText: "No, เพิ่มคอร์ส!"
+                  title: "บันทึกสำเร็จ",
+                  text: "สินค้าใหม่ ได้เพิ่มในรายการแล้ว",
+                  icon: "success"
                 })
                 .then(result => {
                   if (result.value) {
                     fetch_data_table();
-                    document.getElementById("form_add_detail").reset();
-                    var tagButton = document.getElementsByClassName(
-                      "dropify-clear"
-                    )[0];
-                    tagButton.click();
-                    disabled_btn_add_detail();
-                    $("#id_course").val(data.id_course);
                     window.location.href =
-                      "front_courese_manage.php?id_course=" + data.id_course;
+                      "front_manage.php";
                   } else {
-                    window.location.href = "front_courese_manage.php";
+                    window.location.href = "front_manage.php";
                   }
                 });
             } else {
@@ -894,8 +1029,8 @@ $(document).on("click", "#btnSendEdit", function() {
 
 function disabled_btn_add_detail() {
   var name_th = $("#name_th").val();
-  var id_courese = $("#id_courese").val();
-  if (id_courese == "") {
+  var id_product = $("#id_product").val();
+  if (id_product == "") {
     btnSendAdd = "btnSendAdd_detail";
   } else {
     btnSendAdd = "btnSendedit_detail";
@@ -2939,7 +3074,7 @@ $(document).on("click", ".edit_btn_content_question", function() {
   $("#modal_edit_content_question").modal("show");
 });
 
-$(document).on("click", ".checkbox_remove_course", function() {
+$(document).on("click", ".checkbox_remove_product", function() {
   var i = 0;
   if ($(this).is(":checked")) {
     $(this)
@@ -2958,7 +3093,7 @@ $(document).on("click", ".checkbox_remove_course", function() {
       i++;
     });
     $(".num_course_").html("[ " + i + " ]");
-    if ($("input.checkbox_remove_course").is(":checked")) {
+    if ($("input.checkbox_remove_product").is(":checked")) {
     } else {
       $("#MultiDelete_course").prop("disabled", true);
     }
@@ -2990,7 +3125,7 @@ function ClickCheckAll_course(vol) {
   }}
 }
 
-function ClickCheckAll_course_list(vol) {
+function ClickCheckAll_product_list(vol) {
   var i = 1;
   var num = 0;
   for (i = 1; i <= document.frmMain.hdnCount_course.value; i++) {
@@ -3025,7 +3160,8 @@ $(document).on("click", "#MultiDelete_course", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -3054,9 +3190,9 @@ $(document).on("click", "#MultiDelete_course", function() {
     });
 });
 
-$(document).on("click", ".delete_btn_course", function() {
+$(document).on("click", ".delete_btn_product", function() {
   id = $(this).attr("data-id");
-  form = "del_one_course";
+  form = "del_one_product";
   swal
     .fire({
       title: "ยืนยัน?",
@@ -3066,7 +3202,8 @@ $(document).on("click", ".delete_btn_course", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons:true
     })
     .then(result => {
       if (result.value) {
@@ -3096,20 +3233,21 @@ $(document).on("click", ".delete_btn_course", function() {
 });
 
 
-$(document).on("click", ".approval_btn_course", function() {
+$(document).on("click", ".approval_btn_product", function() {
   id = $(this).attr("data-id");
   data_val = $(this).attr("data-val");
-  form = "approval_one_course";
+  form = "approval_one_product";
   swal
     .fire({
       title: "ยืนยัน?",
-      text: "ยืนยันการเปลี่ยนสถานะ Approval หรือไม่?",
+      text: "ยืนยันการเปลี่ยนสถานะ ร้านค้า หรือไม่?",
       icon: "info",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -3123,7 +3261,7 @@ $(document).on("click", ".approval_btn_course", function() {
           },
           success: function(data) {
             if (data.status == "0") {
-              swal.fire("สำเร็จ", "เปลี่ยนสถานะ Approvalเรียบร้อยแล้ว", "success");
+              swal.fire("สำเร็จ", "เปลี่ยนสถานะ ร้านค้า เรียบร้อยแล้ว", "success");
               div_table_list_course();
               
             } else {
