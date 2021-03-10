@@ -19,19 +19,18 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
         <tbody>
             <tr>
                 <td style="text-align: left">จำนวนเงิน:</td>
-                <td style="text-align: right">`+ sum_amount_f +` บาท</td>
+                <td style="text-align: right">` + sum_amount_f + ` บาท</td>
             </tr>    
             <tr>
                 <td style="text-align: left">เงินที่ได้รับ:</td>
-                <td style="text-align: right">`+ sum_receive_money +` บาท</td>
+                <td style="text-align: right">` + sum_receive_money + ` บาท</td>
             </tr>    
             <tr>
                 <td style="text-align: left"><h1 style="color: red;">เงินทอน:</h1></td>
-                <td style="text-align: right"><h1 style="color: red;">`+ (sum_receive_money-sum_amount_f) +` บาท</h1></td>
+                <td style="text-align: right"><h1 style="color: red;">` + (sum_receive_money - sum_amount_f) + ` บาท</h1></td>
             </tr>                 
         </tbody>
-        </table>`
-,
+        </table>`,
     icon: 'info',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -87,11 +86,10 @@ $(document).on('click', '#btnSendReturnCard', function () {
         <tbody>
             <tr>
                 <td style="text-align: left"><h3 style="color: red;">จำนวนเงินที่ต้องคืน:</h3></td>
-                <td style="text-align: right"><h3 style="color: red;">`+ amount_r +` บาท</h3></td>
+                <td style="text-align: right"><h3 style="color: red;">` + amount_r + ` บาท</h3></td>
             </tr>                   
         </tbody>
-        </table>`
-,
+        </table>`,
     icon: 'info',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -113,16 +111,17 @@ $(document).on('click', '#btnSendReturnCard', function () {
           if (data.status == '0') {
             swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
             document.getElementById("form_return_card").reset();
-            setTimeout(function () {
-              location.reload();
-            }, 1000);
+            //setTimeout(function () {  
+            //  location.reload();
+           // }, 1000);
 
             $.ajax({
-              type: "GET",
-              url: "http://localhost:8080/print/functions.php?ip=192.168.1.106&printname=print_test_s&data=test",
-              data: {
-                _method: 'printslip_return_card'
-              }
+              method: "POST",
+              url: "http://localhost:8080/print_php/functions.php",
+              data: formData,
+              cache: false,
+              contentType: false,
+              processData: false,
             });
 
           } else {

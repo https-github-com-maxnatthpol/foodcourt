@@ -78,9 +78,10 @@ $db = new DB();
                             <form action="" name="form_return_card" id="form_return_card" method="post">
                                 <input type="hidden" name="form" value="form_return_card">
                                 <!--ตั้งค่าการพิมพ์ -->
-                                <input type="hidden" name="form" value="printslip_return_card">
-                                <input type="hidden" name="ip" value="printslip_return_card">
-                                <input type="hidden" name="printname" value="printslip_return_card">
+                                <input type="hidden" name="print" value="printslip_return_card">
+                                <input type="hidden" name="ip" value="192.168.1.106">
+                                <input type="hidden" name="printname" value="print_test_s">
+                                <input type="hidden" name="data" value="print_test_s">
 
                                 <!--ตั้งค่าการพิมพ์ -->
                                 <input type="hidden" name="amount_r" id="amount_r" value="">
