@@ -4,7 +4,7 @@ $(document).on("click", "#btn_search", function() {
   var button_create = $("#per_button_open").val();
   var button_view = $("#per_input_read").val();
     
-  var id_category = $("#id_category").val();
+  var id_category_s = $("#id_category_s").val();
   var search_key = $("#search_key").val();    
     
   $.ajax({
@@ -16,7 +16,7 @@ $(document).on("click", "#btn_search", function() {
       button_delete: button_delete,
       button_create: button_create,
       button_view: button_view,
-      id_category: id_category,
+      id_category_s: id_category_s,
       search_key: search_key
     },
     success: function(data) {

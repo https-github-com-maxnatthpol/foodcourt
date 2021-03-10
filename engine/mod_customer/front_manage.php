@@ -56,7 +56,7 @@ $db = new DB();
           <div class="col-md-4" >
                                       <div class="form-group">
                                         <label for="example-email"> หมวดหมู่ร้านค้า </label>
-                                        <select class="form-control select2" name="id_category" id="id_category">
+                                        <select class="form-control select2" name="id_category_s" id="id_category_s">
                                           <option value="0">-- เลือกหมวดหมู่ร้านค้า --</option>
 <?php
   $strSQL = "SELECT `id_catagory`,`name_catagory_th`,`level`  FROM `product_catagory` WHERE `delete_datetime` IS null";

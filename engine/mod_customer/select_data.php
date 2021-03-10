@@ -353,8 +353,8 @@ $button_view    = $_POST["button_view"];
 
 	$strSQL = "SELECT `id_customer`,`forename`,`email`,`telephone`,`id_catagory`,`create_datetime`,`status` FROM `mod_customer` WHERE `delete_datetime` IS null ";
     
-          if (isset($_POST["id_category"]) && $_POST["id_category"] != '0') {
-          $id_category = $db->clear($_POST["id_category"]);
+          if (isset($_POST["id_category_s"]) && $_POST["id_category_s"] != '0') {
+          $id_category = $db->clear($_POST["id_category_s"]);
           $strSQL .= " AND id_catagory='".$id_category."' ";
       }
       if (isset($_POST["search_key"]) && $_POST["search_key"] != '') {
