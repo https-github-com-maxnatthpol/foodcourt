@@ -94,7 +94,7 @@ $db = new DB();
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">รับเงิน </label>
+                                            <label class="control-label">เงินที่ได้รับ </label>
                                             <div class="input-group">
                                                 <input type="number" id="receive_money" name="receive_money" class="form-control" placeholder="">
                                             </div>
@@ -102,14 +102,6 @@ $db = new DB();
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">เงินทอน </label>
-                                            <div class="input-group">
-                                                <input type="number" id="change" name="change"  class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="input-group">

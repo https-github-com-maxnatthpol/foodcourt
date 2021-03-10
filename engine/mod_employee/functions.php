@@ -879,23 +879,18 @@ function form_add_card()
     $query = $db->Query($sql);
     $result = mysqli_fetch_array($query);
 
-    ///Generating
-    $y = substr(date("Y") + 543, 2);
-    $m = date("m");
-    $r = random_number();
-
     $number = $db->clear($result[0] + 1);
-    $card_number = $db->clear($y . $m . "0001" . $r);
-    $img_card = $db->clear("");
-    $status = $db->clear("0");
+    $card_number = $db->clear($_POST["card_number"]);
+    $status = $db->clear("1");
     $amount = $db->clear("0");
     $Issue_date = $db->clear($date_regdate);
+    $last_update = $db->clear("");
     $id_employee = $db->clear($id_data);
 
     $id = setMD5();
 
-    $str = "INSERT INTO `card`(`id`, `number`, `card_number`, `img_card`, `status`,`amount`, `Issue_date`, `id_employee`) 
-			VALUES ('" . $id . "','" . $number . "','" . $card_number . "','" . $img_card . "','" . $status . "','" . $amount . "','" . $Issue_date . "','" . $id_employee . "')";
+    $str = "INSERT INTO `card`(`id`, `number`, `card_number`, `status`,`amount`, `Issue_date`, `last_update`, `id_employee`) 
+			VALUES ('" . $id . "','" . $number . "','" . $card_number . "','" . $status . "','" . $amount . "','" . $Issue_date . "','" . $last_update . "','" . $id_employee . "')";
     $objQuery = $db->Query($str);
 
     if ($objQuery) {
