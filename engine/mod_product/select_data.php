@@ -93,7 +93,7 @@ if (isset($_POST['form'])) {
         <input class="ClickCheckAll filled-in chk-col-light-blue" type="checkbox" name="CheckAll_course" id="CheckAll_course" value="Y" onClick="ClickCheckAll_product_list(this);"><label for="CheckAll_course"></label>
       </th>
       <th>รูปสินค้า</th>
-      <th>ชื่อสินค้า</th>
+      <th>ชื่อร้านค้า</th>
       <th>อีเมล</th>
       <th>เบอร์โทรศัพท์</th>    
       <th>วันที่สร้าง</th>

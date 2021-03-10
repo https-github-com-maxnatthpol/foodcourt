@@ -87,6 +87,18 @@ function ADD_PERMISSION()
     }
 
     $id_user = setMD5();
+    
+    $strSQL_customer = "SELECT id_customer
+    FROM `mod_customer` 
+    WHERE id_customer = '".$id_extends."' ";
+	$objQuery_customer = $db->Query($strSQL_customer);
+    $num = mysqli_num_rows($objQuery_customer);
+	if($num>0)
+    {
+       $str_cus_up = "UPDATE `mod_customer` SET `status`='1' WHERE `id_customer`='".$id_extends."' ";
+	   $objQuery_cus_up = $db->Query($str_cus_up);
+    }
+    
 
     $strSQL_member = "INSERT INTO users";
     $strSQL_member .= "(id_user,
