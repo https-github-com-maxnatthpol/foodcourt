@@ -79,6 +79,7 @@ $db = new DB();
                                 <input type="hidden" name="form" value="form_return_card">
                                 <!--ตั้งค่าการพิมพ์ -->
                                 <input type="hidden" name="print" value="printslip_return_card">
+                                <input type="hidden" id="PRINT_HOST" name="PRINT_HOST" value="<?=constant("PRINT_HOST");?>">
                                 <input type="hidden" name="ip" value="192.168.1.106">
                                 <input type="hidden" name="printname" value="print_test_s">
                                 <input type="hidden" name="data" value="print_test_s">

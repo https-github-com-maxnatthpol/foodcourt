@@ -117,7 +117,7 @@ $(document).on('click', '#btnSendReturnCard', function () {
 
             $.ajax({
               method: "POST",
-              url: "http://localhost:8080/print_php/functions.php",
+              url: document.getElementById("PRINT_HOST").value+"functions.php",
               data: formData,
               cache: false,
               contentType: false,
