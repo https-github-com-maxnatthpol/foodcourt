@@ -1,3 +1,60 @@
+$(document).on("click", "#btn_search", function() {
+  var button_update = $("#per_button_edit").val();
+  var button_delete = $("#per_button_del").val();
+  var button_create = $("#per_button_open").val();
+  var button_view = $("#per_input_read").val();
+    
+  var id_category = $("#id_category").val();
+  var search_key = $("#search_key").val();    
+    
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: "select_table_front_manage",
+      button_update: button_update,
+      button_delete: button_delete,
+      button_create: button_create,
+      button_view: button_view,
+      id_category: id_category,
+      search_key: search_key
+    },
+    success: function(data) {
+      $("#div_table_list").html(data);
+      $("#table_front_manage").DataTable({
+        scrollY: true,
+        scrollCollapse: true,
+        scrollX: true,
+        order: [[1, "asc"]],
+                      language: {
+                sEmptyTable: "ไม่มีข้อมูลในตาราง",
+				sInfo: "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+				sInfoEmpty: "แสดง 0 ถึง 0 จาก 0 แถว",
+				sInfoFiltered: "(กรองข้อมูล _MAX_ ทุกแถว)",
+				sInfoPostFix: "",
+				sInfoThousands: ",",
+				sLengthMenu: "แสดง _MENU_ แถว",
+				sLoadingRecords: "กำลังโหลดข้อมูล...",
+				sProcessing: "กำลังดำเนินการ...",
+				sSearch: "ค้นหา: ",
+				sZeroRecords: "ไม่พบข้อมูล",
+				oPaginate: {
+				sFirst: "หน้าแรก",
+				sPrevious: "ก่อนหน้า",
+				sNext: "ถัดไป",
+				sLast: "หน้าสุดท้าย",	
+				},
+				oAria: {
+				sSortAscending: ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
+				sSortDescending: ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย",
+				},
+            }
+      });
+    }
+  });
+swal.fire("ค้นหาสำเร็จ", "", "success");
+});
+
 fetch_data_table();
 function fetch_data_table() {
   var button_update = $("#per_button_edit").val();
@@ -20,7 +77,30 @@ function fetch_data_table() {
         scrollY: true,
         scrollCollapse: true,
         scrollX: true,
-        order: [[1, "asc"]]
+        order: [[1, "asc"]],
+                      language: {
+                sEmptyTable: "ไม่มีข้อมูลในตาราง",
+				sInfo: "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+				sInfoEmpty: "แสดง 0 ถึง 0 จาก 0 แถว",
+				sInfoFiltered: "(กรองข้อมูล _MAX_ ทุกแถว)",
+				sInfoPostFix: "",
+				sInfoThousands: ",",
+				sLengthMenu: "แสดง _MENU_ แถว",
+				sLoadingRecords: "กำลังโหลดข้อมูล...",
+				sProcessing: "กำลังดำเนินการ...",
+				sSearch: "ค้นหา: ",
+				sZeroRecords: "ไม่พบข้อมูล",
+				oPaginate: {
+				sFirst: "หน้าแรก",
+				sPrevious: "ก่อนหน้า",
+				sNext: "ถัดไป",
+				sLast: "หน้าสุดท้าย",	
+				},
+				oAria: {
+				sSortAscending: ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
+				sSortDescending: ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย",
+				},
+            }
       });
     }
   });
@@ -60,6 +140,24 @@ $(document).on("click", ".address_btn", function() {
   });
 });
 
+$(document).on("click", ".print_btn", function() {
+  form = "select_div_print";
+  id = $(this).attr("data-id");
+  name = $(this).attr("data1-id");
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: form,
+      id: id,
+      name: name
+    },
+    success: function(data) {
+      $("#div_print").html(data);
+    }
+  });
+});
+
 $(document).on("click", ".delete_btn", function() {
   id = $(this).attr("data-id");
   form = "del_one";
@@ -72,7 +170,8 @@ $(document).on("click", ".delete_btn", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -154,23 +253,16 @@ function ClickCheckAll(vol){
 
 $(document).on("click", "#btnSendAdd", function() {
   var name = $("#name").val();
-  var surname = $("#surname").val();
   const isValidid_cade = id_cade.checkValidity();
-  const isValidlicense_number = license_number.checkValidity();
   const isValidEmail = e_mail.checkValidity();
   const isValidtelaphone = telaphone.checkValidity();
+  var id_category = $("#id_category").val();    
 
-  if (name == "" || surname == "" || !isValidid_cade || !isValidEmail) {
+  if (name == "" || !isValidid_cade || !isValidEmail || !isValidtelaphone || id_category == "0") {
     if (name == "") {
       $("#name").attr("style", "border-color: red; border-width: 1px;");
     } else {
       $("#name").attr("style", "");
-    }
-
-    if (surname == "") {
-      $("#surname").attr("style", "border-color: red; border-width: 1px;");
-    } else {
-      $("#surname").attr("style", "");
     }
 
     if (isValidid_cade) {
@@ -193,22 +285,29 @@ $(document).on("click", "#btnSendAdd", function() {
       $("#e_mail").attr("style", "border-color: red; border-width: 1px;");
     }
 
-    /*if ( isValidtelaphone ) {
-   $("#telaphone").attr("style" , "");
+    if (isValidtelaphone) {
+        $("#telaphone").attr("style" , "");
   
-} else {
-  $("#telaphone").attr("style" , "border-color: red; border-width: 1px;");
+    } else {
+        $("#telaphone").attr("style" , "border-color: red; border-width: 1px;");
   
-}*/
+    }
+      
+    if (id_category) {
+      $("#id_category").attr("style", "");
+    } else {
+      $("#id_category").attr("style", "border: 1px solid red;");
+    }  
+      
     swal.fire("คำเตือน", "กรุณากรอกข้อมูลให้ถูกต้องและครบถ้วน", "warning");
     return false;
+      
   } else {
     $("#name").attr("style", "");
-    $("#surname").attr("style", "");
     $("#id_cade").attr("style", "");
-    $("#license_number").attr("style", "");
     $("#e_mail").attr("style", "");
     $("#telaphone").attr("style", "");
+    $("#id_category").attr("style", "");  
   }
 
   var formData = new FormData($("#form_add")[0]);
@@ -221,7 +320,8 @@ $(document).on("click", "#btnSendAdd", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -257,64 +357,61 @@ $(document).on("click", "#btnSendAdd", function() {
 
 $(document).on("click", "#btnSendEdit", function() {
   var name = $("#name_edit").val();
-  var surname = $("#surname_edit").val();
   const isValidid_cade = id_cade_edit.checkValidity();
-  const isValidlicense_number = license_number_edit.checkValidity();
   const isValidEmail = e_mail_edit.checkValidity();
   const isValidtelaphone = telaphone_edit.checkValidity();
+  var id_category = $("#id_category_edit").val();    
 
-  if (name == "" || surname == "" || !isValidid_cade || !isValidEmail) {
+  if (name == "" || !isValidid_cade || !isValidEmail || !isValidtelaphone || id_category == "0") {
     if (name == "") {
-      $("#name_edit").attr("style", "border-color: red; border-width: 1px;");
+      $("#name").attr("style", "border-color: red; border-width: 1px;");
     } else {
-      $("#name_edit").attr("style", "");
-    }
-
-    if (surname == "") {
-      $("#surname_edit").attr("style", "border-color: red; border-width: 1px;");
-    } else {
-      $("#surname_edit").attr("style", "");
+      $("#name").attr("style", "");
     }
 
     if (isValidid_cade) {
-      $("#id_cade_edit").attr("style", "");
+      $("#id_cade").attr("style", "");
     } else {
-      $("#id_cade_edit").attr("style", "border-color: red; border-width: 1px;");
+      $("#id_cade").attr("style", "border-color: red; border-width: 1px;");
     }
 
-    /*if (isValidlicense_number) {
-      $("#license_number_edit").attr("style", "");
-    } else {
-      $("#license_number_edit").attr(
-        "style",
-        "border-color: red; border-width: 1px;"
-      );
-    }*/
+    /*if ( isValidlicense_number ) {
+   $("#license_number").attr("style" , "");
+  
+} else {
+  $("#license_number").attr("style" , "border-color: red; border-width: 1px;");
+  
+}*/
 
     if (isValidEmail) {
-      $("#e_mail_edit").attr("style", "");
+      $("#e_mail").attr("style", "");
     } else {
-      $("#e_mail_edit").attr("style", "border-color: red; border-width: 1px;");
+      $("#e_mail").attr("style", "border-color: red; border-width: 1px;");
     }
 
-    /*if (isValidtelaphone) {
-      $("#telaphone_edit").attr("style", "");
+    if (isValidtelaphone) {
+        $("#telaphone").attr("style" , "");
+  
     } else {
-      $("#telaphone_edit").attr(
-        "style",
-        "border-color: red; border-width: 1px;"
-      );
-    }*/
-
+        $("#telaphone").attr("style" , "border-color: red; border-width: 1px;");
+  
+    }
+      
+    if (id_category) {
+      $("#id_category").attr("style", "");
+    } else {
+      $("#id_category").attr("style", "border: 1px solid red;");
+    }  
+      
     swal.fire("คำเตือน", "กรุณากรอกข้อมูลให้ถูกต้องและครบถ้วน", "warning");
     return false;
+      
   } else {
     $("#name_edit").attr("style", "");
-    $("#surname_edit").attr("style", "");
     $("#id_cade_edit").attr("style", "");
-    $("#license_number_edit").attr("style", "");
     $("#e_mail_edit").attr("style", "");
     $("#telaphone_edit").attr("style", "");
+    $("#id_category_edit").attr("style", "");  
   }
   var formData = new FormData($("#form_edit")[0]);
   swal
@@ -326,7 +423,8 @@ $(document).on("click", "#btnSendEdit", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -391,7 +489,8 @@ $(document).on("click", "#MultiDelete", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -435,7 +534,8 @@ $(document).on("click", "#confirm_cus", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -479,7 +579,8 @@ $(document).on("click", "#un_confirm_cus", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -600,7 +701,8 @@ $(document).on("click", "#btnSendaddress", function() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "ยกเลิก!",
-      confirmButtonText: "ยืนยัน"
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
     })
     .then(result => {
       if (result.value) {
@@ -627,6 +729,47 @@ $(document).on("click", "#btnSendaddress", function() {
       }
     });
 });
+
+$(document).on("click", "#btnSendprint", function() {
+  var formData = new FormData($("#form_print")[0]);
+  swal
+    .fire({
+      title: "ยืนยัน?",
+      text: "ยืนยันการบันทึกการปริ้นหรือไม่?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "ยกเลิก!",
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
+    })
+    .then(result => {
+      if (result.value) {
+        $.ajax({
+          method: "POST",
+          url: "functions.php",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            if (data.status == "0") {
+              swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
+              document.getElementById("form_print").reset();
+              $("#modal_print").modal("toggle");
+            } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          }
+        }).fail(function(data) {
+          // คือไม่สำรเ็จ
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
+        });
+      }
+    });
+});
+
 
 function check_email(val) {
   if (val == "add") {
@@ -672,3 +815,46 @@ function check_email(val) {
     swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
   });
 }
+
+$(document).on("click", ".approval_btn_product", function() {
+  id = $(this).attr("data-id");
+  data_val = $(this).attr("data-val");
+  form = "approval_one_product";
+  swal
+    .fire({
+      title: "ยืนยัน?",
+      text: "ยืนยันการเปลี่ยนสถานะ ร้านค้า หรือไม่?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "ยกเลิก!",
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons: true
+    })
+    .then(result => {
+      if (result.value) {
+        $.ajax({
+          url: "functions.php",
+          method: "POST",
+          data: {
+            form: form,
+            id: id,
+            data_val:data_val
+          },
+          success: function(data) {
+            if (data.status == "0") {
+              swal.fire("สำเร็จ", "เปลี่ยนสถานะ ร้านค้า เรียบร้อยแล้ว", "success");
+              fetch_data_table();
+              
+            } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          }
+        }).fail(function(data) {
+          // คือไม่สำรเ็จ
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
+        });
+      }
+    });
+});

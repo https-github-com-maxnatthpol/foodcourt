@@ -19,6 +19,10 @@ if (isset($_POST['form'])) {
 		form_address();
 	}else if ($_POST['form']=="check_email") {
 		check_email();
+	}else if ($_POST['form']=="form_print") {
+		form_print();
+	}else if ($_POST['form']=="approval_one_product") {
+		approval_one_product();
 	}
 }else{
 	if ($_GET['form']=="Multi_del") {
@@ -56,6 +60,7 @@ if (isset($_SESSION["id_data"])) {
 		echo json_encode(array('status' => '1','message'=> 'ซ้ำ'.$sql));
 	}
 }
+
 function form_address(){
 	$db = new DB();
 
@@ -93,6 +98,32 @@ if (isset($_SESSION["id_data"])) {
 	}
 }
 
+function form_print(){
+	$db = new DB();
+
+if (isset($_SESSION["id_data"])) {
+	$id_data = $_SESSION["id_data"];
+}else{
+	$id_data = '';
+}
+
+	header('Content-Type: application/json');
+	date_default_timezone_set("Asia/Bangkok");
+	$date_regdate = date("Y-m-d H:i:s");
+
+	$ip_customer = $db->clear($_POST["ip_customer"]);
+	$print_customer = $db->clear($_POST["print_customer"]);
+    $id_print = $db->clear($_POST["id_print"]);
+
+    $str = "UPDATE `mod_customer` SET `ip_customer`='".$ip_customer."',`print_customer`='".$print_customer."',`update_id`='".$id_data."',`update_datetime`='".$date_regdate."' WHERE `id_customer` = '".$id_print."' ";
+    $objQuery = $db->Query($str);
+
+	if($objQuery){
+		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
+	}else{
+		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
+	}
+}
 
 function confirm_cus(){
 	$db = new DB();
@@ -254,34 +285,30 @@ $id_cade_text = '';
 for ($i=0; $i < count($string) ; $i++) { 
 		$id_cade_text .= $string[$i];
 	}	
-
-		
+	
 
 	$name = $db->clear($_POST["name"]);
-	$surname = $db->clear($_POST["surname"]);	
 	$id_cade = $db->clear($id_cade_text);
-	$license_number = $db->clear($_POST["license_number"]);
 	$e_mail = $db->clear($_POST["e_mail"]);
 	$telaphone = $db->clear($_POST["telaphone"]);
+    $id_category = $db->clear($_POST["id_category_edit"]);
 	$id_edit = $db->clear($_POST["id_edit"]);
 	$directory_ed = $db->clear($_POST["directory_ed"]);
-
 
 
 $str = "";
 $str .="UPDATE `mod_customer` SET ";
 $str .="  `forename` = '".$name."' ";
-$str .=",`surename`='".$surname."' ";
 $str .=",`id_card`='".$id_cade."' ";
-$str .=",`license_number`='".$license_number."' ";
 $str .=",`email`='".$e_mail."' ";
 $str .=",`telephone`='".$telaphone."' ";
+$str .=",`id_catagory`='".$id_category."' ";    
 $str .=",`update_id`='".$id_data."' ";
 $str .=",`update_datetime`='".$date_regdate."' ";
 $str .=" WHERE `id_customer`= '".$id_edit."' ";
 $objQuery = $db->Query($str);
 
-	if($objQuery){
+if($objQuery){
 
 if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
 
@@ -331,13 +358,11 @@ if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
 					if( file_exists($directory_ed) ){
 						unlink ($directory_ed);
 					}
-				}
-				
-				
+				}	
 				
 $sql = "";
 $sql .="UPDATE `user_images` SET ";
-$sql .="  `name` = '".$newname."' ";
+$sql .=" `name` = '".$newname."' ";
 $sql .=",`size`='".$_FILES["name_img"]["size"]."' ";
 $sql .=",`directory`='".$directory."' ";
 $sql .=",`date`='".$date_regdate."' ";
@@ -348,19 +373,14 @@ $query = $db->Query($sql);
 }
 
 
-
 // $strSQL3 ="UPDATE users SET";
 // $strSQL3 .= "  `user_email` = '$e_mail', `update_datetime`= '$date_regdate' WHERE `id_data_role` = '$id_edit' "; 
 // $objQuery3 = $db->Query($strSQL3);
-
-	
 	
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
 	}else{
 		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
 	}
-
-
 
 }
 
@@ -403,19 +423,16 @@ for ($i=0; $i < count($string) ; $i++) {
 		$id_cade_text .= $string[$i];
 	}	
 
-		
-
 	$name = $db->clear($_POST["name"]);
-	$surname = $db->clear($_POST["surname"]);
 	
 	$id_cade = $db->clear($id_cade_text);
-	$license_number = $db->clear($_POST["license_number"]);
 	$e_mail = $db->clear($_POST["e_mail"]);
 	$telaphone = $db->clear($_POST["telaphone"]);
+    $id_category = $db->clear($_POST["id_category"]);
 	
-$id_customer = setMD5();
-$str = "INSERT INTO `mod_customer`(`id_customer`, `forename`, `surename`, `id_card`, `license_number`, `email`, `telephone`, `create_id`, `create_datetime`) VALUES ('".$id_customer."','".$name."','".$surname."','".$id_cade."','".$license_number."','".$e_mail."','".$telaphone."','".$id_data."','".$date_regdate."')";
-$objQuery = $db->Query($str);
+    $id_customer = setMD5();
+    $str = "INSERT INTO `mod_customer`(`id_customer`, `forename`, `id_card`, `email`, `telephone`, `id_catagory`, `create_id`, `create_datetime`) VALUES ('".$id_customer."','".$name."','".$id_cade."','".$e_mail."','".$telaphone."','".$id_category."','".$id_data."','".$date_regdate."')";
+    $objQuery = $db->Query($str);
 
 
 // $sql = "SELECT * FROM roles WHERE tag = 'mod_customer' ";
@@ -431,7 +448,6 @@ $objQuery = $db->Query($str);
 // $strSQL3 .= "VALUES ";
 // $strSQL3 .= "('$id_member','$e_mail','$pass','$e_mail','$date_regdate','$date_regdate','$id_customer', '$id_date_role')";
 // $objQuery3 = $db->Query($strSQL3);
-
 
 
 	if($objQuery){
@@ -492,13 +508,11 @@ if(isset($_FILES['name_img']) && $_FILES['name_img']['name']!=''){
 $sql = "INSERT INTO `user_images`(`id_user`, `name`, `size`, `date`, `directory`, `active`, `type`) VALUES ('".$id_customer."','".$newname_img."','".$tmp_size."','".$date_regdate."','".$directory."','1','1')";
 $query = $db->Query($sql);
 	
-	if($query){
-		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
-	}else{
-		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
-	}
-
-
+        if($query){
+            echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
+        }else{
+            echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
+        }
 		
 	}else{
 		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
@@ -507,6 +521,35 @@ $query = $db->Query($sql);
 }
 
 
+function approval_one_product(){
+	$db = new DB();
 
+if (isset($_SESSION["id_data"])) {
+	$id_data = $_SESSION["id_data"];
+}else{
+	$id_data = '';
+}
+
+	header('Content-Type: application/json');
+	date_default_timezone_set("Asia/Bangkok");
+	$date_regdate = date("Y-m-d H:i:s");
+	
+
+	$id = $db->clear($_POST["id"]);
+	$data_val = $db->clear($_POST["data_val"]);
+
+	$str = "UPDATE `users` SET `status`='".$data_val."',`update_datetime`='".$date_regdate."' WHERE `id_data_role`='".$id."' ";
+	$objQuery = $db->Query($str);
+    
+    $str_cus = "UPDATE `mod_customer` SET `update_datetime`='".$date_regdate."',`update_id`='".$id_data."',`status`='".$data_val."' WHERE `id_customer`='".$id."' ";
+	$objQuery_cus = $db->Query($str_cus);
+    
+	if($objQuery){
+		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
+	}else{
+		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
+	}
+
+}
 
 ?>

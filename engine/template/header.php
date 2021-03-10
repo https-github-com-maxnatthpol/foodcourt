@@ -15,7 +15,7 @@ $logo = getSetting('logo_img');
 $logo = $logo == ""?HEAD_LOGO_MINI:$logo;
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
     <meta charset="utf-8">
