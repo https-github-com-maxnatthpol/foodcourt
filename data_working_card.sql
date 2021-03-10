@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2021 at 12:46 PM
+-- Generation Time: Mar 10, 2021 at 08:23 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.2.34
 
@@ -28,12 +28,24 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `data_working_card` (
-  `id` int(11) NOT NULL,
-  `amount` int(11) NOT NULL,
-  `Identity` tinyint(1) NOT NULL COMMENT '0 = เงินเข้า, 1 = เงินออก',
+  `id` varchar(35) NOT NULL,
+  `amount` int(11) NOT NULL COMMENT 'จำนวนเงินที่เติมหรือจ่ายออก',
+  `receive_money` int(11) NOT NULL COMMENT 'เงินที่รับมา',
+  `Identity` int(1) NOT NULL COMMENT '0 = เงินเข้า, 1 = เงินออก,2 = ย้ายเงิน',
   `data_date` datetime NOT NULL,
-  `id_card` varchar(35) NOT NULL
+  `id_card` varchar(35) NOT NULL,
+  `id_cashier` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `data_working_card`
+--
+ALTER TABLE `data_working_card`
+  ADD PRIMARY KEY (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

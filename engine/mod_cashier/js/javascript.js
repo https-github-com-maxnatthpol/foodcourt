@@ -55,6 +55,17 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
             setTimeout(function () {
               location.reload();
             }, 1000);
+
+            //print
+            $.ajax({
+              method: "POST",
+              url: document.getElementById("PRINT_HOST").value + "functions.php",
+              data: formData,
+              cache: false,
+              contentType: false,
+              processData: false,
+            });
+
           } else {
             swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
           }
@@ -110,14 +121,16 @@ $(document).on('click', '#btnSendReturnCard', function () {
         success: function (data) {
           if (data.status == '0') {
             swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
-            document.getElementById("form_return_card").reset();
-            //setTimeout(function () {  
-            //  location.reload();
-           // }, 1000);
 
+            document.getElementById("form_return_card").reset();
+            setTimeout(function () {
+              location.reload();
+            }, 1000);
+
+            //print
             $.ajax({
               method: "POST",
-              url: document.getElementById("PRINT_HOST").value+"functions.php",
+              url: document.getElementById("PRINT_HOST").value + "functions.php",
               data: formData,
               cache: false,
               contentType: false,
@@ -171,14 +184,14 @@ $('#card_number').keyup(function () {
       //console.log(response.status);
       //console.log('numStr : ',numStr);
       //console.log(response.message);
-      if (response.status == 1 && card_number != '' && numStr == 15) {
+      if (response.status == 1 && card_number != '' && numStr == 10) {
         $("#card_number").attr("style", "border-color: #28a745; border-width: 2px; background-color: #28a74585;");
         $("#card_number_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #28a745; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number").innerHTML = "<i style='color:#fafafa;' class='fa fa-check-circle'></i>  เลขบัตรถูกต้อง";
         document.getElementById('btnSendฺBuyCard').disabled = false;
         $("#a_card_number").attr("style", "color: #fafafa;");
 
-        document.getElementById("number").innerHTML = leftPad(response.message[0], 7);
+        document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount").innerHTML = response.message[1];
         document.getElementById("Issue_date").innerHTML = response.deta;
         document.getElementById("employee").innerHTML = response.message[3] + " " + response.message[4];
@@ -189,7 +202,7 @@ $('#card_number').keyup(function () {
           $("#card_number_alert").attr("style", "transition: 0.5s; display:none;");
         }, 10000);
 
-      } else if (response.status == 0 && numStr == 15) {
+      } else if (response.status == 0 && numStr == 10) {
         $("#card_number").attr("style", "border-color: #dd4b39; border-width: 2px; background-color: #ff000038;");
         $("#card_number_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #dd4b39; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number").innerHTML = "<i style='color:#fafafa;' class='fa fa-times-circle'></i>  ไม่พบข้อมูล";
@@ -206,7 +219,7 @@ $('#card_number').keyup(function () {
           $("#card_number_alert").attr("style", "transition: 0.5s; display:none;");
         }, 10000);
 
-      } else if (numStr < 15) {
+      } else if (numStr < 10) {
         $("#card_number").attr("style", "border-color: #ffc107; border-width: 2px; background-color: #ffc10745;");
         $("#card_number_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #ffc107; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number").innerHTML = "<i style='color:#fafafa;' class='fa fa-exclamation-triangle'></i>  กำหนดไม่ต่ำกว่า 15 ตัวเลข";
@@ -249,14 +262,14 @@ $('#card_number_r').keyup(function () {
       //console.log(response.status);
       //console.log('numStr : ',numStr);
       //console.log(response.message);
-      if (response.status == 1 && card_number != '' && numStr == 15) {
+      if (response.status == 1 && card_number != '' && numStr == 10) {
         $("#card_number_r").attr("style", "border-color: #28a745; border-width: 2px; background-color: #28a74585;");
         $("#card_number_r_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #28a745; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number_r").innerHTML = "<i style='color:#fafafa;' class='fa fa-check-circle'></i>  เลขบัตรถูกต้อง";
         document.getElementById('btnSendReturnCard').disabled = false;
         $("#a_card_number_r").attr("style", "color: #fafafa;");
 
-        document.getElementById("number").innerHTML = leftPad(response.message[0], 7);
+        document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount").innerHTML = response.message[1];
         document.getElementById("amount_r").value = response.message[1];
         document.getElementById("amount_t").innerHTML = response.message[1];
@@ -269,7 +282,7 @@ $('#card_number_r').keyup(function () {
           $("#card_number_r_alert").attr("style", "transition: 0.5s; display:none;");
         }, 10000);
 
-      } else if (response.status == 0 && numStr == 15) {
+      } else if (response.status == 0 && numStr == 10) {
         $("#card_number_r").attr("style", "border-color: #dd4b39; border-width: 2px; background-color: #ff000038;");
         $("#card_number_r_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #dd4b39; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number_r").innerHTML = "<i style='color:#fafafa;' class='fa fa-times-circle'></i>  ไม่พบข้อมูล";
@@ -286,7 +299,7 @@ $('#card_number_r').keyup(function () {
           $("#card_number_r_alert").attr("style", "transition: 0.5s; display:none;");
         }, 10000);
 
-      } else if (numStr < 15) {
+      } else if (numStr < 10) {
         $("#card_number_r").attr("style", "border-color: #ffc107; border-width: 2px; background-color: #ffc10745;");
         $("#card_number_r_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #ffc107; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number_r").innerHTML = "<i style='color:#fafafa;' class='fa fa-exclamation-triangle'></i>  กำหนดไม่ต่ำกว่า 15 ตัวเลข";

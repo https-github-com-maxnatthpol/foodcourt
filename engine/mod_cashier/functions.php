@@ -82,7 +82,7 @@ function form_buy_card()
 		$objQuery = $db->Query($str);
 
 		if ($objQuery) {
-			$str = "UPDATE card SET amount = amount + '" . $amount_f . "' WHERE id = '" . $db->clear($result[0]) . "'";
+			$str = "UPDATE card SET amount = amount + '" . $amount_f . "',last_update = '" . $data_date . "'  WHERE id = '" . $db->clear($result[0]) . "'";
 			$query = $db->Query($str);
 			if ($query) {
 				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!"));
@@ -130,7 +130,7 @@ function form_return_card()
 		$objQuery = $db->Query($str);
 
 		if ($objQuery) {
-			$str = "UPDATE card SET amount = amount - '" . $amount_r . "' WHERE id = '" . $db->clear($result[0]) . "'";
+			$str = "UPDATE card SET amount = amount - '" . $amount_r . "',last_update = '" . $data_date . "'  WHERE id = '" . $db->clear($result[0]) . "'";
 			$query = $db->Query($str);
 			if ($query) {
 				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!"));

@@ -75,10 +75,18 @@ $db = new DB();
                     <hr class="m-t-0 m-b-40">
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
-                        <form action="" name="form_buy_card" id="form_buy_card" method="post">
-                        <input type="hidden" name="form" value="form_buy_card">
+                            <form action="" name="form_buy_card" id="form_buy_card" method="post">
+                                <input type="hidden" name="form" value="form_buy_card">
+                                <!--ตั้งค่าการพิมพ์ -->
+                                <input type="hidden" name="print" value="printslip_buy_card">
+                                <input type="hidden" id="PRINT_HOST" name="PRINT_HOST" value="<?= constant("PRINT_HOST"); ?>">
+                                <input type="hidden" name="ip" value="192.168.1.106">
+                                <input type="hidden" name="printname" value="print_test_s">
+
+                                <input type="hidden" name="SESSION_name" value="<?=$_SESSION['name']?>">
+                                <!--ตั้งค่าการพิมพ์ -->
                                 <div class="form-group">
-                                    <input type="text" id="card_number" name="card_number" class="form-control" maxlength="15" placeholder="" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
+                                    <input type="text" id="card_number" name="card_number" class="form-control" maxlength="10" placeholder="" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
                                     <div class="col-md-12" id="card_number_alert">
                                         <small id="a_card_number" style="color: #fafafa;"></small>
                                     </div>

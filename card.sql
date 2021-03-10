@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2021 at 12:46 PM
+-- Generation Time: Mar 10, 2021 at 08:23 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.2.34
 
@@ -29,13 +29,31 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `card` (
   `id` varchar(35) NOT NULL,
-  `number` varchar(7) NOT NULL,
-  `card_number` varchar(15) NOT NULL,
-  `img_card` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `number` int(4) NOT NULL,
+  `card_number` varchar(10) NOT NULL,
+  `status` tinyint(1) NOT NULL COMMENT '1 = ใช้งานได้ ,0 = ระงับการใช้งาน',
+  `amount` int(11) NOT NULL,
   `Issue_date` datetime NOT NULL,
+  `last_update` datetime NOT NULL,
   `id_employee` varchar(35) NOT NULL COMMENT 'ผู้ออกบัตร'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `card`
+--
+
+INSERT INTO `card` (`id`, `number`, `card_number`, `status`, `amount`, `Issue_date`, `last_update`, `id_employee`) VALUES
+('j0a4a9p37b9f32138c66bf7010555164a9m', 1, '0011675218', 1, 0, '2021-03-07 01:19:16', '2021-03-11 01:45:09', 'hd4cff774d6516542n451ce4dbd75c3513o');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `card`
+--
+ALTER TABLE `card`
+  ADD PRIMARY KEY (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
