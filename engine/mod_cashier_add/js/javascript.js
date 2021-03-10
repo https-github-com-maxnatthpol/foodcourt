@@ -697,3 +697,61 @@ function check_email(val) {
     swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
   });
 }
+
+$(document).on("click", ".print_btn", function() {
+  form = "select_div_print";
+  id = $(this).attr("data-id");
+  name = $(this).attr("data1-id");
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: form,
+      id: id,
+      name: name
+    },
+    success: function(data) {
+      $("#div_print").html(data);
+    }
+  });
+});
+
+$(document).on("click", "#btnSendprint", function() {
+  var formData = new FormData($("#form_print")[0]);
+  swal
+    .fire({
+      title: "ยืนยัน?",
+      text: "ยืนยันการบันทึกการปริ้นหรือไม่?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "ยกเลิก!",
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
+    })
+    .then(result => {
+      if (result.value) {
+        $.ajax({
+          method: "POST",
+          url: "functions.php",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            if (data.status == "0") {
+              swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
+              document.getElementById("form_print").reset();
+              $("#modal_print").modal("toggle");
+            } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          }
+        }).fail(function(data) {
+          // คือไม่สำรเ็จ
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
+        });
+      }
+    });
+});

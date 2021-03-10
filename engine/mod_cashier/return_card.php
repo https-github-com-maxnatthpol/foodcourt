@@ -79,11 +79,17 @@ $db = new DB();
                                 <input type="hidden" name="form" value="form_return_card">
                                 <!--ตั้งค่าการพิมพ์ -->
                                 <input type="hidden" name="print" value="printslip_return_card">
+                                <?php
+                                $sql = "SELECT `ip_cashier`,print_cashier FROM mod_cashier WHERE `id_cashier` =  '" . $_SESSION["id_data"] . "'";
+                                $query = $db->Query($sql);
+                                $result = mysqli_fetch_array($query);
+                                $result[0];
+                                ?>                               
                                 <input type="hidden" id="PRINT_HOST" name="PRINT_HOST" value="<?= constant("PRINT_HOST"); ?>">
-                                <input type="hidden" name="ip" value="192.168.1.103">
-                                <input type="hidden" name="printname" value="XP-58-111">
+                                <input type="hidden" name="ip" value="<?=$result[0]?>">
+                                <input type="hidden" name="printname" value="<?=$result[1]?>">
 
-                                <input type="hidden" name="SESSION_name" value="<?=$_SESSION['name']?>">
+                                <input type="hidden" name="SESSION_name" value="<?= $_SESSION['name'] ?>">
                                 <!--ตั้งค่าการพิมพ์ -->
                                 
                                 <input type="hidden" name="amount_r" id="amount_r" value="">
