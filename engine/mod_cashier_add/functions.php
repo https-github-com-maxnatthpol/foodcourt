@@ -19,6 +19,8 @@ if (isset($_POST['form'])) {
 		form_address();
 	}else if ($_POST['form']=="check_email") {
 		check_email();
+	}else if ($_POST['form']=="form_print") {
+		form_print();
 	}
 }else{
 	if ($_GET['form']=="Multi_del") {
@@ -498,7 +500,29 @@ $query = $db->Query($sql);
 
 }
 
+function form_print(){
+	$db = new DB();
 
+if (isset($_SESSION["id_data"])) {
+	$id_data = $_SESSION["id_data"];
+}else{
+	$id_data = '';
+}
 
+	header('Content-Type: application/json');
+	date_default_timezone_set("Asia/Bangkok");
+	$date_regdate = date("Y-m-d H:i:s");
 
-?>
+	$ip_cashier = $db->clear($_POST["ip_cashier"]);
+	$print_cashier = $db->clear($_POST["print_cashier"]);
+    $id_print = $db->clear($_POST["id_print"]);
+
+    $str = "UPDATE `mod_cashier` SET `ip_cashier`='".$ip_cashier."',`print_cashier`='".$print_cashier."',`update_id`='".$id_data."',`update_datetime`='".$date_regdate."' WHERE `id_cashier` = '".$id_print."' ";
+    $objQuery = $db->Query($str);
+
+	if($objQuery){
+		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
+	}else{
+		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
+	}
+}
