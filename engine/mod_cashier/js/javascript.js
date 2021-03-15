@@ -1,10 +1,46 @@
+//function -------------------------------------------
+function leftPad(number, targetLength) {
+  var output = number + '';
+  while (output.length < targetLength) {
+    output = '0' + output;
+  }
+  return output;
+}
+
+
+
+function chkNumber(ele) {
+  var vchar = String.fromCharCode(event.keyCode);
+  if ((vchar < '0' || vchar > '9') && (vchar != '.')) return false;
+  ele.onKeyPress = vchar;
+}
+
+//btnSend------------------------------------
 $(document).on('click', '#btnSendฺBuyCard', function () {
   var formData = new FormData($('#form_buy_card')[0]);
+  var card_number = document.getElementById("card_number").value;
   var sum_amount_f = document.getElementById("amount_f").value;
   var sum_receive_money = document.getElementById("receive_money").value;
-  swal.fire({
-    title: "ตรวจสอบข้อมูลก่อนยืนยัน !",
-    html: `
+  if (card_number == "") {
+    console.log(1111);
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกเรียบร้อยแล้ว',
+      showConfirmButton: false,
+      timer: 1000
+    })
+  } else if (sum_amount_f == "") {
+    console.log(1111);
+    Swal.fire({
+      icon: 'success',
+      title: 'บันทึกเรียบร้อยแล้ว',
+      showConfirmButton: false,
+      timer: 1000
+    })
+  } else {
+    swal.fire({
+      title: "ตรวจสอบข้อมูลก่อนยืนยัน !",
+      html: `
     <style>
       table.center {
         margin-left: auto; 
@@ -31,50 +67,56 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
             </tr>                 
         </tbody>
         </table>`,
-    icon: 'info',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    cancelButtonText: 'ยกเลิก!',
-    confirmButtonText: 'ยืนยัน',
-    reverseButtons: true
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'ยกเลิก!',
+      confirmButtonText: 'ยืนยัน',
+      reverseButtons: true
 
-  }).then((result) => {
-    if (result.value) {
-      $.ajax({
-        method: "POST",
-        url: "functions.php",
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-          if (data.status == '0') {
-            swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
-            document.getElementById("form_buy_card").reset();
-            setTimeout(function () {
-              location.reload();
-            }, 1000);
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          method: "POST",
+          url: "functions.php",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            if (data.status == '0') {
+              Swal.fire({
+                icon: 'success',
+                title: 'บันทึกเรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 1000
+              })
+              document.getElementById("form_buy_card").reset();
+              setTimeout(function () {
+                location.reload();
+              }, 1000);
 
-            //print
-            $.ajax({
-              method: "POST",
-              url: document.getElementById("PRINT_HOST").value + "functions.php",
-              data: formData,
-              cache: false,
-              contentType: false,
-              processData: false,
-            });
+              //print
+              $.ajax({
+                method: "POST",
+                url: document.getElementById("PRINT_HOST").value + "functions.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+              });
 
-          } else {
-            swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
-          }
-        },
-      }).fail(function () {
-        swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
-      });
-    }
-  });
+            } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          },
+        }).fail(function () {
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+        });
+      }
+    });
+  }
 });
 
 $(document).on('click', '#btnSendReturnCard', function () {
@@ -120,9 +162,15 @@ $(document).on('click', '#btnSendReturnCard', function () {
         processData: false,
         success: function (data) {
           if (data.status == '0') {
-            swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
+            Swal.fire({
+              icon: 'success',
+              title: 'บันทึกเรียบร้อยแล้ว',
+              showConfirmButton: false,
+              timer: 1000
+            })
 
             document.getElementById("form_return_card").reset();
+
             setTimeout(function () {
               location.reload();
             }, 1000);
@@ -148,23 +196,7 @@ $(document).on('click', '#btnSendReturnCard', function () {
   });
 });
 
-
-function leftPad(number, targetLength) {
-  var output = number + '';
-  while (output.length < targetLength) {
-    output = '0' + output;
-  }
-  return output;
-}
-
-
-
-function chkNumber(ele) {
-  var vchar = String.fromCharCode(event.keyCode);
-  if ((vchar < '0' || vchar > '9') && (vchar != '.')) return false;
-  ele.onKeyPress = vchar;
-}
-
+//CHECK------------------------------------------------------
 $('#card_number').keyup(function () {
   var card_number = $('#card_number').val();
 
@@ -192,10 +224,7 @@ $('#card_number').keyup(function () {
         $("#a_card_number").attr("style", "color: #fafafa;");
 
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
-        document.getElementById("amount").innerHTML = response.message[1];
-        document.getElementById("Issue_date").innerHTML = response.deta;
-        document.getElementById("employee").innerHTML = response.message[3] + " " + response.message[4];
-        document.getElementById("status").innerHTML = response.message[5];
+        document.getElementById("amount").innerHTML = "฿ " + response.message[1];
 
         setTimeout(function () {
           $("#card_number").attr("style", "");
@@ -210,16 +239,13 @@ $('#card_number').keyup(function () {
         $("#a_card_number").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
         document.getElementById("amount").innerHTML = "-";
-        document.getElementById("Issue_date").innerHTML = "-";
-        document.getElementById("employee").innerHTML = "-";
-        document.getElementById("status").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
           $("#card_number_alert").attr("style", "transition: 0.5s; display:none;");
         }, 10000);
 
-      } else if (numStr < 10) {
+      } else if (numStr < 18) {
         $("#card_number").attr("style", "border-color: #ffc107; border-width: 2px; background-color: #ffc10745;");
         $("#card_number_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #ffc107; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number").innerHTML = "<i style='color:#fafafa;' class='fa fa-exclamation-triangle'></i>  กำหนดไม่ต่ำกว่า 18 ตัวเลข";
@@ -227,9 +253,6 @@ $('#card_number').keyup(function () {
         $("#a_card_number").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
         document.getElementById("amount").innerHTML = "-";
-        document.getElementById("Issue_date").innerHTML = "-";
-        document.getElementById("employee").innerHTML = "-";
-        document.getElementById("status").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
@@ -270,12 +293,8 @@ $('#card_number_r').keyup(function () {
         $("#a_card_number_r").attr("style", "color: #fafafa;");
 
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
-        document.getElementById("amount").innerHTML = response.message[1];
         document.getElementById("amount_r").value = response.message[1];
         document.getElementById("amount_t").innerHTML = response.message[1];
-        document.getElementById("Issue_date").innerHTML = response.deta;
-        document.getElementById("employee").innerHTML = response.message[3] + " " + response.message[4];
-        document.getElementById("status").innerHTML = response.message[5];
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "");
@@ -289,27 +308,21 @@ $('#card_number_r').keyup(function () {
         document.getElementById('btnSendReturnCard').disabled = true;
         $("#a_card_number_r").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
-        document.getElementById("amount").innerHTML = "-";
-        document.getElementById("Issue_date").innerHTML = "-";
-        document.getElementById("employee").innerHTML = "-";
-        document.getElementById("status").innerHTML = "-";
+        document.getElementById("amount_t").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
           $("#card_number_r_alert").attr("style", "transition: 0.5s; display:none;");
         }, 10000);
 
-      } else if (numStr < 10) {
+      } else if (numStr < 18) {
         $("#card_number_r").attr("style", "border-color: #ffc107; border-width: 2px; background-color: #ffc10745;");
         $("#card_number_r_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #ffc107; transition: 0.5s; display:inline-block;");
         document.getElementById("a_card_number_r").innerHTML = "<i style='color:#fafafa;' class='fa fa-exclamation-triangle'></i>  กำหนดไม่ต่ำกว่า 18 ตัวเลข";
         document.getElementById('btnSendReturnCard').disabled = true;
         $("#a_card_number_r").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
-        document.getElementById("amount").innerHTML = "-";
-        document.getElementById("Issue_date").innerHTML = "-";
-        document.getElementById("employee").innerHTML = "-";
-        document.getElementById("status").innerHTML = "-";
+        document.getElementById("amount_t").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
@@ -322,3 +335,61 @@ $('#card_number_r').keyup(function () {
   });
 
 });
+
+//select_data-----------------------------------------------------------------
+fetch_data_table();
+
+function fetch_data_table() {
+  var button_update = $("#per_button_edit").val();
+  var button_delete = $("#per_button_del").val();
+  var button_create = $("#per_button_open").val();
+  var button_view = $("#per_input_read").val();
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: "select_table_front_manage",
+      button_update: button_update,
+      button_delete: button_delete,
+      button_create: button_create,
+      button_view: button_view
+    },
+    success: function (data) {
+      $("#div_table_list").html(data);
+      $("#table_front_manage").DataTable({
+        scrollY: true,
+        scrollCollapse: true,
+        scrollX: true,
+        searching: false,
+        lengthChange: false,
+        pageLength: 5,
+        order: [
+          [0, "ASC"]
+        ],
+        language: {
+          sEmptyTable: "ไม่มีข้อมูลในตาราง",
+          sInfo: "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+          sInfoEmpty: "แสดง 0 ถึง 0 จาก 0 แถว",
+          sInfoFiltered: "(กรองข้อมูล _MAX_ ทุกแถว)",
+          sInfoPostFix: "",
+          sInfoThousands: ",",
+          sLengthMenu: "แสดง _MENU_ แถว",
+          sLoadingRecords: "กำลังโหลดข้อมูล...",
+          sProcessing: "กำลังดำเนินการ...",
+          sSearch: "ค้นหา: ",
+          sZeroRecords: "ไม่พบข้อมูล",
+          oPaginate: {
+            sFirst: "หน้าแรก",
+            sPrevious: "ก่อนหน้า",
+            sNext: "ถัดไป",
+            sLast: "หน้าสุดท้าย",
+          },
+          oAria: {
+            sSortAscending: ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
+            sSortDescending: ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย",
+          },
+        }
+      });
+    }
+  });
+}

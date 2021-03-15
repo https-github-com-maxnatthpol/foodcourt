@@ -69,8 +69,9 @@ $db = new DB();
 
         <div class="row">
             <div class="col-md-6">
-                <div class="card card-body">
-                    <div class="ribbon ribbon-bookmark ribbon-info"><i class="mdi mdi-calculator"></i> สแกนบาร์โค้ด</div>
+                <div class="ribbon-wrapper card">
+                    <div class="ribbon ribbon-bookmark ribbon-success"><i class="mdi mdi-calculator"></i> สแกนบัตร</div>
+                    <label for="example" class="text"><i class="mdi mdi-credit-card"></i> รหัสบัตร </label>
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
                             <form action="" name="form_buy_card" id="form_buy_card" method="post">
@@ -84,8 +85,8 @@ $db = new DB();
                                 $result[0];
                                 ?>
                                 <input type="hidden" id="PRINT_HOST" name="PRINT_HOST" value="<?= constant("PRINT_HOST"); ?>">
-                                <input type="hidden" name="ip" value="<?=$result[0]?>">
-                                <input type="hidden" name="printname" value="<?=$result[1]?>">
+                                <input type="hidden" name="ip" value="<?= $result[0] ?>">
+                                <input type="hidden" name="printname" value="<?= $result[1] ?>">
 
                                 <input type="hidden" name="SESSION_name" value="<?= $_SESSION['name'] ?>">
                                 <!--ตั้งค่าการพิมพ์ -->
@@ -95,6 +96,7 @@ $db = new DB();
                                         <small id="a_card_number" style="color: #fafafa;"></small>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -113,14 +115,30 @@ $db = new DB();
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">หมายเลขบัตร </label>
+                                            <div class="input-group">
+                                            <h2><p id="number" class="form-control-static"> - </p></h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">เงินคงเหลือ </label>
+                                            <div class="input-group">
+                                                <h2><p id="amount" class="form-control-static"> - </p></h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <label class="control-label">&nbsp;</label>
-                                                <div class="input-group">
-                                                    <button type="button" class="btn btn-success  btnSendฺBuyCard" id="btnSendฺBuyCard" style="transition: 0.4s; margin-left: 5px;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ยืนยัน</button>
-                                                </div>
+                                                <button type="button" class="btn btn-success  btnSendฺBuyCard" id="btnSendฺBuyCard" style="transition: 0.4s; margin-left: 5px;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;ยืนยัน</button>
                                             </div>
                                         </div>
                                     </div>
@@ -131,76 +149,9 @@ $db = new DB();
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card card-body">
-                    <h3 class="box-title m-b-0">ข้อมูลบัตร</h3>
-                    <p class="text-muted m-b-30 font-13"> *ตรวจสอบความถูกต้องของข้อมูลก่อนยืนยัน </p>
-                    <form class="form-horizontal" role="form">
-                        <div class="form-body">
-                            <hr class="m-t-0 m-b-40">
-                            <!--row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">หมายเลขบัตร:</label>
-                                        <div class="col-md-9">
-                                            <p id="number" class="form-control-static"> - </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/row-->
-                            <!--row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">เงินคงเหลือ:</label>
-                                        <div class="col-md-9">
-                                            <p id="amount" class="form-control-static"> - </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/row-->
-                            <!--row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">วันที่ออกบัตร:</label>
-                                        <div class="col-md-9">
-                                            <p id="Issue_date" class="form-control-static"> - </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/row-->
-                            <!--row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">ผู้ออกบัตร:</label>
-                                        <div class="col-md-9">
-                                            <p id="employee" class="form-control-static"> - </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/row-->
-                            <!--row-->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">สถานะบัตร:</label>
-                                        <div class="col-md-9">
-                                            <p id="status" class="form-control-static"> - </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/row-->
-                        </div>
-
-                    </form>
-
+                <div class="ribbon-wrapper card">
+                    <div class="ribbon ribbon-bookmark ribbon-success"><i class="mdi mdi-calculator"></i> ข้อมูลการทำธุรกรรมวันนี้</div>
+                    <div id="div_table_list"></div>
                 </div>
             </div>
         </div>
