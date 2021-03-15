@@ -127,6 +127,8 @@ $db = new DB();
          			<div class="ribbon-wrapper card">
                         <div class="ribbon ribbon-bookmark ribbon-info"><i class="mdi mdi-credit-card-scan"></i> สแกนชำระสินค้า</div>
                         <form name="form_card" id="form_card">
+                        <input type="hidden" name="total_card_s" id="total_card_s">
+                        <input type="hidden" name="form" value="form_card">    
                         <div class="form-group">
                           <label for="example" class="text-themecolor"><i class="mdi mdi-credit-card"></i> เลขบัตรชำระสินค้า </label>
                           <input type="text" class="form-control" name="idcard" id="idcard" placeholder="กรุณากรอกเลขบัตรชำระสินค้า" maxlength="18" OnKeyPress="return chkNumber(this)">
@@ -134,7 +136,7 @@ $db = new DB();
                             <small id="a_idcard"  style="color: #FFFFFF;"></small>
                           </div>    
                         </div>
-                        </form>    
+                            
                         <div class="row"> 
                             <div class="col-lg-6">
                                 <div class="form-group">
@@ -163,9 +165,9 @@ $db = new DB();
                           <label for="example" class="text-themecolor"><i class="fas fa-calculator"></i> จำนวนเงินที่ต้องชำระ</label>
                         </div>
                         <div id="shopmenu">
-                            <input type="text" id="balance" /></br>
+                            <input type="text" id="balance" name="balance" /></br>
                         </div>
-                        
+                       </form> 
                     </div>
 				</div>
 				<div class="col-md-6 col-lg-6 col-sm-12">   
@@ -185,7 +187,7 @@ $db = new DB();
                                 <input type="button" value="9" id="9" class="pinButton calc"/><br>
                                 <input type="button" value="รีเซต" id="clear" class="pinButton clear"/>
                                 <input type="button" value="0" id="0 " class="pinButton calc"/>
-                                <input type="button" value="ตกลง" id="enter" class="pinButton enter"/>
+                                <input type="button" value="ตกลง" id="enter" name="enter" class="pinButton enter"/>
                               </form>
                             </div>
                         </div>
@@ -237,9 +239,89 @@ $(document).ready(function () {
     document.getElementById("total_card").innerHTML = ": -"
     document.getElementById("idcard").focus();  
   });
-  $("#enter").click(function () {
-    alert("Your text " + input_value.val() + " added");
-  });
+    
+//  $("#enter").click(function () {
+//    alert("Your text " + input_value.val() + " added");
+//  });
+    
+  $(document).on('click', '#enter', function(event) {
+  var formData = new FormData($('#form_card')[0]);
+      
+  var total = parseInt($("#total_card_s").val());
+  var balance = parseInt($("#balance").val());
+            
+  if(balance > total){
+      swal.fire('คำเตือน!','ยอดเงินของคุณไม่เพียงพอ','warning');        
+  }
+  else if ($("#idcard").val() != "" 
+  && $("#balance").val() != "" 
+  && $("#total_card_s").val() != "" ){
+// ------------------------------------------------------------------------
+  swal
+    .fire({
+      title: "ยืนยัน?",
+      text: "ยืนยันการชำระเงินหรือไม่?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "ยกเลิก!",
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
+    })
+    .then(result => {
+      if (result.value) {
+        $.ajax({
+          url: "function_m.php",
+          method: "POST",
+          data: formData,
+          processData: false,
+          contentType: false, 
+          success: function(data) {
+          if(data.status == 1){
+            swal.
+                fire({
+                itle: "สำเร็จ !",
+                text: "การชำระเงิน สำเร็จ.",
+                type: "success",  
+                    }).then(function() {
+//                            document.getElementById("register_form").reset();
+//                            $('#model_login').modal('show');
+//                            location.href='index.php';  
+                });
+
+             } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          }
+        }).fail(function(data) {
+          // คือไม่สำรเ็จ
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
+        });
+      }
+    });
+// -------------------------------------------------------------------------
+  }
+  else{
+    swal.fire('คำเตือน!','กรุณากรอกข้อมูลให้ครบถ้วน','warning');
+
+	  				if($("#idcard").val() == ""){
+                        $("#idcard").attr("style" , "border-color: red; border-width: 1px; background-color: #ff000038;");
+                        setTimeout(function() {
+                            $("#idcard").attr("style" , "");
+                        }, 5000);
+                    }
+                    if($("#balance").val() == ""){
+                        $("#balance").attr("style" , "border-color: red; border-width: 1px; background-color: #ff000038;");
+                        setTimeout(function() {
+                            $("#balance").attr("style" , "");
+                        }, 5000);
+                    }
+  	}
+
+});    
+    
+    
 });
     
 function chkNumber(ele)
@@ -268,12 +350,13 @@ $( '#idcard' ).keyup(function() {
                            //console.log(response.status);
                            //console.log('numStr : ',numStr);
 				           //console.log(response.message);
-                          if(response.status == 1 && idcard != '' ){
+                          if(numStr == 18 && response.status == 1 && idcard != '' ){
                             $("#idcard").attr("style" , "height: 35px !important; font-size: 16px; border-color: #339601; border-width: 2px; background-color: #3396012e;");
                             $("#idcard_alert").attr("style" , "height: 35px !important; font-size: 16px; border-radius: 5px; background-color: #339601; color: #ffffff; transition: 0.5s; display:inline-block;");
                             document.getElementById("a_idcard").innerHTML = "<i style='color:#fafafa;' class='fa fa-times-circle'></i> เลขบัตรประชาชนนี้ถูกใช้งานไปแล้ว";
                             $("#a_idcard").attr("style" , "color: #ffffff;");  
 							document.getElementById('enter').disabled = false;
+                            $("#total_card_s").attr("value" , response.message[2]);  
                             document.getElementById("number_card").innerHTML = ": " + leftPad(response.message[0], 4);
                             document.getElementById("total_card").innerHTML = ": ฿ " + response.message[2];  
 
@@ -304,5 +387,5 @@ $( '#idcard' ).keyup(function() {
          });
 
 });
-
+    
 </script>
