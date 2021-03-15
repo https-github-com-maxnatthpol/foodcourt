@@ -26,9 +26,6 @@ if ($_POST['form'] == 'check_user_ex') {
 } elseif ($_POST['form'] == 'del') {
     doDel();
     exit;
-} elseif ($_POST['form'] == "form_add_card") {
-    form_add_card();
-    exit;
 }
 
 function doCheckuser()
@@ -859,45 +856,6 @@ function setMD5()
 
     $set_modify_md5 = $letter_pre . $setmid . $cut_post . $letter_post;
     return $set_modify_md5;
-}
-
-function form_add_card()
-{
-    $db = new DB();
-
-    header('Content-Type: application/json');
-    date_default_timezone_set("Asia/Bangkok");
-    $date_regdate = date("Y-m-d H:i:s");
-
-    if (isset($_SESSION["id_data"])) {
-        $id_data = $_SESSION["id_data"];
-    } else {
-        $id_data = '';
-    }
-
-    $sql = 'SELECT `number`,`Issue_date` FROM card order by `Issue_date` desc limit 1 ';
-    $query = $db->Query($sql);
-    $result = mysqli_fetch_array($query);
-
-    $number = $db->clear($result[0] + 1);
-    $card_number = $db->clear($_POST["card_number"]);
-    $status = $db->clear("1");
-    $amount = $db->clear("0");
-    $Issue_date = $db->clear($date_regdate);
-    $last_update = $db->clear("");
-    $id_employee = $db->clear($id_data);
-
-    $id = setMD5();
-
-    $str = "INSERT INTO `card`(`id`, `number`, `card_number`, `status`,`amount`, `Issue_date`, `last_update`, `id_employee`) 
-			VALUES ('" . $id . "','" . $number . "','" . $card_number . "','" . $status . "','" . $amount . "','" . $Issue_date . "','" . $last_update . "','" . $id_employee . "')";
-    $objQuery = $db->Query($str);
-
-    if ($objQuery) {
-        echo json_encode(array('status' => '0', 'message' => 'สำเร็จ'));
-    } else {
-        echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
-    }
 }
 
 //function

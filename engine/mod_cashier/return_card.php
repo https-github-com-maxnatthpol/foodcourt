@@ -79,6 +79,7 @@ $db = new DB();
                                 <input type="hidden" name="form" value="form_return_card">
                                 <!--ตั้งค่าการพิมพ์ -->
                                 <input type="hidden" name="print" value="printslip_return_card">
+                                <input type="hidden" name="SESSION_name" value="<?= $_SESSION['name'] ?>">
                                 <?php
                                 $sql = "SELECT `ip_cashier`,print_cashier FROM mod_cashier WHERE `id_cashier` =  '" . $_SESSION["id_data"] . "'";
                                 $query = $db->Query($sql);
@@ -88,14 +89,12 @@ $db = new DB();
                                 <input type="hidden" id="PRINT_HOST" name="PRINT_HOST" value="<?= constant("PRINT_HOST"); ?>">
                                 <input type="hidden" name="ip" value="<?=$result[0]?>">
                                 <input type="hidden" name="printname" value="<?=$result[1]?>">
-
-                                <input type="hidden" name="SESSION_name" value="<?= $_SESSION['name'] ?>">
                                 <!--ตั้งค่าการพิมพ์ -->
                                 
                                 <input type="hidden" name="amount_r" id="amount_r" value="">
 
                                 <div class="form-group">
-                                    <input type="text" id="card_number_r" name="card_number_r" class="form-control" maxlength="10" placeholder="" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
+                                    <input type="text" id="card_number_r" name="card_number_r" class="form-control" maxlength="18" placeholder="" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
                                     <div class="col-md-12" id="card_number_r_alert">
                                         <small id="a_card_number_r" style="color: #fafafa;"></small>
                                     </div>
