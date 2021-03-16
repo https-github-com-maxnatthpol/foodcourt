@@ -130,10 +130,10 @@ $db = new DB();
                         <input type="hidden" name="total_card_s" id="total_card_s">
                         <input type="hidden" name="form" value="form_card">
                                 <!--ตั้งค่าการพิมพ์ -->
-                                <input type="hidden" name="print" value="printslip_return_card">
+                                <input type="hidden" name="print" value="printslip_return_customer_his">
                                 <input type="hidden" name="SESSION_name" value="<?= $_SESSION['name'] ?>">
                                 <?php
-                                $sql = "SELECT `ip_customer`,print_customer FROM mod_customer WHERE `id_customer` =  '" . $_SESSION["id_data"] . "'";
+                                $sql = "SELECT `ip_customer`,`print_customer` FROM `mod_customer` WHERE `id_customer` =  '" . $_SESSION["id_data"] . "'";
                                 $query = $db->Query($sql);
                                 $result = mysqli_fetch_array($query);
                                 $result[0];
