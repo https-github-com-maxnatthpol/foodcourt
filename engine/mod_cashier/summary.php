@@ -75,7 +75,7 @@ $db = new DB();
         <div class="row">
             <div class="col-md-12">
                 <div class="ribbon-wrapper card" style="height: 500px;">
-                    <div class="ribbon ribbon-bookmark ribbon-info">ข้อมูลสรุปยอดการใช้งาน</div>
+                    <div class="ribbon ribbon-bookmark ribbon-info">ข้อมูลสรุปยอดการใช้งานวันนี้</div>
                     <div class="contact-page-aside">
                         <!-- .left-aside-column-->
                         <div id="fetch_data_summary_total"></div>
@@ -96,13 +96,14 @@ $db = new DB();
                 </div>
             </div>
         </div>
+       
 
         <div class="row">
             <div class="col-md-12">
                 <div class="ribbon-wrapper card">
-                    <div class="ribbon ribbon-bookmark ribbon-info">กราฟข้อมูลสรุปยอดการใช้งาน</div>
+                    <div class="ribbon ribbon-bookmark ribbon-info">กราฟข้อมูลสรุปยอดการใช้งานวันนี้</div>
                     <div class="card-body">
-                        <canvas id="chart_summary" width="800" height="450"></canvas>
+                    <div id="div_chart_summary"></div>
                     </div>
                 </div>
             </div>
@@ -116,35 +117,3 @@ $db = new DB();
 <?php include('../template/footer.php'); ?>
 
 <script type="text/javascript" src="js/javascript.js"></script>
-<script src="../../plugins_b/Chart.js/Chart.min.js"></script>
-<!--SELECT DATE_FORMAT(data_date, "%Y-%m-%d") as d,SUM(amount) AS amount FROM data_working_card WHERE date(data_date)>=date_add(NOW(),interval -1 week) GROUP BY DATE_FORMAT(data_date, "%Y-%m-%d") ORDER BY data_date ASC -->
-
-<script>
-    $.ajax({
-        url: "select_data.php",
-        method: "POST",
-        data: {
-            form: "chart_summary",
-        },
-        success: function(data) {
-            new Chart(document.getElementById("chart_summary"), {
-                type: 'line',
-                data: {
-                    labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050, ],
-                    datasets: [{
-                        data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478, ],
-                        label: "ยอดเงินสุทธิ",
-                        borderColor: "#6610f2",
-                        fill: false
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: 'กราฟสรุปยอดเงินสุทธิ (ย้อนหลัง 10 วัน)'
-                    }
-                }
-            });
-        }
-    });
-</script>

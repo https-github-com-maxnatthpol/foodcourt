@@ -435,3 +435,17 @@ function fetch_data_summary_total() {
     }
   });
 }
+
+chart_summary();
+function chart_summary() {
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: "chart_summary",
+    },
+    success: function (data) {
+      $("#div_chart_summary").html(data);
+    }
+  });
+}

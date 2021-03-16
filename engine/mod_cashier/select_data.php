@@ -12,8 +12,8 @@ if (isset($_POST['form'])) {
     select_table_front_manage();
   } elseif ($_POST['form'] == "fetch_data_summary_total") {
     fetch_data_summary_total();
-  }elseif ($_POST['form'] == "fetch_data_summary_total") {
-    fetch_data_summary_total();
+  } elseif ($_POST['form'] == "chart_summary") {
+    chart_summary();
   }
 }
 
@@ -71,7 +71,7 @@ function select_table_front_manage()
             ?>
           </td>
           <td>
-            <?php echo str_pad($objResult["number"],4,"0",STR_PAD_LEFT); ?>
+            <?php echo str_pad($objResult["number"], 4, "0", STR_PAD_LEFT); ?>
           </td>
           <td>
             <?php echo $objResult["text_Identity"]; ?>
@@ -125,7 +125,7 @@ function fetch_data_summary_total()
       <div class="card-body">
         <div class="d-flex flex-row">
           <div class="m-l-10 align-self-center">
-            <h3 class="card-title">+ ฿ <?=$total_buy_result[0]?></h3>
+            <h3 class="card-title">+ ฿ <?= $total_buy_result[0] ?></h3>
             <h5 class="card-title">ยอดเงินซื้อบัตร/เติมเงิน</h5>
           </div>
         </div>
@@ -135,7 +135,7 @@ function fetch_data_summary_total()
       <div class="card-body">
         <div class="d-flex flex-row">
           <div class="m-l-10 align-self-center">
-            <h3 class="card-title">- ฿ <?=$total_return_result[0]?></h3>
+            <h3 class="card-title">- ฿ <?= $total_return_result[0] ?></h3>
             <h5 class="card-title">ยอดเงินคืนบัตร</h5>
           </div>
         </div>
@@ -145,7 +145,7 @@ function fetch_data_summary_total()
       <div class="card-body">
         <div class="d-flex flex-row">
           <div class="m-l-10 align-self-center">
-            <h3 class="card-title">= ฿ <?=$total_buy_result[0]-$total_return_result[0]?></h3>
+            <h3 class="card-title">= ฿ <?= $total_buy_result[0] - $total_return_result[0] ?></h3>
             <h5 class="card-title">ยอดเงินสุทธิ</h5>
           </div>
         </div>
@@ -155,7 +155,51 @@ function fetch_data_summary_total()
 <?php
 }
 
-function fetch_data_summary_total()
+function chart_summary()
 {
-  
+  $db = new DB();
+
+  $sql = "SELECT DATE_FORMAT(data_date, '%Y-%m-%d') as summary_date,SUM(amount) AS amount FROM data_working_card WHERE date(data_date)>=date_add(NOW(),interval -1 week) GROUP BY DATE_FORMAT(data_date, '%Y-%m-%d') ORDER BY data_date ASC";
+
+  $query = $db->Query($sql);
+  $summary_date = "";
+  $amount = "";
+  while ($objResult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+    $summary_date .= '"'.$objResult["summary_date"] . '",';
+    $amount .= $objResult["amount"] . ",";
+  }
+?>
+  <canvas id="chart_summary" width="800" height="450"></canvas>
+  <script src="../../plugins_b/Chart.js/Chart.min.js"></script>
+
+  <script>
+    $.ajax({
+      url: "select_data.php",
+      method: "POST",
+      data: {
+        form: "chart_summary",
+      },
+      success: function(data) {
+        new Chart(document.getElementById("chart_summary"), {
+          type: 'line',
+          data: {
+            labels: [<?= $summary_date ?>],
+            datasets: [{
+              data: [<?= $amount ?>],
+              label: "ยอดเงินสุทธิ",
+              borderColor: "#6610f2",
+              fill: false
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'กราฟสรุปยอดเงินสุทธิ (ย้อนหลัง 10 วัน)'
+            }
+          }
+        });
+      }
+    });
+  </script>
+<?php
 }
