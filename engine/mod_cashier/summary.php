@@ -71,14 +71,6 @@ $db = new DB();
         <!-- ============================================================== -->
         <!-- Start Page Content -->
         <!-- ============================================================== -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="ribbon-wrapper card">
-                    <div class="ribbon ribbon-bookmark ribbon-info">กราฟข้อมูลสรุปยอดการใช้งาน</div>
-
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -110,49 +102,7 @@ $db = new DB();
                 <div class="ribbon-wrapper card">
                     <div class="ribbon ribbon-bookmark ribbon-info">กราฟข้อมูลสรุปยอดการใช้งาน</div>
                     <div class="card-body">
-                        <h4 class="card-title">Line Chart</h4>
-                        <div id="morris-line-chart" style="position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg height="363" version="1.1" width="629" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;">
-                                <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc>
-                                <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="49.546875" y="331" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal">
-                                    <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan>
-                                </text>
-                                <path fill="none" stroke="#eef0f2" d="M62.046875,331H604" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="49.546875" y="254.5" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal">
-                                    <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">5,000</tspan>
-                                </text>
-                                <path fill="none" stroke="#eef0f2" d="M62.046875,254.5H604" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="49.546875" y="178" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal">
-                                    <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">10,000</tspan>
-                                </text>
-                                <path fill="none" stroke="#eef0f2" d="M62.046875,178H604" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="49.546875" y="101.5" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal">
-                                    <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">15,000</tspan>
-                                </text>
-                                <path fill="none" stroke="#eef0f2" d="M62.046875,101.5H604" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="49.546875" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal">
-                                    <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">20,000</tspan>
-                                </text>
-                                <path fill="none" stroke="#eef0f2" d="M62.046875,25H604" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="504.5651010024302" y="343.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)">
-                                    <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2013</tspan>
-                                </text><text x="263.550710054678" y="343.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)">
-                                    <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2012</tspan>
-                                </text>
-                                <path fill="none" stroke="#009efb" d="M62.046875,290.2102C77.19258809234508,289.7818,107.48401427703524,292.792075,122.62972736938032,288.4966C137.7754404617254,284.201125,168.06686664641555,257.74819836065575,183.21257973876064,255.84640000000002C198.19366551488457,253.96527336065577,228.15583706713247,276.99482500000005,243.1369228432564,273.36490000000003C258.11800861938036,269.734975,288.08018017162823,230.42659959016396,303.0612659477522,226.80700000000002C318.2069790400973,223.14762459016396,348.4984052247874,240.443125,363.6441183171325,244.24900000000002C378.7898314094776,248.05487500000004,409.0812575941677,275.3355065573771,424.2269706865128,257.254C439.2080564626367,239.36903155737707,469.17022801488463,111.6657299723757,484.15131379100853,100.38310000000001C498.96777225091137,89.2244549723757,528.6006891707169,154.92755796703295,543.4171476306198,167.4889C558.5628607229648,180.32938296703296,588.8542869076549,193.365025,604,201.9904" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                                <circle cx="62.046875" cy="290.2102" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="122.62972736938032" cy="288.4966" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="183.21257973876064" cy="255.84640000000002" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="243.1369228432564" cy="273.36490000000003" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="303.0612659477522" cy="226.80700000000002" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="363.6441183171325" cy="244.24900000000002" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="424.2269706865128" cy="257.254" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="484.15131379100853" cy="100.38310000000001" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="543.4171476306198" cy="167.4889" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                <circle cx="604" cy="201.9904" r="4" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                            </svg>
-                            <div class="morris-hover morris-default-style" style="left: 511.859px; top: 114px; display: none;">
-                                <div class="morris-hover-row-label">2013 Q2</div>
-                                <div class="morris-hover-point" style="color: #009efb">
-                                    Item 1:
-                                    8,432
-                                </div>
-                            </div>
-                        </div>
+                        <canvas id="chart_summary" width="800" height="450"></canvas>
                     </div>
                 </div>
             </div>
@@ -166,3 +116,35 @@ $db = new DB();
 <?php include('../template/footer.php'); ?>
 
 <script type="text/javascript" src="js/javascript.js"></script>
+<script src="../../plugins_b/Chart.js/Chart.min.js"></script>
+<!--SELECT DATE_FORMAT(data_date, "%Y-%m-%d") as d,SUM(amount) AS amount FROM data_working_card WHERE date(data_date)>=date_add(NOW(),interval -1 week) GROUP BY DATE_FORMAT(data_date, "%Y-%m-%d") ORDER BY data_date ASC -->
+
+<script>
+    $.ajax({
+        url: "select_data.php",
+        method: "POST",
+        data: {
+            form: "chart_summary",
+        },
+        success: function(data) {
+            new Chart(document.getElementById("chart_summary"), {
+                type: 'line',
+                data: {
+                    labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050, ],
+                    datasets: [{
+                        data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478, ],
+                        label: "ยอดเงินสุทธิ",
+                        borderColor: "#6610f2",
+                        fill: false
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'กราฟสรุปยอดเงินสุทธิ (ย้อนหลัง 10 วัน)'
+                    }
+                }
+            });
+        }
+    });
+</script>
