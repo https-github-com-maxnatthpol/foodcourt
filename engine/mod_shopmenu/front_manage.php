@@ -47,7 +47,7 @@ $db = new DB();
   border: 1px solid rgb(228, 220, 220);
   outline: none;
   font-size: 60px;
-  color: transparent;
+  color: #ff0707;
   text-shadow: 0 0 0 rgb(71, 71, 71);
   text-align: center;
 }
@@ -128,7 +128,20 @@ $db = new DB();
                         <div class="ribbon ribbon-bookmark ribbon-info"><i class="mdi mdi-credit-card-scan"></i> สแกนชำระสินค้า</div>
                         <form name="form_card" id="form_card">
                         <input type="hidden" name="total_card_s" id="total_card_s">
-                        <input type="hidden" name="form" value="form_card">    
+                        <input type="hidden" name="form" value="form_card">
+                                <!--ตั้งค่าการพิมพ์ -->
+                                <input type="hidden" name="print" value="printslip_return_card">
+                                <input type="hidden" name="SESSION_name" value="<?= $_SESSION['name'] ?>">
+                                <?php
+                                $sql = "SELECT `ip_customer`,print_customer FROM mod_customer WHERE `id_customer` =  '" . $_SESSION["id_data"] . "'";
+                                $query = $db->Query($sql);
+                                $result = mysqli_fetch_array($query);
+                                $result[0];
+                                ?>
+                                <input type="hidden" id="PRINT_HOST" name="PRINT_HOST" value="<?= constant("PRINT_HOST"); ?>">
+                                <input type="hidden" name="ip" value="<?= $result[0] ?>">
+                                <input type="hidden" name="printname" value="<?= $result[1] ?>">
+                                <!--ตั้งค่าการพิมพ์ -->    
                         <div class="form-group">
                           <label for="example" class="text-themecolor"><i class="mdi mdi-credit-card"></i> เลขบัตรชำระสินค้า </label>
                           <input type="text" class="form-control" name="idcard" id="idcard" placeholder="กรุณากรอกเลขบัตรชำระสินค้า" maxlength="18" OnKeyPress="return chkNumber(this)">
@@ -194,6 +207,16 @@ $db = new DB();
                     </div>
 				</div>
                 <!-- Row -->
+                  <div class="col-md-12 col-lg-12">   
+                     <div class="ribbon-wrapper card" >
+                      <div class="ribbon ribbon-bookmark ribbon-info"><i class="fas fa-history"></i> ประวัติการชำระเงิน <?php echo DateThai($date);?></div>
+                      <div class="box-body" style="padding: 0;">
+                        <form action="" name="frmMain" id="frmMain" method="post">
+                          <div id="div_table_list"></div>  
+                        </form>
+                      </div>
+                    </div>
+                  </div>
                 <!-- ============================================================== -->
 			</div>
 </div>
@@ -279,16 +302,24 @@ $(document).ready(function () {
           contentType: false, 
           success: function(data) {
           if(data.status == 1){
-            swal.
-                fire({
-                itle: "สำเร็จ !",
-                text: "การชำระเงิน สำเร็จ.",
-                type: "success",  
-                    }).then(function() {
-//                            document.getElementById("register_form").reset();
-//                            $('#model_login').modal('show');
-//                            location.href='index.php';  
-                });
+                swal.fire("สำเร็จ", "บันทึกข้อมูลเรียบร้อยแล้ว", "success");
+                    document.getElementById("form_card").reset();
+                    document.getElementById("number_card").innerHTML = ": -"
+                    document.getElementById("total_card").innerHTML = ": -"
+                    document.getElementById("idcard").focus();
+//                            location.href='index.php';
+                    fetch_data_table()
+              
+              //print
+              $.ajax({
+                method: "POST",
+                url: document.getElementById("PRINT_HOST").value + "functions.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+              });
+
 
              } else {
               swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
@@ -387,5 +418,55 @@ $( '#idcard' ).keyup(function() {
          });
 
 });
+    
+fetch_data_table()
+    
+function fetch_data_table() {
+          var button_update = $('#per_button_edit').val();
+          var button_delete = $('#per_button_del').val();
+          var button_create = $('#per_button_open').val();
+          var button_view = $('#per_input_read').val();
+        $.ajax({
+            url: "select_data.php",
+            method: "POST",
+            data: {
+                form: "select_table_front_manage",button_update:button_update,button_delete:button_delete,button_create:button_create,button_view:button_view
+            },
+            success: function(data) {
+                $('#div_table_list').html(data);
+                $('#table_front_manage').DataTable({
+                	scrollY: true,
+                	scrollCollapse: true,
+                	scrollX: true,
+                	 "order": [[ 2, 'DESC' ]]
+					,
+            language: {
+                sEmptyTable: "ไม่มีข้อมูลในตาราง",
+				sInfo: "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+				sInfoEmpty: "แสดง 0 ถึง 0 จาก 0 แถว",
+				sInfoFiltered: "(กรองข้อมูล _MAX_ ทุกแถว)",
+				sInfoPostFix: "",
+				sInfoThousands: ",",
+				sLengthMenu: "แสดง _MENU_ แถว",
+				sLoadingRecords: "กำลังโหลดข้อมูล...",
+				sProcessing: "กำลังดำเนินการ...",
+				sSearch: "ค้นหา: ",
+				sZeroRecords: "ไม่พบข้อมูล",
+				oPaginate: {
+				sFirst: "หน้าแรก",
+				sPrevious: "ก่อนหน้า",
+				sNext: "ถัดไป",
+				sLast: "หน้าสุดท้าย",	
+				},
+				oAria: {
+				sSortAscending: ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
+				sSortDescending: ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย",
+				},
+            }
+					
+				});
+            }
+        });
+    }    
     
 </script>

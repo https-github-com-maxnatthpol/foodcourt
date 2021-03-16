@@ -49,6 +49,7 @@ function form_card(){
     header('Content-Type: application/json');
 	date_default_timezone_set("Asia/Bangkok");
 	$date_regdate = date("Y-m-d H:i:s");
+    $date_action = date("Y-m-d");
     
     if (isset($_SESSION["id_data"])) {
 	$id_data = $_SESSION["id_data"];
@@ -82,7 +83,7 @@ function form_card(){
     
     $id_history_pay = setMD5();
     
-    $str = "INSERT INTO `history_payment_shop`(`id_history_pay`, `id_customer`, `amount`, `card_number`, `id_catagory`, `create_datetime`) VALUES ('".$id_history_pay."','".$id_data."','".$balance."','".$card_number."','".$id_catagory."','".$date_regdate."')";
+    $str = "INSERT INTO `history_payment_shop`(`id_history_pay`, `id_customer`, `amount`, `card_number`, `id_catagory`, `create_datetime`, `date_action`) VALUES ('".$id_history_pay."','".$id_data."','".$balance."','".$card_number."','".$id_catagory."','".$date_regdate."','".$date_action."')";
     $objQuery = $db->Query($str);
     
     $str_c = "UPDATE `card` SET `amount`='".$totalsum."',`last_update`='".$date_regdate."' WHERE `card_number`='".$card_number."' ";
