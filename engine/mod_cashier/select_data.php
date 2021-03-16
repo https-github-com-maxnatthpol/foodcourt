@@ -12,6 +12,8 @@ if (isset($_POST['form'])) {
     select_table_front_manage();
   } elseif ($_POST['form'] == "fetch_data_summary_total") {
     fetch_data_summary_total();
+  }elseif ($_POST['form'] == "fetch_data_summary_total") {
+    fetch_data_summary_total();
   }
 }
 
@@ -152,4 +154,8 @@ function fetch_data_summary_total()
   </div>
 <?php
 }
-?>
+
+function fetch_data_summary_total()
+{
+  
+}
