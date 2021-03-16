@@ -22,20 +22,37 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
   var sum_amount_f = document.getElementById("amount_f").value;
   var sum_receive_money = document.getElementById("receive_money").value;
   if (card_number == "") {
-    console.log(1111);
+    document.getElementById("card_number").focus();
     Swal.fire({
-      icon: 'success',
-      title: 'บันทึกเรียบร้อยแล้ว',
-      showConfirmButton: false,
-      timer: 1000
+      icon: 'warning',
+      title: 'กรุณากรอก รหัสบัตร',
+      showConfirmButton: true,
+      timer: 2000
     })
+    
   } else if (sum_amount_f == "") {
-    console.log(1111);
+    document.getElementById("amount_f").focus();
     Swal.fire({
-      icon: 'success',
-      title: 'บันทึกเรียบร้อยแล้ว',
-      showConfirmButton: false,
-      timer: 1000
+      icon: 'warning',
+      title: 'กรุณากรอก จำนวนเงิน',
+      showConfirmButton: true,
+      timer: 2000
+    })
+  } else if (sum_receive_money == "") {
+    document.getElementById("receive_money").focus();
+    Swal.fire({
+      icon: 'warning',
+      title: 'กรุณากรอก เงินที่ได้รับ',
+      showConfirmButton: true,
+      timer: 2000
+    })
+  } else if (parseInt(sum_receive_money, 11) < parseInt(sum_amount_f, 11)) {
+    document.getElementById("receive_money").focus();
+    Swal.fire({
+      icon: 'error',
+      title: 'เงินที่ได้รับต้องไม่น้อยกว่าจำนวนเงิน',
+      showConfirmButton: true,
+      timer: 2000
     })
   } else {
     swal.fire({
@@ -122,78 +139,90 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
 $(document).on('click', '#btnSendReturnCard', function () {
   var formData = new FormData($('#form_return_card')[0]);
   var amount_r = document.getElementById("amount_r").value;
-  swal.fire({
-    title: "ตรวจสอบข้อมูลก่อนยืนยัน !",
-    html: `
-    <style>
-      table.center {
-        margin-left: auto; 
-        margin-right: auto;
-        width:60%;
+  var card_number_r = document.getElementById("card_number_r").value;
+  if (card_number_r == "") {
+    document.getElementById("card_number_r").focus();
+    Swal.fire({
+      icon: 'warning',
+      title: 'กรุณากรอก รหัสบัตร',
+      showConfirmButton: true,
+      timer: 2000
+    })
+  } else {
+    swal.fire({
+      title: "ตรวจสอบข้อมูลก่อนยืนยัน !",
+      html: `
+      <style>
+        table.center {
+          margin-left: auto; 
+          margin-right: auto;
+          width:60%;
+        }
+        th, td {
+          padding: 5px;
+        }
+      </style>
+      <table id="table" class="center" >
+          <tbody>
+              <tr>
+                  <td style="text-align: left"><h3 style="color: red;">จำนวนเงินที่ต้องคืน:</h3></td>
+                  <td style="text-align: right"><h3 style="color: red;">` + amount_r + ` บาท</h3></td>
+              </tr>                   
+          </tbody>
+          </table>`,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'ยกเลิก!',
+      confirmButtonText: 'ยืนยัน',
+      reverseButtons: true
+  
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          method: "POST",
+          url: "functions.php",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            if (data.status == '0') {
+              Swal.fire({
+                icon: 'success',
+                title: 'บันทึกเรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 1000
+              })
+  
+              document.getElementById("form_return_card").reset();
+  
+              setTimeout(function () {
+                location.reload();
+              }, 1000);
+  
+              //print
+              $.ajax({
+                method: "POST",
+                url: document.getElementById("PRINT_HOST").value + "functions.php",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+              });
+  
+            } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          },
+        }).fail(function () {
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+        });
       }
-      th, td {
-        padding: 5px;
-      }
-    </style>
-    <table id="table" class="center" >
-        <tbody>
-            <tr>
-                <td style="text-align: left"><h3 style="color: red;">จำนวนเงินที่ต้องคืน:</h3></td>
-                <td style="text-align: right"><h3 style="color: red;">` + amount_r + ` บาท</h3></td>
-            </tr>                   
-        </tbody>
-        </table>`,
-    icon: 'info',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    cancelButtonText: 'ยกเลิก!',
-    confirmButtonText: 'ยืนยัน',
-    reverseButtons: true
-
-  }).then((result) => {
-    if (result.value) {
-      $.ajax({
-        method: "POST",
-        url: "functions.php",
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-          if (data.status == '0') {
-            Swal.fire({
-              icon: 'success',
-              title: 'บันทึกเรียบร้อยแล้ว',
-              showConfirmButton: false,
-              timer: 1000
-            })
-
-            document.getElementById("form_return_card").reset();
-
-            setTimeout(function () {
-              location.reload();
-            }, 1000);
-
-            //print
-            $.ajax({
-              method: "POST",
-              url: document.getElementById("PRINT_HOST").value + "functions.php",
-              data: formData,
-              cache: false,
-              contentType: false,
-              processData: false,
-            });
-
-          } else {
-            swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
-          }
-        },
-      }).fail(function () {
-        swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
-      });
-    }
-  });
+    });
+  }
+  
 });
 
 //CHECK------------------------------------------------------
@@ -338,7 +367,6 @@ $('#card_number_r').keyup(function () {
 
 //select_data-----------------------------------------------------------------
 fetch_data_table();
-
 function fetch_data_table() {
   var button_update = $("#per_button_edit").val();
   var button_delete = $("#per_button_del").val();
@@ -390,6 +418,20 @@ function fetch_data_table() {
           },
         }
       });
+    }
+  });
+}
+
+fetch_data_summary_total();
+function fetch_data_summary_total() {
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: "fetch_data_summary_total",
+    },
+    success: function (data) {
+      $("#fetch_data_summary_total").html(data);
     }
   });
 }

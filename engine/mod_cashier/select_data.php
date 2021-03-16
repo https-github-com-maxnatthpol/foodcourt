@@ -10,6 +10,8 @@ require_once '../lib/permission.php';
 if (isset($_POST['form'])) {
   if ($_POST['form'] == "select_table_front_manage") {
     select_table_front_manage();
+  } elseif ($_POST['form'] == "fetch_data_summary_total") {
+    fetch_data_summary_total();
   }
 }
 
@@ -19,20 +21,38 @@ function select_table_front_manage()
   $db = new DB();
   date_default_timezone_set("Asia/Bangkok");
   $date_now = date("Y-m-d");
-  $strSQL = "SELECT data_date,Identity,IF(Identity = 0, 'ซื้อบัตร / เติมเงิน', 'คืนบัตร') AS text_Identity,amount FROM `data_working_card` WHERE data_date >= '$date_now 00:00:00';";
+
+  if (isset($_SESSION["id_data"])) {
+    $id_data = $_SESSION["id_data"];
+  } else {
+    $id_data = '';
+  }
+
+  $id_cashier = $db->clear($id_data);
+
+  $strSQL = "SELECT data_working_card.id_cashier,data_working_card.data_date,data_working_card.Identity,
+  IF(data_working_card.Identity = 0, 'ซื้อบัตร / เติมเงิน', 'คืนบัตร') AS text_Identity,data_working_card.amount,
+  card.number
+  FROM `data_working_card` 
+  INNER JOIN `card`
+  WHERE data_working_card.data_date >= '$date_now 00:00:00' 
+  AND data_working_card.id_card = card.id
+  AND data_working_card.id_cashier = '" . $id_cashier . "';";
   $objQuery = $db->Query($strSQL);
 
 ?>
   <style>
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-    color: #ffffff !important;
-    border: 1px solid #a2a9ad;
-    background-color: #a2a9ad;
-}
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+      color: #ffffff !important;
+      border: 1px solid #a2a9ad;
+      background-color: #a2a9ad;
+    }
   </style>
   <table class="table" id="table_front_manage" width="100%">
     <thead>
       <th>เวลา</th>
+      <th>เลขบัตร</th>
       <th>ธุรกรรม</th>
       <th>จำนวนเงิน</th>
     </thead>
@@ -47,6 +67,9 @@ function select_table_front_manage()
             $pieces = explode(" ", $pizza);
             echo $pieces[1];
             ?>
+          </td>
+          <td>
+            <?php echo str_pad($objResult["number"],4,"0",STR_PAD_LEFT); ?>
           </td>
           <td>
             <?php echo $objResult["text_Identity"]; ?>
@@ -67,3 +90,66 @@ function select_table_front_manage()
   </table>
 <?php
 }
+
+function fetch_data_summary_total()
+{
+  $db = new DB();
+  date_default_timezone_set("Asia/Bangkok");
+  $date_now = date("Y-m-d");
+
+  if (isset($_SESSION["id_data"])) {
+    $id_data = $_SESSION["id_data"];
+  } else {
+    $id_data = '';
+  }
+
+  $id_cashier = $db->clear($id_data);
+
+
+  $strSQL = "SELECT sum(amount) FROM `data_working_card` WHERE Identity = 0 AND data_date >= '$date_now 00:00:00' AND id_cashier = '" . $id_cashier . "';";
+  $objQuery = $db->Query($strSQL);
+  $total_buy_result = mysqli_fetch_array($objQuery);
+
+  $strSQL = "SELECT sum(amount) FROM `data_working_card` WHERE Identity = 1 AND data_date >= '$date_now 00:00:00' AND id_cashier = '" . $id_cashier . "';";
+  $objQuery = $db->Query($strSQL);
+  $total_return_result = mysqli_fetch_array($objQuery);
+?>
+  <div class="left-aside ">
+    <ul class="list-style-none">
+      <li class="box-label"><a href="javascript:void(0)">วันที่ <span><?= date("Y-m-d") ?></span></a></li>
+      <li class="divider"></li>
+    </ul>
+    <div class="card card-inverse card-success">
+      <div class="card-body">
+        <div class="d-flex flex-row">
+          <div class="m-l-10 align-self-center">
+            <h3 class="card-title">+ ฿ <?=$total_buy_result[0]?></h3>
+            <h5 class="card-title">ยอดเงินซื้อบัตร/เติมเงิน</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-inverse card-danger">
+      <div class="card-body">
+        <div class="d-flex flex-row">
+          <div class="m-l-10 align-self-center">
+            <h3 class="card-title">- ฿ <?=$total_return_result[0]?></h3>
+            <h5 class="card-title">ยอดเงินคืนบัตร</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-inverse card-info">
+      <div class="card-body">
+        <div class="d-flex flex-row">
+          <div class="m-l-10 align-self-center">
+            <h3 class="card-title">= ฿ <?=$total_buy_result[0]-$total_return_result[0]?></h3>
+            <h5 class="card-title">ยอดเงินสุทธิ</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php
+}
+?>
