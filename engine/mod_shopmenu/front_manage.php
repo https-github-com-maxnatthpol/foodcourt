@@ -128,6 +128,7 @@ $db = new DB();
                         <div class="ribbon ribbon-bookmark ribbon-info"><i class="mdi mdi-credit-card-scan"></i> สแกนชำระสินค้า</div>
                         <form name="form_card" id="form_card">
                         <input type="hidden" name="total_card_s" id="total_card_s">
+                        <input type="hidden" name="card_code" id="card_code">    
                         <input type="hidden" name="name_shop" id="name_shop" value="<?php echo $_SESSION["name"]; ?>">    
                         <input type="hidden" name="form" value="form_card">
                                 <!--ตั้งค่าการพิมพ์ -->
@@ -145,7 +146,7 @@ $db = new DB();
                                 <!--ตั้งค่าการพิมพ์ -->    
                         <div class="form-group">
                           <label for="example" class="text-themecolor"><i class="mdi mdi-credit-card"></i> เลขบัตรชำระสินค้า </label>
-                          <input type="text" class="form-control" name="idcard" id="idcard" placeholder="กรุณากรอกเลขบัตรชำระสินค้า" maxlength="18" OnKeyPress="return chkNumber(this)">
+                          <input type="text" class="form-control" name="idcard" id="idcard" placeholder="กรุณากรอกเลขบัตรชำระสินค้า" maxlength="18" OnKeyPress="return chkNumber(this)" autofocus>
                           <div class="col-md-12" id="idcard_alert" >
                             <small id="a_idcard"  style="color: #FFFFFF;"></small>
                           </div>    
@@ -303,12 +304,12 @@ $(document).ready(function () {
           contentType: false, 
           success: function(data) {
           if(data.status == 1){
-                swal.fire("สำเร็จ", "บันทึกข้อมูลเรียบร้อยแล้ว", "success");
+                swal.fire({ title:"สำเร็จ",text: "บันทึกข้อมูลเรียบร้อยแล้ว",icon: "success" ,timer: 1500});
               
         //            print
                       $.ajax({
                         method: "POST",
-                        url: document.getElementById("PRINT_HOST").value + "functions.php?ref="+data.ref_p,
+                        url: document.getElementById("PRINT_HOST").value + "functions.php?ref_p="+data.ref_p,
                         data: formData,
                         cache: false,
                         contentType: false,
@@ -319,13 +320,14 @@ $(document).ready(function () {
                     document.getElementById("number_card").innerHTML = ": -"
                     document.getElementById("total_card").innerHTML = ": -"
                     document.getElementById("idcard").focus();
-//                            location.href='index.php';
+                    
                     fetch_data_table()
 
              } else {
               swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
             }
           }
+
         }).fail(function(data) {
           // คือไม่สำรเ็จ
           swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
@@ -350,9 +352,7 @@ $(document).ready(function () {
                         }, 5000);
                     }
   	}
-
 });    
-    
     
 });
     
@@ -388,7 +388,8 @@ $( '#idcard' ).keyup(function() {
                             document.getElementById("a_idcard").innerHTML = "<i style='color:#fafafa;' class='fa fa-times-circle'></i> เลขบัตรประชาชนนี้ถูกใช้งานไปแล้ว";
                             $("#a_idcard").attr("style" , "color: #ffffff;");  
 							document.getElementById('enter').disabled = false;
-                            $("#total_card_s").attr("value" , response.message[2]);  
+                            $("#total_card_s").attr("value" , response.message[2]);
+                            $("#card_code").attr("value" , response.message[0]);  
                             document.getElementById("number_card").innerHTML = ": " + leftPad(response.message[0], 4);
                             document.getElementById("total_card").innerHTML = ": ฿ " + response.message[2];  
 
