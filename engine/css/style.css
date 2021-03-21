@@ -8020,3 +8020,75 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
 .boxsave{
     padding-top: 20px;
 }
+
+#pinpad {
+  padding: 0px 5px 0px 5px;
+}
+    
+#shopmenu form {
+  width: 100%;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px 20px;
+  text-align: center;
+  -webkit-box-shadow: 3px 3px 3px 4px #7460ee33;    
+  box-shadow: 3px 3px 3px 4px #7460ee33;
+  border-radius: 5px;
+}
+
+#shopmenu input[type="text"] {
+  padding: 0 40px;
+  border-radius: 5px;
+  width: 100%;
+  margin: auto;
+  border: 1px solid rgb(228, 220, 220);
+  outline: none;
+  font-size: 60px;
+  color: #ff0707;
+  text-shadow: 0 0 0 rgb(71, 71, 71);
+  text-align: center;
+}
+
+#shopmenu input:focus {
+  outline: none;
+}    
+    
+#shopmenu .pinButton {
+  border: none;
+  background: none;
+  font-size: 1.7em;
+  border-radius: 50%;
+  height: 60px;
+  font-weight: 550;
+  width: 60px;
+  color: transparent;
+  text-shadow: 0 0 0 rgb(102, 101, 101);
+  margin: 7px 20px;
+}
+
+#shopmenu .clear,
+#shopmenu .enter {
+  font-size: 1.2em !important;
+}
+
+#shopmenu .pinButton:hover {
+  box-shadow: #506ce8 0 0 1px 1px;
+}
+#shopmenu .pinButton:active {
+  background: #506ce8;
+  color: #fff;
+}
+#shopmenu .clear:hover {
+  box-shadow: #ff3c41 0 0 1px 1px;
+}
+#shopmenu .clear:active {
+  background: #ff3c41;
+  color: #fff;
+}
+#shopmenu .enter:hover {
+  box-shadow: #47cf73 0 0 1px 1px;
+}
+#shopmenu .enter:active {
+  background: #47cf73;
+  color: #fff;
+}

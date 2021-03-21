@@ -462,7 +462,7 @@ $button_view    = $_POST["button_view"];
 			
 			<?php } elseif ($objResult["status"] == '2') { ?>
 			
-                      <a href="../mod_permission/front-manage.php"><button type="button" class="btn btn-warning btn-sm"><i class="fas fa-registered" style="color: #FFFFFF;"></i>&nbsp;สมัครเข้าใช้งาน</button></a>
+                      <a href="../mod_permission/front-manage.php?se=tecc7b75da4a064e697280w10c55d043cby"><button type="button" class="btn btn-warning btn-sm"><i class="fas fa-registered" style="color: #FFFFFF;"></i>&nbsp;สมัครเข้าใช้งาน</button></a>
 			
 			<?php }
 		  
