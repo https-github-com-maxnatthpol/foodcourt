@@ -128,6 +128,7 @@ $db = new DB();
                         <div class="ribbon ribbon-bookmark ribbon-info"><i class="mdi mdi-credit-card-scan"></i> สแกนชำระสินค้า</div>
                         <form name="form_card" id="form_card">
                         <input type="hidden" name="total_card_s" id="total_card_s">
+                        <input type="hidden" name="name_shop" id="name_shop" value="<?php echo $_SESSION["name"]; ?>">    
                         <input type="hidden" name="form" value="form_card">
                                 <!--ตั้งค่าการพิมพ์ -->
                                 <input type="hidden" name="print" value="printslip_return_customer_his">
