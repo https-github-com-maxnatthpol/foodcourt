@@ -304,7 +304,15 @@ $(document).ready(function () {
           contentType: false, 
           success: function(data) {
           if(data.status == 1){
-                swal.fire({ title:"สำเร็จ",text: "บันทึกข้อมูลเรียบร้อยแล้ว",icon: "success" ,timer: 1500});
+                swal.fire({ 
+                    title:"สำเร็จ",
+                    text: "บันทึกข้อมูลเรียบร้อยแล้ว",
+                    icon: "success" ,
+                    timer: 2000, 
+                    onClose: () => {
+                               window.location.reload()
+                           }
+                        });
               
         //            print
                       $.ajax({
