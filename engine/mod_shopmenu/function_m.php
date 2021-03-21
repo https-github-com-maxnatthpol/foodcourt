@@ -90,7 +90,7 @@ function form_card(){
 	$objQuery_c = $db->Query($str_c);
 
 	if ($objQuery) {
-		echo json_encode(array('status' => '1', 'message' => 'สำเร็จ'));
+		echo json_encode(array('status' => '1', 'message' => 'สำเร็จ', 'ref_p' => $id_history_pay));
 	} else {
 		echo json_encode(array('status' => '0', 'message' => 'ผิดพลาด'));
 	}

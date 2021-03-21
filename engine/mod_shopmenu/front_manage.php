@@ -314,7 +314,7 @@ $(document).ready(function () {
               //print
               $.ajax({
                 method: "POST",
-                url: document.getElementById("PRINT_HOST").value + "functions.php",
+                url: document.getElementById("PRINT_HOST").value + "functions.php?ref="+data.ref_p,
                 data: formData,
                 cache: false,
                 contentType: false,
