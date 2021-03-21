@@ -68,7 +68,7 @@ $db = new DB();
         <!-- ============================================================== -->
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="ribbon-wrapper card">
                     <div class="ribbon ribbon-bookmark ribbon-danger"><i class="mdi mdi-calculator"></i> สแกนบัตร</div>
                     <label for="example" class="text"><i class="mdi mdi-credit-card"></i> รหัสบัตร </label>
@@ -134,7 +134,7 @@ $db = new DB();
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="ribbon-wrapper card">
                     <div class="ribbon ribbon-bookmark ribbon-danger"><i class="mdi mdi-calculator"></i> ข้อมูลการทำธุรกรรมวันนี้</div>
                     <div id="div_table_list"></div>
