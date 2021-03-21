@@ -114,10 +114,10 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
                 location.reload();
               }, 1000);
 
-              //print
+              //.print
               $.ajax({
                 method: "POST",
-                url: document.getElementById("PRINT_HOST").value + "functions.php",
+                url: document.getElementById("PRINT_HOST").value + "functions.php?ref="+data.ref+"&number="+data.number,
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -202,10 +202,10 @@ $(document).on('click', '#btnSendReturnCard', function () {
                 location.reload();
               }, 1000);
   
-              //print
+              //.print
               $.ajax({
                 method: "POST",
-                url: document.getElementById("PRINT_HOST").value + "functions.php",
+                url: document.getElementById("PRINT_HOST").value + "functions.php?ref="+data.ref+"&number="+data.number,
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -388,9 +388,9 @@ function fetch_data_table() {
         scrollY: true,
         scrollCollapse: true,
         scrollX: true,
-        searching: false,
+        searching: true,
         lengthChange: false,
-        pageLength: 5,
+        pageLength: 4,
         order: [
           [0, "ASC"]
         ],

@@ -32,7 +32,7 @@ function select_table_front_manage()
 
   $id_cashier = $db->clear($id_data);
 
-  $strSQL = "SELECT data_working_card.id_cashier,data_working_card.data_date,data_working_card.Identity,
+  $strSQL = "SELECT data_working_card.id,data_working_card.id_cashier,data_working_card.data_date,data_working_card.Identity,
   IF(data_working_card.Identity = 0, 'ซื้อบัตร / เติมเงิน', 'คืนบัตร') AS text_Identity,data_working_card.amount,
   card.number
   FROM `data_working_card` 
@@ -54,6 +54,7 @@ function select_table_front_manage()
   <table class="table" id="table_front_manage" width="100%">
     <thead>
       <th>เวลา</th>
+      <th>รหัสอ้างอิง</th>
       <th>เลขบัตร</th>
       <th>ธุรกรรม</th>
       <th>จำนวนเงิน</th>
@@ -69,6 +70,9 @@ function select_table_front_manage()
             $pieces = explode(" ", $pizza);
             echo $pieces[1];
             ?>
+          </td>
+          <td>
+            <?php echo substr($objResult["id"], 0 ,4); ?>
           </td>
           <td>
             <?php echo str_pad($objResult["number"], 4, "0", STR_PAD_LEFT); ?>
@@ -158,8 +162,21 @@ function fetch_data_summary_total()
 function chart_summary()
 {
   $db = new DB();
+  date_default_timezone_set("Asia/Bangkok");
 
-  $sql = "SELECT DATE_FORMAT(data_date, '%Y-%m-%d') as summary_date,SUM(amount) AS amount FROM data_working_card WHERE date(data_date)>=date_add(NOW(),interval -1 week) GROUP BY DATE_FORMAT(data_date, '%Y-%m-%d') ORDER BY data_date ASC";
+  if (isset($_SESSION["id_data"])) {
+    $id_data = $_SESSION["id_data"];
+  } else {
+    $id_data = '';
+  }
+
+  $id_cashier = $db->clear($id_data);
+
+  $sql = "SELECT DATE_FORMAT(data_date, '%Y-%m-%d') as summary_date,SUM(amount) AS amount 
+  FROM data_working_card 
+  WHERE date(data_date)>=date_add(NOW(),interval -1 week) AND id_cashier = '" . $id_cashier . "'
+  GROUP BY DATE_FORMAT(data_date, '%Y-%m-%d') 
+  ORDER BY data_date ASC";
 
   $query = $db->Query($sql);
   $summary_date = "";

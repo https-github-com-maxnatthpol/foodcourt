@@ -63,7 +63,7 @@ function form_buy_card()
 		$id_data = '';
 	}
 
-	$sql = "SELECT `id` FROM card WHERE `card_number` =  '" . $db->clear($_POST['card_number']) . "'";
+	$sql = "SELECT id,number FROM card WHERE `card_number` =  '" . $db->clear($_POST['card_number']) . "'";
 	$query = $db->Query($sql);
 	if ($query) {
 		$result = mysqli_fetch_array($query);
@@ -72,8 +72,10 @@ function form_buy_card()
 		$receive_money = $db->clear($_POST['receive_money']);
 		$Identity = $db->clear("0");
 		$data_date = $db->clear($date_regdate);
-		$id_card = $db->clear($result[0]);
+		$id_card = $db->clear($result["id"]);
 		$id_cashier = $db->clear($id_data);
+
+		$number = $result["number"];
 
 		$id = setMD5();
 
@@ -85,7 +87,7 @@ function form_buy_card()
 			$str = "UPDATE card SET amount = amount + '" . $amount_f . "',last_update = '" . $data_date . "'  WHERE id = '" . $db->clear($result[0]) . "'";
 			$query = $db->Query($str);
 			if ($query) {
-				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!"));
+				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!", 'number' => $number, 'ref' => $id));
 			} else {
 				echo json_encode(array('status' => '1', 'message' => $str));
 			}
@@ -111,7 +113,7 @@ function form_return_card()
 		$id_data = '';
 	}
 
-	$sql = "SELECT `id` FROM card WHERE `card_number` =  '" . $db->clear($_POST['card_number_r']) . "'";
+	$sql = "SELECT id,number FROM card WHERE `card_number` =  '" . $db->clear($_POST['card_number_r']) . "'";
 	$query = $db->Query($sql);
 	if ($query) {
 		$result = mysqli_fetch_array($query);
@@ -123,6 +125,8 @@ function form_return_card()
 		$id_card = $db->clear($result[0]);
 		$id_cashier = $db->clear($id_data);
 
+		$number = $result["number"];
+
 		$id = setMD5();
 
 		$str = "INSERT INTO `data_working_card`(`id`, `amount`, `receive_money`, `Identity`, `data_date`,`id_card`, `id_cashier`) 
@@ -133,7 +137,7 @@ function form_return_card()
 			$str = "UPDATE card SET amount = amount - '" . $amount_r . "',last_update = '" . $data_date . "'  WHERE id = '" . $db->clear($result[0]) . "'";
 			$query = $db->Query($str);
 			if ($query) {
-				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!"));
+				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!", 'number' => $number, 'ref' => $id));
 			} else {
 				echo json_encode(array('status' => '1', 'message' => $str));
 			}
