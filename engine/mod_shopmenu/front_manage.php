@@ -304,23 +304,23 @@ $(document).ready(function () {
           success: function(data) {
           if(data.status == 1){
                 swal.fire("สำเร็จ", "บันทึกข้อมูลเรียบร้อยแล้ว", "success");
+              
+        //            print
+                      $.ajax({
+                        method: "POST",
+                        url: document.getElementById("PRINT_HOST").value + "functions.php?ref="+data.ref_p,
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                      });
+              
                     document.getElementById("form_card").reset();
                     document.getElementById("number_card").innerHTML = ": -"
                     document.getElementById("total_card").innerHTML = ": -"
                     document.getElementById("idcard").focus();
 //                            location.href='index.php';
                     fetch_data_table()
-              
-              //print
-              $.ajax({
-                method: "POST",
-                url: document.getElementById("PRINT_HOST").value + "functions.php?ref="+data.ref_p,
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-              });
-
 
              } else {
               swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
