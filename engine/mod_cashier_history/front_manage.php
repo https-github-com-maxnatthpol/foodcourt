@@ -13,7 +13,6 @@ require_once '../lib/service.php';
 require_once '../lib/permission.php';
 $db = new DB();
 ?>
-
 <!--alerts CSS -->
 
         <!-- Page wrapper  -->
@@ -45,7 +44,7 @@ $db = new DB();
                         <div class="ribbon ribbon-bookmark ribbon-info"><i class="mdi mdi-credit-card-scan"></i> ค้นหา</div>
                         <form id="form_search" name="form_search">
                             <input type="hidden" name="btn_search_status" id="btn_search_status" value="btn_search_all">
-                            <input type="hidden" name="id_customer" id="id_customer" value="<?php echo $_SESSION["id_data"]; ?>">
+                            <input type="hidden" name="id_cashier" id="id_cashier" value="<?php echo $_SESSION["id_data"]; ?>">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -146,7 +145,7 @@ $(document).on('click', '#btn_search', function(){
   var button_delete = $('#per_button_del').val();
   var button_create = $('#per_button_open').val();
   var button_view = $('#per_input_read').val();
-  var id_customer   = $('#id_customer').val();    
+  var id_cashier   = $('#id_cashier').val();    
   $('#btn_search_status').val('btn_search');
  
         $.ajax({
@@ -154,7 +153,7 @@ $(document).on('click', '#btn_search', function(){
             method: "POST",
             data: {
                 form: "select_table",button_update:button_update,button_delete:button_delete,button_create:button_create,
-                button_view:button_view,start_to_end_date:start_to_end_date,id_customer:id_customer
+                button_view:button_view,start_to_end_date:start_to_end_date,id_cashier:id_cashier
             },
             success: function(data) {
                 $('#div_table_list').html(data);
@@ -198,14 +197,14 @@ function fetch_data_table() {
   var button_delete = $('#per_button_del').val();
   var button_create = $('#per_button_open').val();
   var button_view   = $('#per_input_read').val();
-  var id_customer   = $('#id_customer').val();
+  var id_cashier   = $('#id_cashier').val();
   var start_to_end_date = $('#start_to_end_date').val();    
         $.ajax({
             url: "select_data.php",
             method: "POST",
             data: {
                 form: "select_table",button_update:button_update,button_delete:button_delete,button_create:button_create,
-                button_view:button_view,id_customer:id_customer,start_to_end_date:start_to_end_date
+                button_view:button_view,id_cashier:id_cashier,start_to_end_date:start_to_end_date
             },
             success: function(data) {
                 $('#div_table_list').html(data);
