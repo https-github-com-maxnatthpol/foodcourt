@@ -31,7 +31,7 @@ function select_table_front_manage()
        $id_data = '';
     }
 
-    $strSQL = "SELECT id_customer,amount,card_number,create_datetime FROM `history_payment_shop` WHERE `id_customer` = '".$id_data."' and `date_action` = '".$date_select."' ORDER BY create_datetime ASC";
+    $strSQL = "SELECT id_history_pay,id_customer,amount,card_number,create_datetime FROM `history_payment_shop` WHERE `id_customer` = '".$id_data."' and `date_action` = '".$date_select."' ORDER BY create_datetime ASC";
     $objQuery = $db->Query($strSQL);
     
     $str_num = "SELECT amount
@@ -76,8 +76,9 @@ function select_table_front_manage()
                             </div>
 	<table class="table" id="table_front_manage" width="100%">
 		<thead>
+            <th>รหัสอ้างอิง</th>
 			<th>หมายเลขบัตร</th>
-            <th>จำนวนเงิน
+            <th>จำนวนเงิน</th>
             <th>วันที่เวลา</th>
 		</thead>
 		<tbody>
@@ -90,6 +91,9 @@ function select_table_front_manage()
         $objResult_card = mysqli_fetch_array($objQuery_card);
         $num++; ?>
 			<tr class="show-tr">
+                <td>
+                    <?php echo substr($objResult['id_history_pay'], 0 ,4); ?>
+                </td>
 				<td>
                     <?php echo str_pad($objResult_card['number'],4,"0",STR_PAD_LEFT); ?>
 				</td>
