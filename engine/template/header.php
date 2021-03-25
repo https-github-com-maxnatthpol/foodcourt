@@ -247,7 +247,11 @@ $logo = $logo == ""?HEAD_LOGO_MINI:$logo;
                                      <!-- <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-settings"></i> การตั้งค่าบัญชี</a></li> -->
                                     <li role="separator" class="divider"></li>
+                                    <?php if ($_SESSION['role_tag'] == 'mod_customer') { ?>
+                                    <li><a href="#" class="logout_customer"><i class="fa fa-power-off"></i> ออกจากระบบ</a></li>
+                                    <?php } else { ?>
                                     <li><a href="#" class="logout"><i class="fa fa-power-off"></i> ออกจากระบบ</a></li>
+                                    <?php } ?>
                                 </ul>
                             </div>
                         </li>
