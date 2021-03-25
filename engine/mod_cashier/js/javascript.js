@@ -148,6 +148,13 @@ $(document).on('click', '#btnSendReturnCard', function () {
       showConfirmButton: true,
       timer: 2000
     })
+  } else if (amount_r <= 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'ไม่มีจำนวนเงินในบัตร',
+      showConfirmButton: true,
+      timer: 2000
+    })
   } else {
     swal.fire({
       title: "ตรวจสอบข้อมูลก่อนยืนยัน !",
@@ -327,6 +334,20 @@ $('#card_number_r').keyup(function () {
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "");
+          $("#card_number_r_alert").attr("style", "transition: 0.5s; display:none;");
+        }, 10000);
+
+      } else if (response.status == 0 && numStr == 18) {
+        $("#card_number_r").attr("style", "border-color: #dd4b39; border-width: 2px; background-color: #ff000038;");
+        $("#card_number_r_alert").attr("style", "height: 35px !important; font-size: 14px; border-radius: 5px; background-color: #dd4b39; transition: 0.5s; display:inline-block;");
+        document.getElementById("a_card_number_r").innerHTML = "<i style='color:#fafafa;' class='fa fa-times-circle'></i>  ไม่พบข้อมูล";
+        document.getElementById('btnSendReturnCard').disabled = true;
+        $("#a_card_number_r").attr("style", "color: #fafafa;");
+        document.getElementById("number").innerHTML = "-";
+        document.getElementById("amount_t").innerHTML = "-";
+
+        setTimeout(function () {
+          $("#card_number_r").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
           $("#card_number_r_alert").attr("style", "transition: 0.5s; display:none;");
         }, 10000);
 

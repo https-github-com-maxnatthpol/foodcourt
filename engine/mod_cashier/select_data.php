@@ -82,9 +82,9 @@ function select_table_front_manage()
           </td>
           <?php
           if ($objResult["Identity"] == 0) {
-            echo '<td style="color:green;">+ ฿' . $objResult["amount"] . '</td>';
+            echo '<td style="color:green;">+ ฿' . number_format($objResult['amount'],2) . '</td>';
           } elseif ($objResult["Identity"] == 1) {
-            echo '<td style="color:red;">- ฿' . $objResult["amount"] . '</td>';
+            echo '<td style="color:red;">- ฿' . number_format($objResult['amount'],2) . '</td>';
           }
           ?>
         </tr>
@@ -129,7 +129,7 @@ function fetch_data_summary_total()
       <div class="card-body">
         <div class="d-flex flex-row">
           <div class="m-l-10 align-self-center">
-            <h3 class="card-title">+ ฿ <?= $total_buy_result[0] ?></h3>
+            <h3 class="card-title">+ ฿ <?= number_format($total_buy_result[0],2) ?></h3>
             <h5 class="card-title">ยอดเงินซื้อบัตร/เติมเงิน</h5>
           </div>
         </div>
@@ -139,7 +139,7 @@ function fetch_data_summary_total()
       <div class="card-body">
         <div class="d-flex flex-row">
           <div class="m-l-10 align-self-center">
-            <h3 class="card-title">- ฿ <?= $total_return_result[0] ?></h3>
+            <h3 class="card-title">- ฿ <?= number_format($total_return_result[0],2) ?></h3>
             <h5 class="card-title">ยอดเงินคืนบัตร</h5>
           </div>
         </div>
@@ -149,7 +149,7 @@ function fetch_data_summary_total()
       <div class="card-body">
         <div class="d-flex flex-row">
           <div class="m-l-10 align-self-center">
-            <h3 class="card-title">= ฿ <?= $total_buy_result[0] - $total_return_result[0] ?></h3>
+            <h3 class="card-title">= ฿ <?= number_format($total_buy_result[0] - $total_return_result[0],2) ?></h3>
             <h5 class="card-title">ยอดเงินสุทธิ</h5>
           </div>
         </div>
@@ -211,7 +211,7 @@ function chart_summary()
           options: {
             title: {
               display: true,
-              text: 'กราฟสรุปยอดเงินสุทธิ (ย้อนหลัง 10 วัน)'
+              text: 'กราฟสรุปยอดเงินสุทธิ (ย้อนหลัง 7 วัน)'
             }
           }
         });
