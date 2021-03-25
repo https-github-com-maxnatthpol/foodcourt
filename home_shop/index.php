@@ -184,7 +184,6 @@ $title = $title == ""?TITLE:$title;
 <!--===============================================================================================-->
 	<script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-	<script src="../js/main.js"></script>
     <script type="text/javascript">
 $(document).ready(function () {
   const input_value = $("#txtPassword");
