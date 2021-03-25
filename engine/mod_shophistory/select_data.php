@@ -47,8 +47,49 @@ if (isset($_POST["start_to_end_date"]) && $_POST["start_to_end_date"] != '' ) {
 $strSQL .= " ORDER BY date_action DESC ";
 //echo $strSQL;
 $objQuery = $db->Query($strSQL);
+    
+    $str_num = "SELECT amount
+    FROM `history_payment_shop`
+    WHERE `id_customer` = '".$id_customer."' AND (date_action BETWEEN '".$date_start_clear."' AND '".$date_end_clear."' )";
+    $objQuery_num = $db->Query($str_num); 
+    $objResult_num = mysqli_fetch_array($objQuery_num);
+    $num_sum =  mysqli_num_rows($objQuery_num);
+    
+    $strSQL_sum = "SELECT SUM(`amount`) as amount_sum
+    FROM `history_payment_shop`
+    WHERE `id_customer` = '".$id_customer."' AND (date_action BETWEEN '".$date_start_clear."' AND '".$date_end_clear."' )";
+    $objQuery_sum = $db->Query($strSQL_sum); 
+    $objResult_sum = mysqli_fetch_array($objQuery_sum);    
   
 ?>
+
+                              <div class="row">
+                                <div class="col-lg-6 col-md-6 b-r align-self-center">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row">
+                                            <div class="col-8 p-0 align-self-center">
+                                                <h3 class="m-b-0 text-info"><?php echo $num_sum; ?></h3>
+                                                <h5 class="text-muted m-b-0">จำนวนรายการ</h5> </div>
+                                            <div class="col-4 text-right">
+                                                <div class="round align-self-center round-success"><i class="mdi mdi-format-list-numbers"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 align-self-center">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row">
+                                            <div class="col-8 p-0 align-self-center">
+                                                <h3 class="m-b-0 text-info">฿ <?php echo number_format($objResult_sum['amount_sum'],2); ?></h3>
+                                                <h5 class="text-muted m-b-0">ยอดเงินรวม</h5> </div>
+                                            <div class="col-4 text-right">
+                                                <div class="round align-self-center round"><i class="mdi mdi-numeric"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+
   <table class="table" id="table_front_manage" width="100%">
     <thead >
       <th>ลำดับ</th>
