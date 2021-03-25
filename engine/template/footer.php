@@ -125,7 +125,28 @@ $(function() {
                   //alert(data.message);
                 location.href='../../home/'; 
 //				  location;	
+                    
                 }  
            });  
-      });  
+      });
+      $('.logout_customer').click(function(){  
+        let logout = new FormData();
+        logout.append('actionlogout','logout');
+           //var logout = "logout";  
+           $.ajax({  
+                url: "../lib/service.php",  
+                method: "POST",  
+                data: logout,  
+                processData: false,
+                contentType: false,
+                success:function(data)  
+                {  
+                  //console.log(data);
+                  //alert(data.message);
+                location.href='../../home_shop/'; 
+//				  location;	
+                    
+                }  
+           });  
+      }); 
 </script>
