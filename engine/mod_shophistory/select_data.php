@@ -96,7 +96,7 @@ $objQuery = $db->Query($strSQL);
       <th>วันที่เวลา</th>
       <th>รหัสอ้างอิง</th>
       <th>หมายเลขบัตร</th>
-      <th>ยอดเงินรวม</th>
+      <th>ยอดเงินรวม</th>    
     </thead>
     <tbody>
 <?php

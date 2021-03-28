@@ -48,7 +48,8 @@ $db = new DB();
                                     <div class="form-group">
                                         <label for="example-email" class="text-themecolor"><i class="fas fa-calendar"></i> วันที่เริ่มต้น - วันที่สิ้นสุด </label>
                                         <div class='input-group mb-3'>
-                                          <input type='text' class="form-control daterange" name="start_to_end_date" id="start_to_end_date" value="<?php echo date("d/m/Y") ?> - <?php echo date("d/m/Y") ?>"/>
+
+                                             <input type="text" class="form-control pull-right" id="datepicker-autoclose" data-provide="datepicker" data-date-language="th-th" name="employee-date"  value="<?php echo date("Y-m-d"); ?>" placeholder="วัน/เดือน/ปี">
                                           <div class="input-group-append">
                                               <span class="input-group-text">
                                                       <span class="ti-calendar"></span>
@@ -121,69 +122,82 @@ $db = new DB();
 			</div>
 </div>
                 <!-- End PAge Content -->
-                
+<div style="display: none;">
+<span id="startDate">null</span> 
+<b>To</b>
+<span id="endDate"><?php echo date("Y-m-d"); ?></span>
+</div>    
+            
 <input type="hidden" name="per_button_edit" id="per_button_edit" value="<?php echo $button_update ?>">
 <input type="hidden" name="per_button_del" id="per_button_del" value="<?php echo $button_delete ?>">
 <input type="hidden" name="per_button_open" id="per_button_open" value="<?php echo $button_create ?>">
 <input type="hidden" name="per_input_read" id="per_input_read" value="<?php echo $button_view ?>">
 <input type="hidden" name="per_input_approval" id="per_input_approval" value="<?php echo $button_approval ?>">
 <?php include('../template/footer.php');?>
+<script src="../../plugins_b/bootstrap-datepicker-custom/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/javascript.js"></script>
 <script type="text/javascript">
+    
+/**
+ * Thai translation for bootstrap-datepicker
+ * Suchau Jiraprapot <seroz24@gmail.com>
+ */
+ 
+(function($){
+	// en-th - (rare use) english language with thai-year
+	$.fn.datepicker.dates['en-th'] = 
+	// en-en.th - english language with smart thai-year input (2540-2569) conversion 
+	$.fn.datepicker.dates['en-en.th'] = 
+							$.fn.datepicker.dates['en'];
+	
+	// th-th - thai language with thai-year
+	$.fn.datepicker.dates['th-th'] =
+	$.fn.datepicker.dates['th'] = {
+		format: 'dd/mm/yyyy',
+		days: ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์", "อาทิตย์"],
+		daysShort: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส", "อา"],
+		daysMin: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส", "อา"],
+		months: ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"],
+		monthsShort: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."],
+		today: "วันนี้"
+	};
+}(jQuery));
+     
     
     $(".select2").select2({
       width : '100%'
     });    
+    
+    
+      // $('#datepicker-autoclose').datepicker({
+      //   autoclose: true,
+      //   format: 'dd/mm/yyyy',
+      //   endDate: new Date()
+      // })
 
-  $(function () {
+  var minD = $("#startDate").html();
+  var maxD = $("#endDate").html();
 
-        function openWindowWithPost(url, date) {
-            var form = document.createElement("form");
-            form.target = "_blank";
-            form.method = "POST";
-            form.action = url;
-            form.style.display = "none";
 
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "date";
-            input.value = date;
-            form.appendChild(input);
-
-            document.body.appendChild(form);
-            form.submit();
-            document.body.removeChild(form);
-        }
-
-        moment.locale('th');
-        $('.daterange').daterangepicker({
-
-            showDropdowns: true,
-            maxDate: '<?php echo date("d/m/Y"); ?>',   
-            "locale": {
-                format: 'DD/MM/YYYY'
-            },
-            alwaysShowCalendars: true,
-            startDate:moment().subtract(0, 'days'),
-            endDate:  moment(),
-            autoApply : true,
-            ranges: {
-                'วันนี้': [moment(), moment()],
-                'เมื่อวาน': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                '7 วันก่อน': [moment().subtract(6, 'days'), moment()],
-                '30 วันก่อน': [moment().subtract(29, 'days'), moment()],
-                'เดือนนี้': [moment().startOf('month'), moment().endOf('month')],
-                'เดือนที่ผ่ามา': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            }
-        });
-    });
+   $('#datepicker-autoclose').datepicker({
+    format: "yyyy-mm-dd",
+    startDate: new Date(minD),
+    endDate: new Date(maxD),
+    changeMonth: true, 
+    changeYear: true,
+	autoclose: true 
+	   
+  });    
+    
     
 $(document).on('click', '#btn_search', function(){
   var start_to_end_date = $('#start_to_end_date').val();
   var button_update = $('#per_button_edit').val();
   var button_delete = $('#per_button_del').val();
   var button_create = $('#per_button_open').val();
-  var button_view = $('#per_input_read').val();  
+  var button_view = $('#per_input_read').val();
+  var id_category_s = $('#id_category_s').val();
+  var search_key = $('#search_key').val();    
   $('#btn_search_status').val('btn_search');
  
         $.ajax({
@@ -191,7 +205,7 @@ $(document).on('click', '#btn_search', function(){
             method: "POST",
             data: {
                 form: "select_table",button_update:button_update,button_delete:button_delete,button_create:button_create,
-                button_view:button_view,start_to_end_date:start_to_end_date,id_customer:id_customer
+                button_view:button_view,start_to_end_date:start_to_end_date,id_category_s:id_category_s,search_key:search_key
             },
             success: function(data) {
                 $('#div_table_list').html(data);
@@ -235,14 +249,13 @@ function fetch_data_table() {
   var button_delete = $('#per_button_del').val();
   var button_create = $('#per_button_open').val();
   var button_view   = $('#per_input_read').val();
-  var id_customer   = $('#id_customer').val();
   var start_to_end_date = $('#start_to_end_date').val();    
         $.ajax({
             url: "select_data.php",
             method: "POST",
             data: {
                 form: "select_table",button_update:button_update,button_delete:button_delete,button_create:button_create,
-                button_view:button_view,id_customer:id_customer,start_to_end_date:start_to_end_date
+                button_view:button_view,start_to_end_date:start_to_end_date
             },
             success: function(data) {
                 $('#div_table_list').html(data);
