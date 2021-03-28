@@ -122,11 +122,11 @@ $db = new DB();
 
     <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-            
-            <form action="" name="frm_select_num" id="frm_select_num" method="post">
-            <input type="hidden" name="form" value="frm_select_num">
-            </form>
+            <div class="modal-content" style="padding-top:30px;">
+
+                <form action="" name="frm_select_num" id="frm_select_num" method="post">
+                    <input type="hidden" name="form" value="frm_select_num">
+                </form>
 
                 <div id="div_add" class="col-md-12" style="<?php echo $button_create ?>">
                     <div class="card card-body">
@@ -176,6 +176,16 @@ $db = new DB();
                         </div>
                     </div>
                 </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div id="div_edit"></div>
 
             </div>
         </div>
