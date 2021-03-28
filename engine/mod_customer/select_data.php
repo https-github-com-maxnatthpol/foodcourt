@@ -16,6 +16,8 @@ if (isset($_POST['form'])) {
     select_div_address();
     }else if ($_POST['form']=="select_div_print") {
     select_div_print();
+    }else if ($_POST['form']=="select_div_percent") {
+    select_div_percent();
     }
 }else{
 	
@@ -454,21 +456,20 @@ $button_view    = $_POST["button_view"];
             <?php
             if ($objResult["status"] == '1') { ?>
 			
-			          <button type="button" class="btn btn-success btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>" data-val="3"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;อนุมัติการใช้งาน</button>
+			          <button type="button" class="btn btn-success btn-sm approval_btn_product" style="margin-top: 5px; <?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>" data-val="3"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;อนุมัติการใช้งาน</button>
                 
             <?php } elseif ($objResult["status"] == '3') { ?>
 			
-                      <button type="button" class="btn btn-danger btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>" data-val="1"><i class="mdi mdi-close-circle-outline" style="color: #FFFFFF;"></i>&nbsp;ถูกระงับการใช้งาน</button>
+                      <button type="button" class="btn btn-danger btn-sm approval_btn_product" style="margin-top: 5px; <?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>" data-val="1"><i class="mdi mdi-close-circle-outline" style="color: #FFFFFF;"></i>&nbsp;ถูกระงับการใช้งาน</button>
 			
 			<?php } elseif ($objResult["status"] == '2') { ?>
 			
-                      <a href="../mod_permission/front-manage.php?se=tecc7b75da4a064e697280w10c55d043cby"><button type="button" class="btn btn-warning btn-sm"><i class="fas fa-registered" style="color: #FFFFFF;"></i>&nbsp;สมัครเข้าใช้งาน</button></a>
+                      <a href="../mod_permission/front-manage.php?se=tecc7b75da4a064e697280w10c55d043cby"><button type="button" style="margin-top: 5px;" class="btn btn-warning btn-sm"><i class="fas fa-registered" style="color: #FFFFFF;"></i>&nbsp;สมัครเข้าใช้งาน</button></a>
 			
 			<?php }
 		  
 			?>
-                    
-
+                  <button type="button" data-toggle="modal" data-target="#modal_percent" style="margin-top: 5px; <?php echo $button_update ?>"  class="btn btn-primary btn-sm percent_btn" data-id="<?php echo $objResult['id_customer'] ?>"  data1-id="<?php echo $objResult["forename"]; ?>" ><i class="mdi mdi-ticket-percent"></i> คิดเปอร์เซ็นต์</button>
 				</td>
 			</tr>
 <?php
@@ -478,7 +479,63 @@ $button_view    = $_POST["button_view"];
 		</tbody>
 	</table>
 	<input type="hidden" name="hdnCount" value="<?php echo $num ?>">
-<?php		
-	}
+ <?php
+    }
+
+function select_div_percent(){
+    
+  $db = new DB();
+
+  $strSQL = "SELECT `id_customer`,`percent_customer` FROM `mod_customer` WHERE `id_customer`= '".$_POST["id"]."' ";
+  $objQuery = $db->Query($strSQL);
+  $objResult = mysqli_fetch_array($objQuery, MYSQLI_ASSOC);
+  
 ?>
 
+<div class="card card-body" >
+          <div class="box-header with-border">
+            <h3 class="box-title"><i class="mdi mdi-ticket-percent"></i> ตั้งค่าการแบ่งเปอร์เซ็นต์ ( <?php echo $_POST["name"] ?> )</h3>
+          </div>
+          <div class="box-body" style="padding: 0;">
+            <form action="" name="form_percent" id="form_percent" method="post">
+              <input type="hidden" name="form" value="form_percent">
+              <input type="hidden" name="id_edit" value="<?php echo $_POST["id"] ?>">
+              <input type="hidden" name="id_percent" value="<?php echo $objResult["id_customer"] ?>">
+              <div id="div_form_edit">
+                  
+                <div class="row"> 
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="example-percent" class="text-themecolor"><i class="fas fa-percent"></i> เปอร์เซ็นต์ของร้านค้า </label>
+                          <input type="text" class="form-control iconified" name="percent_customer" id="percent_customer" placeholder="xxx" maxlength="3" OnKeyPress="return chkNumber(this)" onchange="changeHandler(this)" value="<?php echo $objResult["percent_customer"] ?>">
+                        </div>
+                      </div>
+                </div>
+
+              </div>
+                  
+              </div> 
+              <div class="boxsave" id="box-del-list" align="center">
+                  
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-window-close"></i> ปิด</button>   
+
+                <button type="button" class="btn btn-success  btnSendpercent" id="btnSendpercent" style="transition: 0.4s; margin-left: 5px;" ><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;บันทึก</button>
+
+              </div>  
+            </form>
+          </div>
+        </div>
+      </div>
+ <?php
+    }
+?>
+
+<script>
+  function changeHandler(val)
+  {
+    if (Number(val.value) > 100)
+    {
+      val.value = 100
+    }
+  }
+</script>

@@ -21,6 +21,8 @@ if (isset($_POST['form'])) {
 		check_email();
 	}else if ($_POST['form']=="form_print") {
 		form_print();
+	}else if ($_POST['form']=="form_percent") {
+		form_percent();
 	}else if ($_POST['form']=="approval_one_product") {
 		approval_one_product();
 	}
@@ -117,6 +119,37 @@ if (isset($_SESSION["id_data"])) {
 
     $str = "UPDATE `mod_customer` SET `ip_customer`='".$ip_customer."',`print_customer`='".$print_customer."',`update_id`='".$id_data."',`update_datetime`='".$date_regdate."' WHERE `id_customer` = '".$id_print."' ";
     $objQuery = $db->Query($str);
+
+	if($objQuery){
+		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
+	}else{
+		echo json_encode(array('status' => '1','message'=> 'ไม่สำเร็จ'));
+	}
+}
+
+function form_percent(){
+	$db = new DB();
+
+if (isset($_SESSION["id_data"])) {
+	$id_data = $_SESSION["id_data"];
+}else{
+	$id_data = '';
+}
+
+	header('Content-Type: application/json');
+	date_default_timezone_set("Asia/Bangkok");
+	$date_regdate = date("Y-m-d H:i:s");
+
+	$id_percent = $db->clear($_POST["id_percent"]);
+    $percent_customer = $db->clear($_POST["percent_customer"]);
+
+    $str = "UPDATE `mod_customer` SET `percent_customer`='".$percent_customer."',`update_id`='".$id_data."',`update_datetime`='".$date_regdate."' WHERE `id_customer` = '".$id_percent."' ";
+    $objQuery = $db->Query($str);
+    
+    $percent_cus_id = setMD5();
+    
+    $str_his_per = "INSERT INTO `percent_customer_history`( `percent_cus_id`, `percent_customer`, `create_datetime`, `create_id`, `id_customer`) VALUES ('".$percent_cus_id."','".$percent_customer."','".$date_regdate."','".$id_data."','".$id_percent."') ";
+    $objQuery_his_per = $db->Query($str_his_per);
 
 	if($objQuery){
 		echo json_encode(array('status' => '0','message'=> 'สำเร็จ'));
