@@ -156,7 +156,7 @@ $db = new DB();
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
-      <div id="div_edit" ></div> 
+      <div id="div_edit"></div> 
 
     </div>
   </div>
@@ -166,7 +166,7 @@ $db = new DB();
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
 
-      <div id="div_address" ></div> 
+      <div id="div_address"></div> 
 
     </div>
   </div>
@@ -176,7 +176,17 @@ $db = new DB();
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
 
-      <div id="div_print" ></div> 
+      <div id="div_print"></div> 
+
+    </div>
+  </div>
+</div>
+            
+<div class="modal fade" id="modal_percent" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div id="div_percent"></div> 
 
     </div>
   </div>
@@ -389,6 +399,13 @@ function chk_pic_edit(){
 						  })
 	}
 	<?php } ?>
+    
+  function chkNumber(ele)
+  {
+  var vchar = String.fromCharCode(event.keyCode);
+  if ((vchar<'0' || vchar>'9') && (vchar != '.')) return false;
+  ele.onKeyPress=vchar;
+  }    
     
 </script>
 

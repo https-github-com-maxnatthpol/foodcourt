@@ -61,7 +61,7 @@ function form_card(){
     $balance     = $db->clear($_POST['balance']);
     $total_card  = $db->clear($_POST['total_card_s']);
 
-	$sql = "SELECT id_customer,id_catagory,percent_customer
+	$sql = "SELECT id_customer,id_catagory
 			FROM mod_customer 
 			WHERE id_customer = '".$id_data."' ";
 
@@ -81,11 +81,9 @@ function form_card(){
     
     $id_catagory = $result["id_catagory"];
     
-    $percent_customer = $result["percent_customer"];
-    
     $id_history_pay = setMD5();
     
-    $str = "INSERT INTO `history_payment_shop`(`id_history_pay`, `id_customer`, `amount`, `card_number`, `id_catagory`, `percent_customer`, `create_datetime`, `date_action`) VALUES ('".$id_history_pay."','".$id_data."','".$balance."','".$card_number."','".$id_catagory."','".$percent_customer."','".$date_regdate."','".$date_action."')";
+    $str = "INSERT INTO `history_payment_shop`(`id_history_pay`, `id_customer`, `amount`, `card_number`, `id_catagory`, `create_datetime`, `date_action`) VALUES ('".$id_history_pay."','".$id_data."','".$balance."','".$card_number."','".$id_catagory."','".$date_regdate."','".$date_action."')";
     $objQuery = $db->Query($str);
     
     $str_c = "UPDATE `card` SET `amount`='".$totalsum."',`last_update`='".$date_regdate."' WHERE `card_number`='".$card_number."' ";

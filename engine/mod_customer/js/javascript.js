@@ -158,6 +158,24 @@ $(document).on("click", ".print_btn", function() {
   });
 });
 
+$(document).on("click", ".percent_btn", function() {
+  form = "select_div_percent";
+  id = $(this).attr("data-id");
+  name = $(this).attr("data1-id");
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: form,
+      id: id,
+      name: name
+    },
+    success: function(data) {
+      $("#div_percent").html(data);
+    }
+  });
+});
+
 $(document).on("click", ".delete_btn", function() {
   id = $(this).attr("data-id");
   form = "del_one";
@@ -758,6 +776,47 @@ $(document).on("click", "#btnSendprint", function() {
               swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
               document.getElementById("form_print").reset();
               $("#modal_print").modal("toggle");
+            } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          }
+        }).fail(function(data) {
+          // คือไม่สำรเ็จ
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
+        });
+      }
+    });
+});
+
+
+$(document).on("click", "#btnSendpercent", function() {
+  var formData = new FormData($("#form_percent")[0]);
+  swal
+    .fire({
+      title: "ยืนยัน?",
+      text: "ยืนยันการบันทึกการแบ่งเปอร์เซ็นต์หรือไม่?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "ยกเลิก!",
+      confirmButtonText: "ยืนยัน",
+      reverseButtons: true
+    })
+    .then(result => {
+      if (result.value) {
+        $.ajax({
+          method: "POST",
+          url: "functions.php",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            if (data.status == "0") {
+              swal.fire("สำเร็จ", "บันทึกเรียบร้อยแล้ว", "success");
+              document.getElementById("form_percent").reset();
+              $("#modal_percent").modal("toggle");
             } else {
               swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
             }
