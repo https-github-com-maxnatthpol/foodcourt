@@ -22,7 +22,7 @@ function fetch_data_table() {
         scrollCollapse: true,
         scrollX: true,
         order: [
-          [1, "asc"]
+          [0, "DESC"]
         ],
         language: {
           sEmptyTable: "ไม่มีข้อมูลในตาราง",
@@ -64,7 +64,7 @@ $(document).on('click', '#add_btn', function () {
     success: function (response) {
       if (response.status == '1') {
         ;
-        document.getElementById("number").value = response.message;
+        document.getElementById("number_1").value = response.message;
       }
     },
   });
@@ -72,8 +72,8 @@ $(document).on('click', '#add_btn', function () {
 });
 
 $(document).on('click', '#btnSendAdd', function () {
-  if (document.getElementById("card_number_1").value == "") {
-    swal.fire("เกิดปัญหากับระบบ", "กรุณากรอกรหัสบัตร", "warning");
+  if (document.getElementById("card_number_1").value == "" || document.getElementById("number_1").value == "") {
+    swal.fire("เกิดปัญหากับระบบ", "กรุณากรอกข้อมูลให้ครบถ้วน", "warning");
   } else {
     var formData = new FormData($('#form_add')[0]);
     swal.fire({
@@ -133,3 +133,152 @@ $(document).on("click", ".edit_btn", function() {
     }
   });
 });
+
+$(document).on("click", "#btnSendEdit", function() {
+  var number = $("#number").val();
+  var card_number = $("#card_number").val();
+
+  if (number == "" || card_number == "") {
+    swal.fire("คำเตือน", "กรุณากรอกข้อมูลให้ถูกต้องและครบถ้วน", "warning");
+    return false;
+  } else {
+    var formData = new FormData($("#form_edit")[0]);
+  swal
+    .fire({
+      title: "ยืนยัน?",
+      text: "ยืนยันการแก้ไขหรือไม่?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "ยกเลิก!",
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons:true
+    })
+    .then(result => {
+      if (result.value) {
+        $.ajax({
+          method: "POST",
+          url: "functions.php",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            if (data.status == "0") {
+              swal.fire("สำเร็จ", "บันทึกการแก้ไขเรียบร้อยแล้ว", "success");
+              fetch_data_table();
+              document.getElementById("form_edit").reset();
+              $("#modal_edit").modal("toggle");
+            } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          }
+        }).fail(function(data) {
+          // คือไม่สำรเ็จ
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
+        });
+      }
+    });
+  }
+  
+});
+
+$(document).on("click", "#transfer_btn", function() {
+  form = "select_div_transfer_front_manage";
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: form
+    },
+    success: function(data) {
+      $("#div_transfer").html(data);
+    }
+  });
+});
+
+$(document).on("change", "#number_from", function() {
+  form = "select_div_transfer_number_from";
+  card_number = document.getElementById("number_from").value;
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: form,
+      card_number: card_number
+    },
+    success: function(data) {
+      document.getElementById("amount_from").value = data.message;
+    }
+  });
+});
+
+$(document).on("change", "#number_to", function() {
+  form = "select_div_transfer_number_to";
+  card_number = document.getElementById("number_to").value;
+  $.ajax({
+    url: "select_data.php",
+    method: "POST",
+    data: {
+      form: form,
+      card_number: card_number
+    },
+    success: function(data) {
+      document.getElementById("amount_to").value = data.message;
+    }
+  });
+});
+
+/*
+
+$(document).on("click", "#btnSendEdit", function() {
+  var number = $("#number").val();
+  var card_number = $("#card_number").val();
+
+  if (number == "" || card_number == "") {
+    swal.fire("คำเตือน", "กรุณากรอกข้อมูลให้ถูกต้องและครบถ้วน", "warning");
+    return false;
+  } else {
+    var formData = new FormData($("#form_edit")[0]);
+  swal
+    .fire({
+      title: "ยืนยัน?",
+      text: "ยืนยันการแก้ไขหรือไม่?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "ยกเลิก!",
+      confirmButtonText: "ยืนยัน",
+	  reverseButtons:true
+    })
+    .then(result => {
+      if (result.value) {
+        $.ajax({
+          method: "POST",
+          url: "functions.php",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            if (data.status == "0") {
+              swal.fire("สำเร็จ", "บันทึกการแก้ไขเรียบร้อยแล้ว", "success");
+              fetch_data_table();
+              document.getElementById("form_edit").reset();
+              $("#modal_edit").modal("toggle");
+            } else {
+              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+            }
+          }
+        }).fail(function(data) {
+          // คือไม่สำรเ็จ
+          swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
+        });
+      }
+    });
+  }
+  
+});
+*/

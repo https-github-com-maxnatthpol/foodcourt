@@ -60,7 +60,8 @@ $db = new DB();
                                 <?php
                                 if ($button_create == '') {
                                 ?>
-                                    <button data-toggle="modal" data-target="#modal_add" type="button" class="btn btn-success pull-right" style="transition: 0.4s; <?php echo $button_create; ?>" id="add_btn"> เพิ่มบัตรใหม่ </button>
+                                    <button data-toggle="modal" data-target="#modal_add" type="button" class="btn btn-success pull-right m-r-10" style="transition: 0.4s; <?php echo $button_create; ?>" id="add_btn"> เพิ่มบัตรใหม่ </button>
+                                    <button data-toggle="modal" data-target="#modal_transfer" type="button" class="btn btn-info pull-right m-r-10" style="transition: 0.4s; <?php echo $button_create; ?> " id="transfer_btn"> โอนเงิน </button>
                                 <?php
                                 }
 
@@ -100,27 +101,17 @@ $db = new DB();
         </div>
     </div>
 
-    <div class="modal fade" id="modal_address" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_transfer" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
-                <div id="div_address"></div>
+                <div id="div_transfer"></div>
 
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="modal_print" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-
-                <div id="div_print"></div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_add" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content" style="padding-top:30px;">
 
@@ -145,7 +136,7 @@ $db = new DB();
 
                                             <div class="form-group">
                                                 <label for="example-email">หมายเลขบัตร </label>
-                                                <input type="text" class="form-control" id="number" name="number" placeholder="กรอกหมายเลขบัตร" value="0">
+                                                <input type="text" class="form-control" id="number_1" name="number_1" placeholder="กรอกหมายเลขบัตร" value="0">
                                             </div>
 
                                         </div>
@@ -154,7 +145,7 @@ $db = new DB();
 
                                             <div class="form-group">
                                                 <label for="example-email">รหัสบัตร </label>
-                                                <input type="text" class="form-control" id="card_number_1" name="card_number" placeholder="กรอกรหัสบัตร">
+                                                <input type="text" class="form-control" id="card_number_1" name="card_number_1" placeholder="กรอกรหัสบัตร">
                                             </div>
 
                                         </div>
@@ -181,7 +172,7 @@ $db = new DB();
         </div>
     </div>
 
-    <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_edit" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -201,8 +192,8 @@ $db = new DB();
 
 
     <script type="text/javascript" src="js/javascript.js"></script>
-    <script src="js/mask.js"></script>
     <script type="text/javascript">
+
         $(".dropify").dropify({
             messages: {
                 //          default: "Drag and drop a file here or click",

@@ -82,7 +82,6 @@ $db = new DB();
                                 $sql = "SELECT `ip_cashier`,print_cashier FROM mod_cashier WHERE `id_cashier` =  '" . $_SESSION["id_data"] . "'";
                                 $query = $db->Query($sql);
                                 $result = mysqli_fetch_array($query);
-                                $result[0];
                                 ?>
                                 <input type="hidden" id="PRINT_HOST" name="PRINT_HOST" value="<?= constant("PRINT_HOST"); ?>">
                                 <input type="hidden" name="ip" value="<?= $result[0] ?>">

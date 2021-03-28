@@ -14,6 +14,9 @@ if (isset($_POST['form'])) {
 	} elseif ($_POST['form'] == "form_add") {
 		form_add();
 		exit;
+	} else if ($_POST['form'] == "form_edit") {
+		form_edit();
+		exit;
 	}
 }
 
@@ -46,15 +49,15 @@ function form_add()
 		$id_data = '';
 	}
 
-	$sql = "SELECT card_number FROM `card` WHERE card_number = '" . $_POST["card_number"] . "'";
+	$sql = "SELECT card_number FROM `card` WHERE card_number = '" . $_POST["card_number_1"] . "'";
 	$query = $db->Query($sql);
 	$result = mysqli_fetch_array($query);
 
 	if ($result > 0) {
 		echo json_encode(array('status' => '2', 'message' => 'มีรหัสบัตรนี้แล้ว'));
 	} else {
-		$number = $db->clear($_POST["number"]);
-		$card_number = $db->clear($_POST["card_number"]);
+		$number = $db->clear($_POST["number_1"]);
+		$card_number = $db->clear($_POST["card_number_1"]);
 		$status = $db->clear("1");
 		$amount = $db->clear("0");
 		$Issue_date = $db->clear($date_regdate);
@@ -72,5 +75,35 @@ function form_add()
 		} else {
 			echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
 		}
+	}
+}
+
+function form_edit()
+{
+	$db = new DB();
+
+	header('Content-Type: application/json');
+	date_default_timezone_set("Asia/Bangkok");
+	$date_regdate = date("Y-m-d H:i:s");
+
+	$number = $db->clear($_POST["number"]);
+	$card_number = $db->clear($_POST["card_number"]);
+	$status = $db->clear($_POST["status"]);
+	$last_update = $db->clear($date_regdate);
+	$id = $db->clear($_POST["id"]);
+
+	$str = "";
+	$str .= "UPDATE `card` SET ";
+	$str .= " `number` = '" . $number . "' ";
+	$str .= ",`card_number`='" . $card_number . "' ";
+	$str .= ",`status`='" . $status . "' ";
+	$str .= ",`last_update`='" . $last_update . "' ";
+	$str .= " WHERE `id`= '" . $id . "' ";
+	$objQuery = $db->Query($str);
+
+	if ($objQuery) {
+		echo json_encode(array('status' => '0', 'message' => 'สำเร็จ'));
+	} else {
+		echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
 	}
 }
