@@ -230,17 +230,19 @@ $(document).on("change", "#number_to", function() {
   });
 });
 
-/*
+$(document).on("click", "#btnSendtransfer", function() {
+  var number_from = $("#number_from").val();
+  var number_to = $("#number_to").val();
+  var amount_from = $("#amount_from").val();
 
-$(document).on("click", "#btnSendEdit", function() {
-  var number = $("#number").val();
-  var card_number = $("#card_number").val();
-
-  if (number == "" || card_number == "") {
+  if (number_from == "" || number_to == "" || amount_from == "") {
     swal.fire("คำเตือน", "กรุณากรอกข้อมูลให้ถูกต้องและครบถ้วน", "warning");
     return false;
-  } else {
-    var formData = new FormData($("#form_edit")[0]);
+  }else if (number_from ==  number_to) {
+    swal.fire("คำเตือน", "ไม่สามารถโอนไปยังบัตรเลขเดียวกันได้", "warning");
+    return false;
+  }else {
+    var formData = new FormData($("#form_transfer")[0]);
   swal
     .fire({
       title: "ยืนยัน?",
@@ -266,8 +268,8 @@ $(document).on("click", "#btnSendEdit", function() {
             if (data.status == "0") {
               swal.fire("สำเร็จ", "บันทึกการแก้ไขเรียบร้อยแล้ว", "success");
               fetch_data_table();
-              document.getElementById("form_edit").reset();
-              $("#modal_edit").modal("toggle");
+              document.getElementById("form_transfer").reset();
+              $("#modal_transfer").modal("toggle");
             } else {
               swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
             }
@@ -281,4 +283,3 @@ $(document).on("click", "#btnSendEdit", function() {
   }
   
 });
-*/

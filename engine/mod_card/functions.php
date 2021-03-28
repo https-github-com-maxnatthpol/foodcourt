@@ -17,6 +17,9 @@ if (isset($_POST['form'])) {
 	} else if ($_POST['form'] == "form_edit") {
 		form_edit();
 		exit;
+	} else if ($_POST['form'] == "form_transfer") {
+		form_transfer();
+		exit;
 	}
 }
 
@@ -103,6 +106,80 @@ function form_edit()
 
 	if ($objQuery) {
 		echo json_encode(array('status' => '0', 'message' => 'สำเร็จ'));
+	} else {
+		echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
+	}
+}
+
+function form_transfer()
+{
+	$db = new DB();
+
+	header('Content-Type: application/json');
+	date_default_timezone_set("Asia/Bangkok");
+	$date_regdate = date("Y-m-d H:i:s");
+
+	if (isset($_SESSION["id_data"])) {
+		$id_data = $_SESSION["id_data"];
+	} else {
+		$id_data = '';
+	}
+
+	$number_from = $db->clear($_POST["number_from"]);
+	$amount_from = $db->clear($_POST["amount_from"]);
+
+	$number_to = $db->clear($_POST["number_to"]);
+	
+
+	$sql = "SELECT id,number FROM card WHERE `card_number` =  '" . $number_from . "'";
+	$query = $db->Query($sql);
+	$result_from = mysqli_fetch_array($query);
+
+	$sql = "SELECT id,number FROM card WHERE `card_number` =  '" . $number_to . "'";
+	$query = $db->Query($sql);
+	$result_to = mysqli_fetch_array($query);
+
+	$receive_money = $db->clear("0");
+	$data_date = $db->clear($date_regdate);
+
+	$id_cashier = $db->clear($id_data);
+
+
+	$str = "";
+	$str .= "UPDATE `card` SET ";
+	$str .= " `amount` = amount - '" . $amount_from . "' ";
+	$str .= ",`last_update`='" . $date_regdate . "' ";
+	$str .= " WHERE `card_number`= '" . $number_from . "' ";
+	$objQuery = $db->Query($str);
+
+	if ($objQuery) {
+		$id = setMD5();
+		$str = "INSERT INTO `data_working_card`(`id`, `amount`, `receive_money`, `Identity`, `data_date`,`id_card`, `id_cashier`) 
+			VALUES ('" . $id . "','" . $amount_from . "','" . $receive_money . "','1','" . $data_date . "','" . $result_from[0] . "','" . $id_cashier . "')";
+		$objQuery = $db->Query($str);
+		if ($objQuery) {
+			$str = "";
+			$str .= "UPDATE `card` SET ";
+			$str .= " `amount` = amount + '" . $amount_from . "' ";
+			$str .= ",`last_update`='" . $date_regdate . "' ";
+			$str .= " WHERE `card_number`= '" . $number_to . "' ";
+			$objQuery = $db->Query($str);
+			if ($objQuery) {
+				$id = setMD5();
+				$str = "INSERT INTO `data_working_card`(`id`, `amount`, `receive_money`, `Identity`, `data_date`,`id_card`, `id_cashier`) 
+			VALUES ('" . $id . "','" . $amount_from . "','" . $receive_money . "','2','" . $data_date . "','" . $result_to[0] . "','" . $id_cashier . "')";
+				$objQuery = $db->Query($str);
+				if ($objQuery) {
+					echo json_encode(array('status' => '0', 'message' => 'สำเร็จ'));
+				} else {
+					echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
+				}
+			} else {
+				echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
+			}
+		} else {
+			echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
+		}
 	} else {
 		echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
 	}
