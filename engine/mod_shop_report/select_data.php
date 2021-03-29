@@ -56,21 +56,9 @@ $objQuery = $db->Query($strSQL);
       
         $strSQL_amount = "SELECT SUM(amount) AS amount_customer FROM `history_payment_shop` WHERE `id_customer` = '".$objResult['id_customer']."' ";
         
-        if (isset($_POST["start_to_end_date"]) && $_POST["start_to_end_date"] != '' ) {
-          $date_start_end = explode("-", $_POST["start_to_end_date"]);
-
-          $date_start_arr = explode("/", $date_start_end[0]);
-          $date_start = $date_start_arr[2].'/'.$date_start_arr[1].'/'.$date_start_arr[0];
-
-          $date_end_arr = explode("/", $date_start_end[1]);
-          $date_end = $date_end_arr[2].'/'.$date_end_arr[1].'/'.$date_end_arr[0];
-
-          $date_start1  = $db->clear($date_start);
-          $date_end1  = $db->clear($date_end);
-          $date_start_clear = preg_replace('/[[:space:]]+/','', trim($date_start1));
-          $date_end_clear = preg_replace('/[[:space:]]+/','', trim($date_end1));
-
-          $strSQL_amount .= " AND (date_action BETWEEN '".$date_start_clear."' AND '".$date_end_clear."' )";
+        if (isset($_POST["customer_date"]) && $_POST["customer_date"] != '' ) {
+          $customer_date = $_POST["customer_date"];            
+          $strSQL_amount .= " AND date_action = '".$customer_date."' ";
         }
       
         $objQuery_amount = $db->Query($strSQL_amount);
@@ -78,21 +66,9 @@ $objQuery = $db->Query($strSQL);
       
         $strSQL_amount_percent = "SELECT SUM(amount*(percent_customer/100)) AS amount_percent FROM `history_payment_shop` WHERE `id_customer` = '".$objResult['id_customer']."' ";
         
-        if (isset($_POST["start_to_end_date"]) && $_POST["start_to_end_date"] != '' ) {
-          $date_start_end = explode("-", $_POST["start_to_end_date"]);
-
-          $date_start_arr = explode("/", $date_start_end[0]);
-          $date_start = $date_start_arr[2].'/'.$date_start_arr[1].'/'.$date_start_arr[0];
-
-          $date_end_arr = explode("/", $date_start_end[1]);
-          $date_end = $date_end_arr[2].'/'.$date_end_arr[1].'/'.$date_end_arr[0];
-
-          $date_start1  = $db->clear($date_start);
-          $date_end1  = $db->clear($date_end);
-          $date_start_clear = preg_replace('/[[:space:]]+/','', trim($date_start1));
-          $date_end_clear = preg_replace('/[[:space:]]+/','', trim($date_end1));
-
-          $strSQL_amount_percent .= " AND (date_action BETWEEN '".$date_start_clear."' AND '".$date_end_clear."' )";
+        if (isset($_POST["customer_date"]) && $_POST["customer_date"] != '' ) {
+          $customer_date = $_POST["customer_date"];            
+          $strSQL_amount_percent .= " AND date_action = '".$customer_date."' ";
         }
       
         $objQuery_amount_percent = $db->Query($strSQL_amount_percent);
@@ -102,22 +78,10 @@ $objQuery = $db->Query($strSQL);
       
         $strSQL_sales_store = "SELECT * FROM `mod_sales_store` WHERE `id_customer` = '".$objResult['id_customer']."' ";
       
-        if (isset($_POST["start_to_end_date"]) && $_POST["start_to_end_date"] != '' ) {
-          $date_start_end = explode("-", $_POST["start_to_end_date"]);
-
-          $date_start_arr = explode("/", $date_start_end[0]);
-          $date_start = $date_start_arr[2].'-'.$date_start_arr[1].'-'.$date_start_arr[0];
-
-          $date_end_arr = explode("/", $date_start_end[1]);
-          $date_end = $date_end_arr[2].'-'.$date_end_arr[1].'-'.$date_end_arr[0];
-
-          $date_start1  = $db->clear($date_start);
-          $date_end1  = $db->clear($date_end);
-          $date_start_clear = preg_replace('/[[:space:]]+/','', trim($date_start1));
-          $date_end_clear = preg_replace('/[[:space:]]+/','', trim($date_end1));
-
-          echo $strSQL_sales_store .= " AND (date_action BETWEEN '".$date_start_clear."' AND '".$date_end_clear."' )";
-        } 
+        if (isset($_POST["customer_date"]) && $_POST["customer_date"] != '' ) {
+          $customer_date = $_POST["customer_date"];            
+          $strSQL_sales_store .= " AND date_action = '".$customer_date."' ";
+        }
       
         $objQuery_sales_store = $db->Query($strSQL_sales_store);
         $objResult_sales_store = mysqli_fetch_array($objQuery_sales_store);
