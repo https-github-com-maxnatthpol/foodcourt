@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `card` (
   `id` varchar(35) NOT NULL,
   `number` int(4) NOT NULL,
-  `card_number` varchar(10) NOT NULL,
+  `card_number` varchar(18) NOT NULL,
   `status` tinyint(1) NOT NULL COMMENT '1 = ใช้งานได้ ,0 = ระงับการใช้งาน',
   `amount` int(11) NOT NULL,
   `Issue_date` datetime NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `card` (
 --
 
 INSERT INTO `card` (`id`, `number`, `card_number`, `status`, `amount`, `Issue_date`, `last_update`, `id_employee`) VALUES
-('j0a4a9p37b9f32138c66bf7010555164a9m', 1, '0011675218', 1, 0, '2021-03-07 01:19:16', '2021-03-11 01:45:09', 'hd4cff774d6516542n451ce4dbd75c3513o');
+('j0a4a9p37b9f32138c66bf7010555164a9m', 1, '001167521822222222', 1, 0, '2021-03-07 01:19:16', '2021-03-11 01:45:09', 'hd4cff774d6516542n451ce4dbd75c3513o');
 
 --
 -- Indexes for dumped tables
