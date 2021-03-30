@@ -46,10 +46,10 @@ $db = new DB();
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="example-email" class="text-themecolor"><i class="fas fa-calendar"></i> วันที่เริ่มต้น - วันที่สิ้นสุด </label>
+                                        <label for="example-email" class="text-themecolor"><i class="fas fa-calendar"></i> วันที่ค้นหา</label>
                                         <div class='input-group mb-3'>
 
-                                             <input type="text" class="form-control pull-right" id="datepicker-autoclose" data-provide="datepicker" data-date-language="th-th" name="employee-date"  value="<?php echo date("Y-m-d"); ?>" placeholder="วัน/เดือน/ปี">
+                                             <input type="text" class="form-control pull-right" id="customer_date" data-provide="datepicker" data-date-language="th-th" name="customer_date" value="<?php echo date("Y-m-d"); ?>" placeholder="วัน/เดือน/ปี">
                                           <div class="input-group-append">
                                               <span class="input-group-text">
                                                       <span class="ti-calendar"></span>
@@ -179,7 +179,7 @@ $db = new DB();
   var maxD = $("#endDate").html();
 
 
-   $('#datepicker-autoclose').datepicker({
+   $('#customer_date').datepicker({
     format: "yyyy-mm-dd",
     startDate: new Date(minD),
     endDate: new Date(maxD),
@@ -191,7 +191,7 @@ $db = new DB();
     
     
 $(document).on('click', '#btn_search', function(){
-  var start_to_end_date = $('#start_to_end_date').val();
+  var customer_date = $('#customer_date').val();
   var button_update = $('#per_button_edit').val();
   var button_delete = $('#per_button_del').val();
   var button_create = $('#per_button_open').val();
@@ -199,13 +199,27 @@ $(document).on('click', '#btn_search', function(){
   var id_category_s = $('#id_category_s').val();
   var search_key = $('#search_key').val();    
   $('#btn_search_status').val('btn_search');
+    
+    if (customer_date == "") {
+        if (customer_date == "") {
+          $("#customer_date").attr("style", "border-color: red; border-width: 1px;");
+        } else {
+          $("#customer_date").attr("style", "");
+        }
+      
+    swal.fire("คำเตือน", "กรุณากรอกวันที่ค้นหา", "warning");
+    return false;
+      
+  } else {
+    $("#customer_date").attr("style", "");
+  }    
  
         $.ajax({
             url: "select_data.php",
             method: "POST",
             data: {
                 form: "select_table",button_update:button_update,button_delete:button_delete,button_create:button_create,
-                button_view:button_view,start_to_end_date:start_to_end_date,id_category_s:id_category_s,search_key:search_key
+                button_view:button_view,customer_date:customer_date,id_category_s:id_category_s,search_key:search_key
             },
             success: function(data) {
                 $('#div_table_list').html(data);
@@ -249,13 +263,13 @@ function fetch_data_table() {
   var button_delete = $('#per_button_del').val();
   var button_create = $('#per_button_open').val();
   var button_view   = $('#per_input_read').val();
-  var start_to_end_date = $('#start_to_end_date').val();    
+  var customer_date = $('#customer_date').val();    
         $.ajax({
             url: "select_data.php",
             method: "POST",
             data: {
                 form: "select_table",button_update:button_update,button_delete:button_delete,button_create:button_create,
-                button_view:button_view,start_to_end_date:start_to_end_date
+                button_view:button_view,customer_date:customer_date
             },
             success: function(data) {
                 $('#div_table_list').html(data);
