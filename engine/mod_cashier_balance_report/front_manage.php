@@ -50,7 +50,7 @@ $db = new DB();
                                 <div class="form-group">
                                     <label for="example-email" class="text-themecolor"><i class="fas fa-calendar"></i> วันที่เริ่มต้น - วันที่สิ้นสุด </label>
                                     <div class='input-group mb-3'>
-                                        <input type="text" class="form-control pull-right" id="datepicker-autoclose" data-provide="datepicker" data-date-language="th-th" name="employee-date" value="<?php echo date("Y-m-d"); ?>" placeholder="วัน/เดือน/ปี">
+                                        <input type="text" class="form-control pull-right" id="datepicker-autoclose" data-provide="datepicker" data-date-language="th-th" name="employee_date" value="<?php echo date("Y-m-d"); ?>" placeholder="วัน/เดือน/ปี">
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <span class="ti-calendar"></span>
