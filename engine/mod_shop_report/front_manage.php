@@ -325,20 +325,17 @@ function fetch_data_table() {
           contentType: false,
           processData: false,
           success: function(data) {
-            $('#div_pdf').html('<iframe  src="example_test.pdf" id="myFrame" frameborder="0" style="border:0; display: none;" width="300"height="300" ></iframe>');
-
-            var objFra = document.getElementById('myFrame');
+//            $('#div_pdf').html('<iframe  src="example_test.pdf" id="myFrame" frameborder="0" style="border:0; display: none;" width="300"height="300" ></iframe>');
+//
+//            var objFra = document.getElementById('myFrame');
 //            objFra.contentWindow.focus();
 //            objFra.contentWindow.print();
           },
         }).fail(function (data) {
-// คือไม่สำรเ็จ
+            // คือไม่สำรเ็จ
              swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
-             
             });
-
-        
+  
     }    
-    
-    
+     
 </script>
