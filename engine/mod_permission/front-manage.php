@@ -1252,7 +1252,7 @@ if($('#wrong_user').css('display') === 'block'){
 }
 
 
-  console.log($('#employee-user-text_ed').css('display') )  
+  console.log($('#employee-user-text_ed').css('display') )
  
 
     var formData = new FormData($('.upload-form-add')[0]);
@@ -1292,7 +1292,6 @@ if($('#wrong_user').css('display') === 'block'){
         }
     // ---------------------
     });         
-           
 });
 
 $(document).on('click','#change-pass',function(){
