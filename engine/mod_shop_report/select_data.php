@@ -133,11 +133,11 @@ $objQuery = $db->Query($strSQL);
         </td>
         <td>
           <?php if ($row_sales_store == 0) { ?>    
-              <button type="button" class="btn btn-warning btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>" data-amount-customer="<?php echo number_format($objResult_amount['amount_customer']) ?>" data-amount-percent="<?php echo number_format($objResult_amount_percent['amount_percent']) ?>" data-total_cus_per="<?php echo $total_cus_per; ?>" ><i class="fas fa-question-circle"></i>&nbsp;อนุมัติการจ่ายเงิน</button>
+              <button type="button" class="btn btn-warning btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>" data-amount-customer="<?php echo number_format($objResult_amount['amount_customer']) ?>" data-amount-percent="<?php echo number_format($objResult_amount_percent['amount_percent']) ?>" data-total_cus_per="<?php echo $total_cus_per; ?>" data-date_action="<?php echo $customer_date; ?>" ><i class="fas fa-question-circle"></i>&nbsp;อนุมัติการจ่ายเงิน</button>
           <?php } else { ?>
-              <button type="button" class="btn btn-success btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;อนุมัติการจ่ายเงินแล้ว</button>
+              <button type="button" class="btn btn-success btn-sm" style="<?php echo $button_approval ?>"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;อนุมัติการจ่ายเงินแล้ว</button>
                 
-              <button type="button" data-toggle="modal" data-target="#modal_print" style="<?php echo $button_update ?>"  class="btn btn-info btn-sm print_btn" data-id="<?php echo $objResult['id_customer'] ?>"  data1-id="<?php echo $objResult["forename"]; ?>" ><i class="fas fa-print"></i> ปริ้นเอกสาร</button>
+              <button type="button" style="<?php echo $button_update ?>"  class="btn btn-info btn-sm print_btn" data-id="<?php echo $objResult['id_customer'] ?>" onclick="print()" ><i class="fas fa-print"></i> ปริ้นเอกสาร</button>
             
           <?php } ?>    
         </td>  
@@ -152,3 +152,8 @@ $objQuery = $db->Query($strSQL);
 <?php   
   }
   ?>
+<script type="text/javascript">
+function func_print() {
+  window.print();
+}
+</script>
