@@ -3,7 +3,8 @@ $(document).on("click", ".approval_btn_product", function() {
   id = $(this).attr("data-id");
   amount_customer = $(this).attr("data-amount-customer");
   amount_percent = $(this).attr("data-amount-percent");
-  total_cus_per = $(this).attr("data-total_cus_per");    
+  total_cus_per = $(this).attr("data-total_cus_per");
+  date_action = $(this).attr("data-date_action");    
   form = "approval_one_shop";
   swal
     .fire({
@@ -27,7 +28,8 @@ $(document).on("click", ".approval_btn_product", function() {
             id: id,
             amount_customer:amount_customer,
             amount_percent:amount_percent,
-            total_cus_per:total_cus_per
+            total_cus_per:total_cus_per,
+            date_action:date_action  
           },
           success: function(data) {
             if (data.status == "0") {
