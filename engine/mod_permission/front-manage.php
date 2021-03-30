@@ -2500,7 +2500,7 @@ $(document).on('keyup', '#employee-pass', function(){
 
         $(document).on('keyup', '#employee-pass-again_ed', function(){
           var pass = $(this).val();
-          var ck_pass = $('#employee-pass').val();
+          var ck_pass = $('#employee-pass_ed').val();
           if(pass != ''){
             if(pass == ck_pass){
               $('#employee-passA-text_ed').hide();
