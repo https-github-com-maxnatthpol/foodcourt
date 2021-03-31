@@ -9,7 +9,7 @@ $(document).on("click", ".approval_btn_product", function() {
 	swal
 	  .fire({
 		title: "ยืนยัน?",
-		text: "ยืนยันอนุมัติการจ่ายเงิน ร้านค้านี้ หรือไม่?",
+		text: "ยืนยันอนุมัติการรับเงิน ร้านค้านี้ หรือไม่?",
 		icon: "info",
 		showCancelButton: true,
 		confirmButtonColor: "#3085d6",
