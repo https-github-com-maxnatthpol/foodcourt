@@ -41,10 +41,10 @@
 } else {
     echo date('Y');
 } ?>
-			            <?php echo $_SERVER['SERVER_NAME']; ?> , All Right
+			            <?php echo "สโมสร กก. ตชด. 22"; ?> , All Right
 			            Reserved.
 			            <?php if (Mikesuwan_present === true) { ?> 
-						    Developed by <a href="http://mikesuwanbc581.blogspot.com/" target="_blank">Mikesuwan</a>
+						    Developed by <a href="#" target="_blank">Suwan Dev.</a>
 
 			            <?php } ?>
 			        </footer>
