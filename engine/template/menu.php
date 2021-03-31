@@ -539,6 +539,22 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                 } elseif ($_SESSION['role_tag'] == 'mod_cashier') {
                 ?>
                     <!-- System -->
+                    <li class="nav-small-cap"><h5>หน้าแรก</h5></li>
+                    <?php
+                    if ($cut_url[$num_fo] == 'page_home') {
+                        $active = 'active';
+                        $link = 'index.php';
+                    } else {
+                        $active = '';
+                        $link = '../page_home/index.php';
+                    }
+                    ?>    
+                    <li class="<?php echo $active; ?>">
+                        <a class="waves-effect waves-dark" aria-expanded="false" href="<?php echo $link; ?>">
+                            <i class="mdi mdi-gauge"></i> <span class="hide-menu">แดชบอร์ด</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
                     <li class="nav-small-cap"><h5>เมนู</h5></li>
                     <?php
                     $active = '';

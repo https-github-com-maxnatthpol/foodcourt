@@ -235,7 +235,7 @@ $db = new DB();
             <div class="col-lg-4 col-md-5">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">รายงานสรุปยอดไม่ได้ระบุ </h3>
+                        <h3 class="card-title">สรุปอัตราส่วนเปอร์เซ็นต์ของกำไร </h3>
                         <div id="sales" style="height:290px; width:100%;"></div>
                     </div>
                     <div>
@@ -244,11 +244,11 @@ $db = new DB();
                     <div class="card-body text-center ">
                         <ul class="list-inline m-b-0">
                             <li>
-                                <h6 class="text-muted  text-success"><i class="fa fa-circle font-10 m-r-10"></i>ไม่ได้ระบุ
+                                <h6 class="text-muted  text-info"><i class="fa fa-circle font-10 m-r-10"></i>ยอดขาย
                                 </h6>
                             </li>
                             <li>
-                                <h6 class="text-muted text-info"><i class="fa fa-circle font-10 m-r-10 "></i>ไม่ได้ระบุ</h6>
+                                <h6 class="text-muted text-warning"><i class="fa fa-circle font-10 m-r-10 "></i>ยอดกำไร</h6>
                             </li>
                         </ul>
                     </div>

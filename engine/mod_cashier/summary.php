@@ -78,7 +78,7 @@ $db = new DB();
             </div>
         </div>
        
-
+<!--
         <div class="row">
             <div class="col-md-12">
                 <div class="ribbon-wrapper card">
@@ -89,7 +89,7 @@ $db = new DB();
                 </div>
             </div>
         </div>
-
+-->
     </div>
 </div>
 <!-- End PAge Content -->

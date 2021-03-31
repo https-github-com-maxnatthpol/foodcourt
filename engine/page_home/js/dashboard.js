@@ -132,7 +132,7 @@ $(function() {
           label: {
             show: false
           },
-          title: "สรุปยอดขายประจำเดือน",
+          title: "สรุปอัตราส่วนประจำวัน",
           width: 20
         },
 
@@ -142,7 +142,7 @@ $(function() {
           //or hide: ['data1', 'data2']
         },
         color: {
-          pattern: ["#26c6da", "#1e88e5", "#eceff1", "#745af2"]
+          pattern: ["#1e88e5", "#ffb22b", "#eceff1", "#745af2"]
         }
       });
     },

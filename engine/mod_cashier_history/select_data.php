@@ -66,6 +66,12 @@ $objQuery = $db->Query($strSQL);
     WHERE `id_cashier` = '".$id_cashier."' AND Identity = 1 AND (data_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' )";
     $objQuery_sum_1 = $db->Query($strSQL_sum_1); 
     $objResult_sum_1 = mysqli_fetch_array($objQuery_sum_1);
+
+    $strSQL_sum_2 = "SELECT SUM(`amount`) as amount_sum
+    FROM `data_working_card`
+    WHERE `id_cashier` = '".$id_cashier."' AND Identity = 2 AND (data_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' )";
+    $objQuery_sum_2 = $db->Query($strSQL_sum_2); 
+    $objResult_sum_2 = mysqli_fetch_array($objQuery_sum_2);
   
 ?>
 
@@ -86,7 +92,7 @@ $objQuery = $db->Query($strSQL);
                                     <div class="card-body">
                                         <div class="d-flex flex-row">
                                             <div class="col-8 p-0 align-self-center">
-                                                <h3 class="m-b-0 text-info">฿ <?php echo number_format(($objResult_sum_0['amount_sum']-$objResult_sum_1['amount_sum']),2); ?></h3>
+                                                <h3 class="m-b-0 text-info">฿ <?php echo number_format((($objResult_sum_0['amount_sum']+$objResult_sum_2['amount_sum'])-$objResult_sum_1['amount_sum']),2); ?></h3>
                                                 <h5 class="text-muted m-b-0">ยอดเงินสุทธิ</h5> </div>
                                             <div class="col-4 text-right">
                                                 <div class="round align-self-center round"><i class="mdi mdi-numeric"></i></div>
@@ -134,6 +140,8 @@ $objQuery = $db->Query($strSQL);
             echo '<span style="color:#04b104;">+ ฿' . number_format($objResult['amount'],2) . '</span>';
           } elseif ($objResult["Identity"] == 1) {
             echo '<span style="color:red;">- ฿' . number_format($objResult['amount'],2) . '</span>';
+          } elseif ($objResult["Identity"] == 2) {
+            echo '<td style="color:#1e88e5;">+ ฿' . number_format($objResult['amount'],2) . '</td>';
           }
           ?>
         </td>

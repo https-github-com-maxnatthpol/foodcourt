@@ -74,12 +74,12 @@ function chart_summary()
                         datasets: [{
                             data: [<?= $amount ?>],
                             label: "ยอดขาย",
-                            borderColor: "#6610f2",
+                            borderColor: "#1e88e5",
                             fill: false
                         }, {
                             data: [<?= $amount_Profit ?>],
                             label: "ยอดกำไร",
-                            borderColor: "#e8c3b9",
+                            borderColor: "#ffb22b",
                             fill: false
                         }, ]
                     },
@@ -101,30 +101,15 @@ function sales()
 {
     $db = new DB();
 
-    $sql = "SELECT SUM(amount) AS amount 
-  FROM history_payment_shop 
-  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
-  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
-  ORDER BY date_action ASC";
+    $date_regdate = date("Y-m-d");
 
-    $query = $db->Query($sql);
-    $amount = "";
-    while ($objResult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-        $amount += $objResult["amount"] . ",";
-    }
-    $sql = "";
-    $sql = "SELECT SUM((amount*percent_customer)/100) AS amount 
-  FROM history_payment_shop 
-  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
-  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
-  ORDER BY date_action ASC";
+    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
+    $objResult = $db->QueryFetchArray($sql);
+    $amount = $objResult["total"];
 
-    $query_Profit = $db->Query($sql);
-    $amount_Profit = "";
-    while ($objResult_Profit = mysqli_fetch_array($query_Profit, MYSQLI_ASSOC)) {
-        $amount_Profit += $objResult_Profit["amount"] . ",";
-    }
+    $sql = "SELECT SUM((amount*percent_customer)/100) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
+    $objResult = $db->QueryFetchArray($sql);
+    $amount_Profit = $objResult["total"];
 
-
-    echo json_encode(array('course' => $amount, 'webinar' => $webinar));
+    echo json_encode(array('course' => $amount, 'webinar' => $amount_Profit));
 }

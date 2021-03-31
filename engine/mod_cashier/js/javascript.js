@@ -456,7 +456,7 @@ function fetch_data_summary_total() {
     }
   });
 }
-
+/*
 chart_summary();
 function chart_summary() {
   $.ajax({
@@ -470,3 +470,4 @@ function chart_summary() {
     }
   });
 }
+*/

@@ -85,6 +85,8 @@ function select_table_front_manage()
             echo '<td style="color:green;">+ ฿' . number_format($objResult['amount'],2) . '</td>';
           } elseif ($objResult["Identity"] == 1) {
             echo '<td style="color:red;">- ฿' . number_format($objResult['amount'],2) . '</td>';
+          } elseif ($objResult["Identity"] == 2) {
+            echo '<td style="color:#1e88e5;">+ ฿' . number_format($objResult['amount'],2) . '</td>';
           }
           ?>
         </tr>
@@ -119,6 +121,10 @@ function fetch_data_summary_total()
   $strSQL = "SELECT sum(amount) FROM `data_working_card` WHERE Identity = 1 AND data_date >= '$date_now 00:00:00' AND id_cashier = '" . $id_cashier . "';";
   $objQuery = $db->Query($strSQL);
   $total_return_result = mysqli_fetch_array($objQuery);
+
+  $strSQL = "SELECT sum(amount) FROM `data_working_card` WHERE Identity = 2 AND data_date >= '$date_now 00:00:00' AND id_cashier = '" . $id_cashier . "';";
+  $objQuery = $db->Query($strSQL);
+  $total_2_result = mysqli_fetch_array($objQuery);
 ?>
   <div class="left-aside ">
     <ul class="list-style-none">
@@ -149,7 +155,7 @@ function fetch_data_summary_total()
       <div class="card-body">
         <div class="d-flex flex-row">
           <div class="m-l-10 align-self-center">
-            <h3 class="card-title">= ฿ <?= number_format($total_buy_result[0] - $total_return_result[0],2) ?></h3>
+            <h3 class="card-title">= ฿ <?= number_format(($total_buy_result[0]+$total_2_result[0]) - $total_return_result[0],2) ?></h3>
             <h5 class="card-title">ยอดเงินสุทธิ</h5>
           </div>
         </div>
@@ -159,6 +165,7 @@ function fetch_data_summary_total()
 <?php
 }
 
+/*
 function chart_summary()
 {
   $db = new DB();
@@ -220,3 +227,4 @@ function chart_summary()
   </script>
 <?php
 }
+*/
