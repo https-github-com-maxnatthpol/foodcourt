@@ -22,6 +22,9 @@ $telephone = $telephone == ""?HEAD_LOGO_MINI:$telephone;
 $email = getSetting('email');
 $email = $email == ""?HEAD_LOGO_MINI:$email;
 
+$logo = getSetting('logo_img');
+$logo = $logo == ""?HEAD_LOGO_MINI:$logo;
+
 $id_customer = $_GET['id'];
 $date_action = $_GET['date_action'];
 
@@ -31,10 +34,9 @@ if (isset($_SESSION["id_data"])) {
 	$id_data = '';
 }
 
-$strSQL_address = "SELECT `address`,`district`,`amphur`,`province`,`postcode` FROM `user_address` WHERE `delete_datetime` IS null AND id_user = '".$id_customer."' AND status = '1' ";
-$objQuery_address = $db->Query($strSQL_address);
-$objResult_address = mysqli_fetch_array($objQuery_address);
-$objResult_num_address = mysqli_num_rows($objQuery_address);
+$strSQL_employee = "SELECT * FROM `mod_employee` WHERE id_employee =  '".$id_data."' ";
+$objQuery_employee = $db->Query($strSQL_employee);
+$objResult_employee = mysqli_fetch_array($objQuery_employee);
 
 $strSQL = "SELECT `id_customer`,`forename` FROM `mod_customer` WHERE `delete_datetime` IS null AND id_customer = '".$id_customer."' ";
 $objQuery = $db->Query($strSQL);
@@ -66,6 +68,8 @@ else { ?>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>รายงานยอดขายร้านค้า <?php echo $objResult["forename"]; ?></title>
+            <!-- Favicon icon -->
+            <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $logo; ?>">
             <link href="cssa4/bootstrap/css/bootstrap.min.css" rel="stylesheet">
             <!-- Custom styles  -->
             <link href="cssa4/CssA4.css" rel="stylesheet">
@@ -319,7 +323,7 @@ navcssa4();
                 <td align="left" width="40%" style="text-align: center;">(...................................................)</br>ผู้รับ ลงวันที่.../...../..........</td>
                 </td>
                 <td align="right" width="20%">&nbsp;</td>
-                <td align="right" style="text-align: center;" width="40%"><br>()</br>ผู้จ่าย</td>
+                <td align="right" style="text-align: center;" width="40%"><br>(...................................................)<br><?php echo $objResult_employee['username'].' '.$objResult_employee['surname']; ?></br>ผู้จ่าย</td>
             </tr>
         </table>
 
