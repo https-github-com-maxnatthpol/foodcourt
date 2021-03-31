@@ -1,27 +1,72 @@
 <?php
-function opencssa4() {
-    ?>
+error_reporting(E_ALL & ~E_NOTICE);
+require_once '../lib/connect.php';
+require_once '../lib/service.php';
+require_once '../lib/config.php';
+require_once '../lib/functions.php';
+
+checkAdminUser();
+$db = new DB();
+$logo = getSetting('logo_img');
+$logo = $logo == ""?HEAD_LOGO_MINI:$logo;
+
+$name_th = getSetting('name_th');
+$name_th = $name_th == ""?HEAD_LOGO_MINI:$name_th;
+
+$address_th = getSetting('address_th');
+$address_th = $address_th == ""?HEAD_LOGO_MINI:$address_th;
+    
+$telephone = getSetting('telephone');
+$telephone = $telephone == ""?HEAD_LOGO_MINI:$telephone;
+
+$email = getSetting('email');
+$email = $email == ""?HEAD_LOGO_MINI:$email;
+
+$id_customer = $_GET['id'];
+
+$strSQL = "SELECT `id_customer`,`forename` FROM `mod_customer` WHERE `delete_datetime` IS null AND id_customer = '".$id_customer."' ";
+$objQuery = $db->Query($strSQL);
+$objResult = mysqli_fetch_array($objQuery);
+$objResult_num = mysqli_num_rows($objQuery);
+
+$strSQL_address = "SELECT `address`,`district`,`amphur`,`province`,`postcode` FROM `user_address` WHERE `delete_datetime` IS null AND id_user = '".$id_customer."' AND status = '1' ";
+$objQuery_address = $db->Query($strSQL_address);
+$objResult_address = mysqli_fetch_array($objQuery_address);
+$objResult_num_address = mysqli_num_rows($objQuery_address);
+
+$str_histor_shop = "SELECT `sales_store_id`,`sales_store_shop`,`sales_store_percent`,`sales_store_total`,`date_action`,`id_customer` FROM `mod_sales_store` WHERE id_customer = '".$id_customer."' ";
+$objQuery_histor_shop = $db->Query($str_histor_shop);
+$objResult_histor_shop = mysqli_fetch_array($objQuery_histor_shop);
+
+if($objResult_num == '0'){
+ ?> 
+<script>
+	window.location.href = "front_manage.php";
+</script>
+<?php    
+}
+else { ?>
+
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="th">
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_POST["no"]."_".$_POST["callname"]; ?></title>
-            <link href="Assets/plugins/cssa4/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <title>รายงานยอดขายร้านค้า <?php echo $objResult["forename"]; ?></title>
+            <link href="cssa4/bootstrap/css/bootstrap.min.css" rel="stylesheet">
             <!-- Custom styles  -->
-            <link href="Assets/plugins/cssa4/CssA4.css" rel="stylesheet">
-            <link href="Assets/plugins/cssa4/CssCustom.css" rel="stylesheet">
+            <link href="cssa4/CssA4.css" rel="stylesheet">
+            <link href="cssa4/CssCustom.css" rel="stylesheet">
         </head>
         <body>
 
-            <div class="bodystarter"></div>
-            <?php
-        }
-
+        <div class="bodystarter"></div>
+<?php
 function navcssa4() {
             ?>
             <nav class="navbar navbar-inverse navbar-fixed-top" id="non-printable">
                 <div class="container">
+<!--
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                             <span class="sr-only">Toggle navigation</span>
@@ -30,13 +75,14 @@ function navcssa4() {
                             <span class="icon-bar"></span>
                         </button>
                     </div>
+-->
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
                             <li><a href="#" onClick="window.history.back()"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Back</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a>View 1/1</a></li>
-                            <li><a href="#" onClick="window.print()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></li>
+                            <li><a href="" onClick="window.print()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -46,8 +92,8 @@ function navcssa4() {
 
 function closecssa4() {
             ?>
-            <script type="text/javascript" src="Assets/js/jquery-2.2.3.min.js"></script>
-            <script src="Assets/plugins/cssa4/bootstrap/js/bootstrap.min.js"></script>
+            <script src="../../plugins_b/jquery/jquery.min.js"></script>
+            <script src="cssa4/bootstrap/js/bootstrap.min.js"></script>
         </body>
     </html>
     <?php
@@ -136,9 +182,7 @@ function setdatetime($input, $output, $digit_only = false, $month_idx="TH_ABBR")
 	$ary_tmp['SC'] = $sec;
 	return str_replace(array_keys($ary_tmp), array_values($ary_tmp), $output);
 }
-
-opencssa4();
-
+//opencssa4();
 navcssa4();
 
 ?>
@@ -150,7 +194,8 @@ navcssa4();
                 <td align="left"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
                         <tr>
                             <td width="17%"><table table width="100%">
-                                    <img src="Assets/plugins/cssa4/logo_b.png" width="125" />
+<!--                            <img src="Assets/plugins/cssa4/logo_b.png" width="125" />-->
+                            <img src="<?php echo $logo; ?>" alt="homepage" class="dark-logo" style="height:135px; padding: 5px;"/>      
                         </tr>
                         <tr>
                             <td align="left">&nbsp;</td>
@@ -163,12 +208,12 @@ navcssa4();
                 <td  align="left" width="63%"><table table width="100%">
                         <tr>
                         <tr>
-                            <td align="left"><div class="thick23">ร้านเมียนประ</div></td>
+                            <td align="left"><div class="thick23"><?php echo $name_th; ?></div></td>
                         </tr>
                         <td align="left">
-                             <div class="s13">70</div> หมู่ <div class="s13">9</div> ต.ธาตุ อ.วารินชำราบ จ.อุบลราชธานี <div class="s13">34190</div></br>
-                            โทร : <div class="s13">080-3670479</div> อีเมลล์ : mionpra@gmail.com </br>
-                            เลขทะเบียนพาณิชย์ / เลขที่ผู้เสียภาษี : <div class="s13">1330400130896</div></td>
+                            <div class="s13"><?php echo $address_th;?></div></br>
+                            โทร : <div class="s13"><?php echo $telephone;?></div> อีเมล : <?php echo $email;?> </br>
+<!--                            เลขทะเบียนพาณิชย์ / เลขที่ผู้เสียภาษี : <div class="s13">1330400130896</div></td>-->
             </tr>
             <tr>
                 <td align="left">&nbsp;</td>
@@ -181,15 +226,15 @@ navcssa4();
                 </tr>
                 <tr>
                     <td align="right">เลขที่</td>
-                    <td align="right"><div class="s13"><?php echo $_POST["no"]; ?></div></td>
+                    <td align="right"><div class="s13"><?php echo substr($objResult_histor_shop['sales_store_id'], 0 ,11); ?></div></td>
                 </tr>
                 <tr>
                     <td align="right">วันที่</td>
-                    <td align="right"><div class="s13"><?php echo setdatetime($_POST["date"],"DD MM YYYY"); ?></div></td>
+                    <?php $lol12 = explode("-",$objResult_histor_shop["create_datetime"]); ?>
+                    <td align="right"><div class="s13"><?php echo setdatetime($objResult_histor_shop["date_action"],"DD MM YYYY"); ?></div></td>
                 </tr>
                 <tr>
-                    <td align="right">พิมพ์โดย</td>
-                    <td align="right"><div class="s13">Lertsak</div></td>
+
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -202,11 +247,16 @@ navcssa4();
         <tr>
             <td align="left"><table width="100%" align="left" cellpadding="0" cellspacing="0">
                     <tr>
-                        <th colspan="2" ><div class="thick15">ลูกค้า</div></th>
+                        <th colspan="2" ><div class="thick15">ร้านค้า</div></th>
                     </tr>
                     <tr>
-                        <td align="left"><div class="s15"><?php echo $_POST["cus_name"]; ?>
-                                 &nbsp; <?php echo $_POST["cus_add"]; ?>
+                        <td align="left"><div class="s15"><?php echo $objResult["forename"]; ?>
+                                 &nbsp; | ที่อยู่ : 
+                            <?php if ($objResult_num_address == '0') {
+                                echo 'ยังไม่ได้ระบุ';
+                            } else { ?>
+                            <?php echo $objResult_address["address"].' ตำบล '.$objResult_address["district"].' อำเภอ '.$objResult_address["amphur"].' จังหวัด '.$objResult_address["province"].' '.$objResult_address["postcode"];?>
+                            <?php } ?>
                             </div></td>
                     </tr>
                 </table></td>
@@ -215,29 +265,23 @@ navcssa4();
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td align="left"><table width="100%" cellpadding="0" cellspacing="0">
+            <td align="left"><table width="100%" cellpadding="0" cellspacing="0" border="1">
                     <tr class="borderbot">
-                        <td width="5%"  align="center"><div class="thick15">#</div></td>
-                        <td width="50%" align="left"><div class="thick15">รายการ</div></td>
-                        <td width="11.25%" align="right"><div class="thick15">จำนวน</div></td>
-                        <td width="11.25%" align="right"><div class="thick15">หน่วย</div></td>
-                        <td width="11.25%" align="right"><div class="thick15">หน่วยละ</div></td>
-                        <td width="11.25%" align="right"><div class="thick15">จำนวนเงิน</div></td>
+                        <td width="55%" align="left"><div class="thick15">รายการ</div></td>
+                        <td width="15%" align="right"><div class="thick15">ยอดรวม</div></td>
+                        <td width="15%" align="right"><div class="thick15">ยอดหัก</div></td>
+                        <td width="15%" align="right"><div class="thick15">ยอดสุทธิ</div></td>
                     </tr>
                     <div class="s15">
-                        <?php for($i=1; $i<=10; $i++) { ?>
                         <tr class="height40">
-                            <td height="20" align="center"><div class="s12"><?php if(isset($_POST['work_item_name'.$i])){echo $i;}else{echo"&nbsp;";} ?></div></td>
-                            <td align="left"><?php if(isset($_POST['work_item_name'.$i])){echo $_POST['work_item_name'.$i];}else{echo"&nbsp;";} ?></td>
-                            <td align="right"><div class="s12"><?php if(isset($_POST['work_item_amount'.$i])){echo $_POST['work_item_amount'.$i];}else{echo"&nbsp;";} ?></div></td>
-                            <td align="right"><?php if(isset($_POST['work_item_unit'.$i])){echo $_POST['work_item_unit'.$i];}else{echo"&nbsp;";} ?></td>
-                            <td align="right"><div class="s12"><?php if(isset($_POST['work_item_unit_price'.$i])){echo number_format($_POST['work_item_unit_price'.$i], 2, '.', ',');}else{echo"&nbsp;";} ?></div></td>
-                            <td align="right"><div class="s12"><?php if(isset($_POST['work_item_price'.$i])){echo number_format($_POST['work_item_price'.$i], 2, '.', ',');}else{echo"&nbsp;";} ?></div></td>
+                            <td align="left">ยอดขายวันที่ <?php echo setdatetime($objResult_histor_shop["date_action"],"DD MM YYYY"); ?></td>
+                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo $objResult_histor_shop['sales_store_shop']; ?></div></td>
+                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo $objResult_histor_shop['sales_store_percent']; ?></div></td>
+                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo $objResult_histor_shop['sales_store_total']; ?></div></td>
                         </tr>
-                        <?php } ?>
                     </div>
                     <tr class="height40 bordertop">
-                        <td align="left" colspan="4">อ้างอิง : <div class="s13"><?php echo $_POST["refer"]; ?></br>หมายเหตุ : <?php echo $_POST["note"]; ?></div></td>
+                        <td align="left" colspan="2">อ้างอิง : <div class="s13"><?php echo substr($objResult_histor_shop['sales_store_id'], 0 ,35); ?></br></div></td>
                         <td align="right">รวม</td>
                         <?php
                             for($j=1; $j<=10; $j++) {
@@ -247,12 +291,12 @@ navcssa4();
                         <td align="right"><div class="s15"><?php echo number_format($sum, 2, '.', ','); ?></div></td>
                     </tr>
                     <tr class="height40">
-                        <td align="left" colspan="4"></td>
+                        <td align="left" colspan="2"></td>
                         <td align="right">ส่วนลด</td>
                         <td align="right"><div class="s15"><?php echo number_format($_POST['discount'], 2, '.', ','); ?></div></td>
                     </tr>
                     <tr class="height40 borderbot">
-                        <td align="center" colspan="4"><div class="thick17"><?php echo Convert(($sum-$_POST['discount'])); ?></div></td>
+                        <td align="center" colspan="2"><div class="thick17"><?php echo Convert(($sum-$_POST['discount'])); ?></div></td>
                         <td align="right">รวมทั้งสิ้น</td>
                         <td align="right"><div class="thick17"><?php echo number_format(($sum-$_POST['discount']), 2, '.', ','); ?></div></td>
                     </tr>
@@ -275,6 +319,6 @@ navcssa4();
 
     </div>
 </page>
-
 <?php
-closecssa4();
+    closecssa4();
+    }
