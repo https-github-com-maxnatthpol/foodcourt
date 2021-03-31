@@ -18,13 +18,17 @@ function select_table()
 {
   $db = new DB();
 
-  $date_now = date("Y-m-d");
+  if (isset($_POST["employee_date"])) {
+    $date_now = $db->clear($_POST["employee_date"]);
+  } else {
+    $date_now = $db->clear(date("Y-m-d"));
+  }
 
   $strSQL = "";
   $strSQL .= "SELECT * FROM `mod_cashier`";
   //$strSQL .= " AND (data_date BETWEEN '".$employee_date." 00:00:00' AND '".$employee_date." 23:59:59' )";
   //$strSQL .= " ORDER BY data_date DESC ";
-  echo $strSQL;
+  //echo $strSQL;
   $objQuery = $db->Query($strSQL);
 
 ?>
@@ -66,6 +70,13 @@ function select_table()
         $query = $db->Query($sql);
         $result_sum_2 = mysqli_fetch_array($query);
 
+        $strSQL_sales_store = "SELECT * FROM `mod_cashier_sales_store` WHERE `id_cashier` = '".$objResult["id_cashier"]."' ";
+        $strSQL_sales_store .= " AND date_action = '".$date_now."' ";
+
+        $objQuery_sales_store = $db->Query($strSQL_sales_store);
+        $objResult_sales_store = mysqli_fetch_array($objQuery_sales_store);
+        $row_sales_store = mysqli_num_rows($objQuery_sales_store);
+
         //echo $sql;
       ?>
         <tr class="show-tr">
@@ -85,7 +96,21 @@ function select_table()
           <?php echo number_format(($result_sum_0["sum_amount"] + $result_sum_2["sum_amount"]) -$result_sum_1["sum_amount"],2); ?>
           </td>
           <td>
-          <button type="button" class="btn btn-warning btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>" data-amount-customer="<?php echo number_format($objResult_amount['amount_customer']) ?>" data-amount-percent="<?php echo number_format($objResult_amount_percent['amount_percent']) ?>" data-total_cus_per="<?php echo $total_cus_per; ?>" data-date_action="<?php echo $customer_date; ?>" ><i class="fas fa-question-circle"></i>&nbsp;อนุมัติการจ่ายเงิน</button>
+          <?php if ($row_sales_store == 0) { ?>    
+              <button type="button" class="btn btn-warning btn-sm approval_btn_product" style="<?php echo $button_approval ?>" 
+              data-id="<?php echo $objResult["id_cashier"] ?>" 
+              data-sales_store="<?php echo number_format(($result_sum_0["sum_amount"])); ?>" 
+              data-sales_store_transfer="<?php echo number_format(($result_sum_2["sum_amount"])); ?>" 
+              data-sales_store_paid="<?php echo number_format(($result_sum_1["sum_amount"])); ?>" 
+              data-sales_store_total="<?php echo number_format(($result_sum_0["sum_amount"] + $result_sum_2["sum_amount"]) -$result_sum_1["sum_amount"],2); ?>"
+              data-date_action="<?php echo $date_now; ?>" >
+              <i class="fas fa-question-circle"></i>&nbsp;อนุมัติการจ่ายเงิน</button>
+          <?php } else { ?>
+              <button type="button" class="btn btn-success btn-sm" style="<?php echo $button_approval ?>"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;อนุมัติการจ่ายเงินแล้ว</button>
+                
+              <button type="button" style="<?php echo $button_update ?>"  class="btn btn-info btn-sm print_btn" data-id="<?php echo $objResult['id_customer'] ?>" onclick="print()" ><i class="fas fa-print"></i> ปริ้นเอกสาร</button>
+            
+          <?php } ?>  
           </td>
         </tr>
       <?php
