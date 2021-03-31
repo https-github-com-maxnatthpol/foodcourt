@@ -30,11 +30,9 @@ function chart_summary()
     date_default_timezone_set("Asia/Bangkok");
 
 
-    $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM(amount) AS amount 
-  FROM history_payment_shop 
-  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
-  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
-  ORDER BY date_action ASC";
+    $date_regdate = date("Y-m-d");
+                                    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
+                                    $objResult = $db->QueryFetchArray($sql);
 
     $query = $db->Query($sql);
     $summary_date = "";
@@ -42,6 +40,18 @@ function chart_summary()
     while ($objResult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
         $summary_date .= '"' . DateThai($objResult["summary_date"]) . '",';
         $amount .= $objResult["amount"] . ",";
+    }
+    $sql = "";
+    $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM((amount*percent_customer)/100) AS amount 
+  FROM history_payment_shop 
+  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
+  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
+  ORDER BY date_action ASC";
+
+    $query_Profit = $db->Query($sql);
+    $amount_Profit = "";
+    while ($objResult_Profit = mysqli_fetch_array($query_Profit, MYSQLI_ASSOC)) {
+        $amount_Profit .= $objResult_Profit["amount"] . ",";
     }
 ?>
     <canvas id="chart_summary" width="800" height="450"></canvas>
@@ -65,7 +75,7 @@ function chart_summary()
                             borderColor: "#6610f2",
                             fill: false
                         }, {
-                            data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
+                            data: [<?= $amount_Profit ?>],
                             label: "ยอดกำไร",
                             borderColor: "#e8c3b9",
                             fill: false
@@ -89,18 +99,30 @@ function sales()
 {
     $db = new DB();
 
-    //==========Course
-    $sql = "SELECT SUM(`amount`) as total FROM `card` WHERE `status` = 1 ";
-    $objResult = $db->QueryFetchArray($sql);
+    $sql = "SELECT SUM(amount) AS amount 
+  FROM history_payment_shop 
+  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
+  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
+  ORDER BY date_action ASC";
 
-    $course = $objResult["total"];
+    $query = $db->Query($sql);
+    $amount = "";
+    while ($objResult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+        $amount += $objResult["amount"] . ",";
+    }
+    $sql = "";
+    $sql = "SELECT SUM((amount*percent_customer)/100) AS amount 
+  FROM history_payment_shop 
+  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
+  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
+  ORDER BY date_action ASC";
 
-    //==========Webinar
-    //==========Course
-    $sql = "SELECT SUM(`amount`) as total FROM `card` WHERE `status` = 1 ";
-    $objResult = $db->QueryFetchArray($sql);
-    $webinar = $objResult["total"];
+    $query_Profit = $db->Query($sql);
+    $amount_Profit = "";
+    while ($objResult_Profit = mysqli_fetch_array($query_Profit, MYSQLI_ASSOC)) {
+        $amount_Profit += $objResult_Profit["amount"] . ",";
+    }
 
 
-    echo json_encode(array('course' => $course, 'webinar' => $webinar));
+    echo json_encode(array('course' => $amount, 'webinar' => $amount_Profit));
 }
