@@ -71,13 +71,21 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                 <li>
                     <div class="waves-effect waves-dark hide-menu" id="realtime" style="padding-left: 15px;"></div>
                 </li>
+                <?php if ($_SESSION['role_tag'] == 'mod_customer'){ ?>
+                        
+				<?php } else { ?>
                 <li class="nav-devider"></li>
+                <?php } ?>
 
                 <?php
                 if($_SESSION['role_tag'] == 'mod_employee' || $_SESSION['role_tag'] == 'mod_customer') {
                 ?>
                     <!-- Dashboard -->
+                    <?php if ($_SESSION['role_tag'] == 'mod_customer'){ ?>
+                        
+					<?php } else { ?>
                     <li class="nav-small-cap"><h5>หน้าแรก</h5></li>
+                    <?php } ?>
                     <?php
                     if ($cut_url[$num_fo] == 'page_home') {
                         $active = 'active';
@@ -86,13 +94,19 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                         $active = '';
                         $link = '../page_home/index.php';
                     }
-                    ?>
+                    ?>    
+                
+                    <?php if ($_SESSION['role_tag'] == 'mod_customer'){ ?>
+                        
+					<?php } else { ?>
+                
                     <li class="<?php echo $active; ?>">
                         <a class="waves-effect waves-dark" aria-expanded="false" href="<?php echo $link; ?>">
                             <i class="mdi mdi-gauge"></i> <span class="hide-menu">แดชบอร์ด</span>
                             <span class="pull-right-container"></span>
                         </a>
                     </li>
+                    <?php } ?>
 
                     <!-- End Dashboard-->
                     <li class="nav-devider"></li>
