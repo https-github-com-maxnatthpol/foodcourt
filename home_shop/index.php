@@ -32,6 +32,9 @@ $title = $title == ""?TITLE:$title;
 
 $logo_img2 = getSetting('logo_img2');
 $logo_img2 = $logo_img2 == ""?logo_img2:$logo_img2;
+
+$logo_img = getSetting('logo_img');
+$logo_img = $logo_img == ""?logo_img:$logo_img;
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -40,7 +43,9 @@ $logo_img2 = $logo_img2 == ""?logo_img2:$logo_img2;
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <?php $show_images1 = explode("/",$logo_img);?>
+    <?php $show_images_index1 = $show_images1[1].'/'.$show_images1[2].'/'.$show_images1[3].'/'.$show_images1[4].'/'.$show_images1[5] ?>
+	<link rel="icon" type="image/png" href="<?php echo $show_images_index1; ?>"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
