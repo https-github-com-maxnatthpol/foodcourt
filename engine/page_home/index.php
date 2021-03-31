@@ -86,7 +86,7 @@ $db = new DB();
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
-                            <div class="round round-lg align-self-center round-info"><i class="mdi mdi-book-open-page-variant"></i></div>
+                            <div class="round round-lg align-self-center round-info"><i class="ti-wallet"></i></div>
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-light">
                                     <?php
@@ -112,7 +112,7 @@ $db = new DB();
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
-                            <div class="round round-lg align-self-center round-warning"><i class="mdi mdi-cellphone-link"></i></div>
+                            <div class="round round-lg align-self-center round-warning"><i class="mdi mdi-sale"></i></div>
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-lgiht">
                                 <?php
@@ -138,7 +138,7 @@ $db = new DB();
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
-                            <div class="round round-lg align-self-center round-primary"><i class="mdi mdi-cart-outline"></i></div>
+                            <div class="round round-lg align-self-center round-primary"><i class="mdi mdi-credit-card-plus"></i></div>
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-lgiht">
                                 <?php
@@ -187,7 +187,7 @@ $db = new DB();
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
-                            <div class="round round-lg align-self-center round-danger"><i class="ti-wallet"></i>
+                            <div class="round round-lg align-self-center round-danger"><i class="mdi mdi-credit-card"></i>
                             </div>
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-lgiht">
