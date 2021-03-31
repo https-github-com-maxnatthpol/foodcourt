@@ -32,7 +32,9 @@ function select_table()
     <thead>
       <th>ลำดับ</th>
       <th>ชื่อ-สกุล</th>
-      <th>ยอดเงิน</th>
+      <th>ยอดเงินซื้อบัตร/เติมเงิน</th>
+      <th>ยอดเงินคืนบัตร</th>
+      <th>ยอดเงินสุทธิ</th>
       <th>ยืนยัน</th>
     </thead>
     <tbody>
@@ -48,6 +50,22 @@ function select_table()
         $query = $db->Query($sql);
         $result_sum_0 = mysqli_fetch_array($query);
 
+        $sql = "";
+        $sql .= "SELECT sum(amount) as sum_amount FROM `data_working_card`";
+        $sql .= " WHERE Identity = 1";
+        $sql .= " AND id_cashier = '".$objResult["id_cashier"]."'";
+        $sql .= " AND (data_date BETWEEN '".$date_now." 00:00:00' AND '".$date_now." 23:59:59' )";
+        $query = $db->Query($sql);
+        $result_sum_1 = mysqli_fetch_array($query);
+
+        $sql = "";
+        $sql .= "SELECT sum(amount) as sum_amount FROM `data_working_card`";
+        $sql .= " WHERE Identity = 2";
+        $sql .= " AND id_cashier = '".$objResult["id_cashier"]."'";
+        $sql .= " AND (data_date BETWEEN '".$date_now." 00:00:00' AND '".$date_now." 23:59:59' )";
+        $query = $db->Query($sql);
+        $result_sum_2 = mysqli_fetch_array($query);
+
         //echo $sql;
       ?>
         <tr class="show-tr">
@@ -58,7 +76,16 @@ function select_table()
             <?php echo $objResult["forename"] . " " . $objResult["surename"]; ?>
           </td>
           <td>
-          <?php echo number_format($result_sum_0["sum_amount"],2); ?>
+          <?php echo number_format(($result_sum_0["sum_amount"] + $result_sum_2["sum_amount"]),2); ?>
+          </td>
+          <td>
+          <?php echo number_format($result_sum_1["sum_amount"],2); ?>
+          </td>
+          <td>
+          <?php echo number_format(($result_sum_0["sum_amount"] + $result_sum_2["sum_amount"]) -$result_sum_1["sum_amount"],2); ?>
+          </td>
+          <td>
+          <button type="button" class="btn btn-warning btn-sm approval_btn_product" style="<?php echo $button_approval ?>" data-id="<?php echo $objResult['id_customer'] ?>" data-amount-customer="<?php echo number_format($objResult_amount['amount_customer']) ?>" data-amount-percent="<?php echo number_format($objResult_amount_percent['amount_percent']) ?>" data-total_cus_per="<?php echo $total_cus_per; ?>" data-date_action="<?php echo $customer_date; ?>" ><i class="fas fa-question-circle"></i>&nbsp;อนุมัติการจ่ายเงิน</button>
           </td>
         </tr>
       <?php
