@@ -171,13 +171,17 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                             $numQuery1 = mysqli_num_rows($objQuery1);
                             if ($numQuery1 <= 0) {
                                 ?>
+                                <?php if(($objResult['id_system'] == '19' || $objResult['id_system'] == '20' || $objResult['id_system'] == '21' || $objResult['id_system'] == '22' || $objResult['id_system'] == '23' || $objResult['id_system'] == '24' ) && $result_member['admin'] != '1'){?>
+                                
+                                <?php } else { ?>
                                 <a class="setcookie check_system_level1
                         check_top_level1-<?php echo $objResult['id_system']; ?> 
                         <?php echo $active; ?>" href="<?php echo $link; ?>" aria-expanded="false" 
                         data-link="<?php echo $link; ?>" data-id="<?php echo $objResult['id_system']; ?>">
                         <?php echo $icon; ?><span class="hide-menu"><?php echo $objResult['name_system']; ?></span>
                                 </a>
-
+                                <?php } ?>
+                                
                                 <?php
                             } else {
                                 ?>
