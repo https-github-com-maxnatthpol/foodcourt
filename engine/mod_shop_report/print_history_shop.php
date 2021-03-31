@@ -34,7 +34,7 @@ $objQuery_address = $db->Query($strSQL_address);
 $objResult_address = mysqli_fetch_array($objQuery_address);
 $objResult_num_address = mysqli_num_rows($objQuery_address);
 
-$str_histor_shop = "SELECT `sales_store_id`,`sales_store_shop`,`sales_store_percent`,`sales_store_total`,`date_action`,`id_customer` FROM `mod_sales_store` WHERE id_customer = '".$id_customer."' ";
+$str_histor_shop = "SELECT `sales_store_id`,`sales_store_shop`,`sales_store_percent`,`sales_store_total`,`date_action`,`id_customer`,`create_datetime` FROM `mod_sales_store` WHERE id_customer = '".$id_customer."' ";
 $objQuery_histor_shop = $db->Query($str_histor_shop);
 $objResult_histor_shop = mysqli_fetch_array($objQuery_histor_shop);
 
@@ -230,8 +230,7 @@ navcssa4();
                 </tr>
                 <tr>
                     <td align="right">วันที่</td>
-                    <?php $lol12 = explode("-",$objResult_histor_shop["create_datetime"]); ?>
-                    <td align="right"><div class="s13"><?php echo setdatetime($objResult_histor_shop["date_action"],"DD MM YYYY"); ?></div></td>
+                    <td align="right"><div class="s13"><?php echo setdatetime($objResult_histor_shop["create_datetime"],"DD MM YYYY"); ?></div></td>
                 </tr>
                 <tr>
 
