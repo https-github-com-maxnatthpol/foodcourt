@@ -92,7 +92,7 @@ $db = new DB();
 									
                                     ?>0
                                 </h3>
-                                <h5 class="text-muted m-b-0">ไม่มีข้อมูล</h5>
+                                <h5 class="text-muted m-b-0">ยอดขาย</h5>
                             </div>
                         </div>
                     </div>

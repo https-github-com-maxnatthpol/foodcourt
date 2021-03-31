@@ -70,7 +70,7 @@ function select_table()
         $query = $db->Query($sql);
         $result_sum_2 = mysqli_fetch_array($query);
 
-        $strSQL_sales_store = "SELECT * FROM `mod_cashier_sales_store` WHERE `id_cashier` = '".$objResult["id_cashier"]."' ";
+        $strSQL_sales_store = "SELECT date_action FROM `mod_cashier_sales_store` WHERE `id_cashier` = '".$objResult["id_cashier"]."' ";
         $strSQL_sales_store .= " AND date_action = '".$date_now."' ";
 
         $objQuery_sales_store = $db->Query($strSQL_sales_store);
@@ -108,7 +108,7 @@ function select_table()
           <?php } else { ?>
               <button type="button" class="btn btn-success btn-sm" style="<?php echo $button_approval ?>"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;อนุมัติการจ่ายเงินแล้ว</button>
                 
-              <button type="button" style="<?php echo $button_update ?>"  class="btn btn-info btn-sm print_btn" data-id="<?php echo $objResult['id_customer'] ?>" onclick="print()" ><i class="fas fa-print"></i> ปริ้นเอกสาร</button>
+              <button type="button" style="<?php echo $button_update ?>" class="btn btn-info btn-sm print_btn" data-id="<?php echo $objResult["id_cashier"] ?>" data-date_action="<?php echo $objResult_sales_store["date_action"]; ?>"><i class="fas fa-print"></i> ปริ้นเอกสาร</button>
             
           <?php } ?>  
           </td>
