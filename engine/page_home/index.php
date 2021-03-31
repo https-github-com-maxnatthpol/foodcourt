@@ -6,19 +6,25 @@ $db = new DB();
 ?>
 <?php include('../template/header.php'); ?>
 <style>
+    .ct-series-a .ct-bar,
+    .ct-series-a .ct-line,
+    .ct-series-a .ct-point,
+    .ct-series-a .ct-slice-donut {
+        stroke: #26C6DA;
+    }
 
-.ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
-    stroke: #26C6DA;
-}
-.ct-series-b .ct-bar, .ct-series-b .ct-line, .ct-series-b .ct-point, .ct-series-b .ct-slice-donut {
-    stroke: #1E88E5;
-}
-.ct-chart {
-    margin: auto;
-    width: 360px;
-    height: 360px;
-}
+    .ct-series-b .ct-bar,
+    .ct-series-b .ct-line,
+    .ct-series-b .ct-point,
+    .ct-series-b .ct-slice-donut {
+        stroke: #1E88E5;
+    }
 
+    .ct-chart {
+        margin: auto;
+        width: 360px;
+        height: 360px;
+    }
 </style>
 <!-- ============================================================== -->
 <!-- End Topbar header -->
@@ -46,7 +52,7 @@ $db = new DB();
             </div>
             <div class="col-md-7 col-4 align-self-center">
                 <div class="d-flex m-t-10 justify-content-end">
-<!--
+                    <!--
                     <div class="d-flex m-r-20 m-l-10 hidden-md-down">
                         <div class="chart-text m-r-10">
                             <h6 class="m-b-0"><small>รายวัน</small></h6>
@@ -63,9 +69,7 @@ $db = new DB();
                     </div>
 -->
                     <div class="">
-                        <button
-                            class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i
-                                class="ti-settings text-white"></i></button>
+                        <button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
                     </div>
                 </div>
             </div>
@@ -86,13 +90,17 @@ $db = new DB();
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-light">
                                     <?php
-//                                    $sql = "SELECT COUNT(`id_course`) as total FROM `course` WHERE `delete_datetime` IS null ";
-//                                    $objResult = $db->QueryFetchArray($sql);
-//                                    echo isset($objResult)?$objResult["total"]:0;
-									
-                                    ?>0
+                                    $date_regdate = date("Y-m-d");
+                                    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
+                                    $objResult = $db->QueryFetchArray($sql);
+                                    if ($objResult["total"] == "") {
+                                        echo "฿ 0";
+                                    } else {
+                                        echo "฿ ".number_format($objResult["total"],2);
+                                    }
+                                    ?>
                                 </h3>
-                                <h5 class="text-muted m-b-0">ยอดขาย</h5>
+                                <h5 class="text-muted m-b-0">ยอดขายร้านค้า</h5>
                             </div>
                         </div>
                     </div>
@@ -104,17 +112,21 @@ $db = new DB();
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
-                            <div class="round round-lg align-self-center round-warning"><i
-                                    class="mdi mdi-cellphone-link"></i></div>
+                            <div class="round round-lg align-self-center round-warning"><i class="mdi mdi-cellphone-link"></i></div>
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-lgiht">
                                 <?php
-//                                    $sql = "SELECT COUNT(`id_webinar`) as total FROM `webinar` WHERE `delete_datetime` IS null ";
-//                                    $objResult = $db->QueryFetchArray($sql);
-//                                    echo isset($objResult)?$objResult["total"]:0;
-                                    ?>0
+                                    $date_regdate = date("Y-m-d");
+                                    $sql = "SELECT SUM((amount*percent_customer)/100) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
+                                    $objResult = $db->QueryFetchArray($sql);
+                                    if ($objResult["total"] == "") {
+                                        echo "฿ 0";
+                                    } else {
+                                        echo "฿ ".number_format($objResult["total"],2);
+                                    }
+                                ?>
                                 </h3>
-                                <h5 class="text-muted m-b-0">ไม่มีข้อมูล</h5>
+                                <h5 class="text-muted m-b-0">ยอดกำไร</h5>
                             </div>
                         </div>
                     </div>
@@ -126,17 +138,44 @@ $db = new DB();
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
-                            <div class="round round-lg align-self-center round-primary"><i
-                                    class="mdi mdi-cart-outline"></i></div>
+                            <div class="round round-lg align-self-center round-primary"><i class="mdi mdi-cart-outline"></i></div>
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-lgiht">
                                 <?php
-//                                    $sql = "SELECT COUNT(`id_article`) as total FROM `article` WHERE `delete_datetime` IS null ";
-//                                    $objResult = $db->QueryFetchArray($sql);
-//                                    echo isset($objResult)?$objResult["total"]:0;
-                                    ?>0
+                                    $date_regdate = date("Y-m-d");
+                                    $strSQL_sum_2 = "SELECT SUM(`amount`) as amount_sum
+                                    FROM `data_working_card`
+                                    WHERE  (data_date BETWEEN '".$date_regdate." 00:00:00' AND '".$date_regdate." 23:59:59' )
+                                    AND Identity = 2";
+                                    $objQuery_sum_2 = $db->Query($strSQL_sum_2); 
+                                    $objResult_sum_2 = mysqli_fetch_array($objQuery_sum_2);
+
+                                    $strSQL_sum_0 = "SELECT SUM(`amount`) as amount_sum
+                                    FROM `data_working_card`
+                                    WHERE  (data_date BETWEEN '".$date_regdate." 00:00:00' AND '".$date_regdate." 23:59:59' )
+                                    AND Identity = 0";
+                                    
+                                    $objQuery_sum_0 = $db->Query($strSQL_sum_0); 
+                                    $objResult_sum_0 = mysqli_fetch_array($objQuery_sum_0);
+
+                                    $strSQL_sum_1 = "SELECT SUM(`amount`) as amount_sum
+                                    FROM `data_working_card`
+                                    WHERE  (data_date BETWEEN '".$date_regdate." 00:00:00' AND '".$date_regdate." 23:59:59' )
+                                    AND Identity = 1";
+                                    $objQuery_sum_1 = $db->Query($strSQL_sum_1); 
+                                    $objResult_sum_1 = mysqli_fetch_array($objQuery_sum_1);
+
+                                    
+                                    $total = ($objResult_sum_0['amount_sum']+$objResult_sum_2['amount_sum'])-$objResult_sum_1['amount_sum'];
+
+                                    if ($total == "") {
+                                        echo "฿ 0";
+                                    } else {
+                                        echo "฿ ".number_format($total,2);
+                                    }
+                                    ?>
                                 </h3>
-                                <h5 class="text-muted m-b-0">ไม่มีข้อมูล</h5>
+                                <h5 class="text-muted m-b-0">ยอดเติมเงิน</h5>
                             </div>
                         </div>
                     </div>
@@ -153,12 +192,17 @@ $db = new DB();
                             <div class="m-l-10 align-self-center">
                                 <h3 class="m-b-0 font-lgiht">
                                 <?php
-//                                    $sql = "SELECT COUNT(`id_partner`) as total FROM `partner` WHERE `delete_datetime` IS null ";
-//                                    $objResult = $db->QueryFetchArray($sql);
-//                                    echo isset($objResult)?$objResult["total"]:0;
-                                    ?>0
+                                    $date_regdate = date("Y-m-d");
+                                    $sql = "SELECT SUM(`amount`) as total FROM `card` WHERE `status` = 1 ";
+                                    $objResult = $db->QueryFetchArray($sql);
+                                    if ($objResult["total"] == "") {
+                                        echo "฿ 0";
+                                    } else {
+                                        echo "฿ ".number_format($objResult["total"],2);
+                                    }
+                                    ?>
                                 </h3>
-                                <h5 class="text-muted m-b-0">ไม่มีข้อมูล</h5>
+                                <h5 class="text-muted m-b-0">ยอดเงินในบัตร</h5>
                             </div>
                         </div>
                     </div>
@@ -177,25 +221,12 @@ $db = new DB();
                             <div class="col-12">
                                 <div class="d-flex flex-wrap">
                                     <div>
-                                        <h3 class="card-title">รายงานยังไม่ได้ระบุ</h3>
-                                        <h6 class="card-subtitle">แยกตามกลุ่มไม่ได้ระบุ</h6>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <ul class="list-inline">
-                                            <li>
-                                                <h6 class="text-muted text-success"><i
-                                                        class="fa fa-circle font-10 m-r-10 "></i>ไม่ได้ระบุ</h6>
-                                            </li>
-                                            <li>
-                                                <h6 class="text-muted  text-info"><i
-                                                        class="fa fa-circle font-10 m-r-10"></i>ไม่ได้ระบุ</h6>
-                                            </li>
-                                        </ul>
+                                        <h3 class="card-title">รายงานสรุปยอดขายโดยรวมของร้านค้า</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="course-webinar" style="height: 360px;"></div>
+                            <div id="div_chart_summary"></div>
                             </div>
                         </div>
                     </div>
@@ -205,7 +236,6 @@ $db = new DB();
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">รายงานสรุปยอดไม่ได้ระบุ </h3>
-                        <h6 class="card-subtitle">แยกตามประเภทรายการไม่ได้ระบุ</h6>
                         <div id="sales" style="height:290px; width:100%;"></div>
                     </div>
                     <div>
@@ -219,14 +249,14 @@ $db = new DB();
                             </li>
                             <li>
                                 <h6 class="text-muted text-info"><i class="fa fa-circle font-10 m-r-10 "></i>ไม่ได้ระบุ</h6>
-                            </li>                            
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Row -->
-        
+
 
         <!-- Row -->
         <!-- Row -->
@@ -236,7 +266,7 @@ $db = new DB();
         <!-- ============================================================== -->
 
     </div>
-    
+
     <?php include('../template/footer.php'); ?>
 
     <!-- ============================================================== -->

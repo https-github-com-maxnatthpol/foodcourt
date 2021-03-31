@@ -151,3 +151,17 @@ $(function() {
     }
   });
 }); //End function()
+
+chart_summary();
+function chart_summary() {
+  $.ajax({
+    url: "function.php",
+    method: "POST",
+    data: {
+      form: "chart_summary",
+    },
+    success: function (data) {
+      $("#div_chart_summary").html(data);
+    }
+  });
+}

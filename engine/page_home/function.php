@@ -10,189 +10,97 @@ require_once '../lib/functions.php';
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
-        case "course_webinar":
-            course_webinar();
-
-        break;
 
         case "sales":
             sales();
 
-        break;
-
+            break;
     }
 }
 
-function course_webinar()
+if (isset($_POST['form'])) {
+    if ($_POST['form'] == "chart_summary") {
+        chart_summary();
+    }
+}
+
+function chart_summary()
 {
     $db = new DB();
+    date_default_timezone_set("Asia/Bangkok");
 
-    //============Category
-    //$sqlCategory = "SELECT `name_th` FROM `category` WHERE `delete_datetime` IS null ORDER BY `name_th`";
-    $sqlCategory = "SELECT `name_th` FROM `category`
-    WHERE category.delete_datetime is null
-    AND ((id_category IN (SELECT DISTINCT id_category FROM course WHERE course.delete_datetime IS null) ) or 
-    (id_category IN (SELECT DISTINCT id_category FROM webinar WHERE webinar.delete_datetime IS null) ))
-    ORDER BY `name_th`";
-    $objCategory = $db->Query($sqlCategory);
-    
-    $arrCategory = array();
-    $category = "";
-   
-    if (isset($objCategory)) {
-        $num = $objCategory->num_rows;
-        while ($result = mysqli_fetch_array($objCategory, MYSQLI_ASSOC)) {
-            if ($num > 1) {
-                array_push($arrCategory, $result["name_th"]);
-            } else {
-                $category = $result;
-            }
-        }
 
-        if ($num > 1) {
-            $category = count($arrCategory) > 1?implode(",", $arrCategory):$arrCategory;
-        }
+    $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM(amount) AS amount 
+  FROM history_payment_shop 
+  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
+  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
+  ORDER BY date_action ASC";
+
+    $query = $db->Query($sql);
+    $summary_date = "";
+    $amount = "";
+    while ($objResult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+        $summary_date .= '"' . DateThai($objResult["summary_date"]) . '",';
+        $amount .= $objResult["amount"] . ",";
     }
-    $category = [$category];
+?>
+    <canvas id="chart_summary" width="800" height="450"></canvas>
+    <script src="../../plugins_b/Chart.js/Chart.min.js"></script>
 
-    //==========Course
-    $sqlCourse = "SELECT C.id_category ,(ifnull((SELECT ifnull((SUM(orders_item.subtotal)),0) as total
-    FROM `orders` 
-    LEFT JOIN orders_item ON orders.id_orders = orders_item.id_orders
-    LEFT JOIN course ON orders_item.id_course = course.id_course
-    WHERE orders.delete_datetime IS null 
-    AND MONTH(orders.orders_datetime) = MONTH(CURRENT_DATE())
-    AND YEAR(orders.orders_datetime) = YEAR(CURRENT_DATE())
-    AND course.id_category = C.id_category),0)) as total
-FROM category as C
-WHERE C.delete_datetime IS null";
-    $objCourse = $db->Query($sqlCourse);
-    
-    $arrCourse = array();
-    $course = "";
-   
-    if (isset($objCourse)) {
-        $num = $objCourse->num_rows;
-        while ($result = mysqli_fetch_array($objCourse, MYSQLI_ASSOC)) {
-            if ($num > 1) {
-                array_push($arrCourse, $result["total"]);
-            } else {
-                $course = $result;
+    <script>
+        $.ajax({
+            url: "function.php",
+            method: "POST",
+            data: {
+                form: "chart_summary",
+            },
+            success: function(data) {
+                new Chart(document.getElementById("chart_summary"), {
+                    type: 'line',
+                    data: {
+                        labels: [<?= $summary_date ?>],
+                        datasets: [{
+                            data: [<?= $amount ?>],
+                            label: "ยอดขาย",
+                            borderColor: "#6610f2",
+                            fill: false
+                        }, {
+                            data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
+                            label: "ยอดกำไร",
+                            borderColor: "#e8c3b9",
+                            fill: false
+                        }, ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'กราฟสรุปยอดขายโดยรวมของร้านค้า (ย้อนหลัง 7 วัน)'
+                        }
+                    }
+                });
             }
-        }
-
-        if ($num > 1) {
-            $course = count($arrCourse) > 1?implode(",", $arrCourse):$arrCourse;
-        }
-    }
-    $course = [$course];
-
-    //==========Webinar
-    $sqlWebinar = "SELECT C.id_category ,(ifnull((SELECT ifnull((SUM(orders_item.subtotal)),0) as total
-    FROM `orders` 
-    LEFT JOIN orders_item ON orders.id_orders = orders_item.id_orders
-    LEFT JOIN webinar ON orders_item.id_course = webinar.id_webinar
-    WHERE orders.delete_datetime IS null 
-    AND MONTH(orders.orders_datetime) = MONTH(CURRENT_DATE())
-    AND YEAR(orders.orders_datetime) = YEAR(CURRENT_DATE())
-    AND webinar.id_category = C.id_category),0)) as total
-FROM category as C
-WHERE C.delete_datetime IS null";
-    $objWebinar = $db->Query($sqlWebinar);
-    
-    $arrWebinar = array();
-    $webinar = "";
-   
-    if (isset($objWebinar)) {
-        $num = $objWebinar->num_rows;
-        while ($result = mysqli_fetch_array($objWebinar, MYSQLI_ASSOC)) {
-            if ($num > 1) {
-                array_push($arrWebinar, $result["total"]);
-            } else {
-                $webinar = $result;
-            }
-        }
-
-        if ($num > 1) {
-            $webinar = count($arrWebinar) > 1?implode(",", $arrWebinar):$arrWebinar;
-        }
-    }
-    $webinar = [$webinar];
-
-    //Prepare data
-    $labels = $arrCategory;
-    $series = [$arrCourse,$arrWebinar];
-
-    echo json_encode(array('labels' => $labels,'series'=> $series,'category'=> $category,'course'=> $course,'webinar'=> $webinar));
+        });
+    </script>
+<?php
 }
+
 
 function sales()
 {
     $db = new DB();
 
     //==========Course
-    $sqlCourse = "SELECT ifnull((SUM(orders_item.subtotal)),0) as total
-    FROM `orders` 
-    LEFT JOIN orders_item ON orders.id_orders = orders_item.id_orders
-    LEFT JOIN course ON orders_item.id_course = course.id_course
-    WHERE orders.delete_datetime IS null 
-    AND MONTH(orders.orders_datetime) = MONTH(CURRENT_DATE())
-    AND YEAR(orders.orders_datetime) = YEAR(CURRENT_DATE()) 
-    AND orders_item.type  = 1";
-    $objCourse = $db->Query($sqlCourse);
-    
-    $arrCourse = array();
-    $course = "";
-   
-    if (isset($objCourse)) {
-        $num = $objCourse->num_rows;
-        while ($result = mysqli_fetch_array($objCourse, MYSQLI_ASSOC)) {
-            if ($num > 1) {
-                array_push($arrCourse, $result["total"]);
-            } else {
-                $course = $result["total"];
-            }
-        }
+    $sql = "SELECT SUM(`amount`) as total FROM `card` WHERE `status` = 1 ";
+    $objResult = $db->QueryFetchArray($sql);
 
-        if ($num > 1) {
-            $course = count($arrCourse) > 1?implode(",", $arrCourse):$arrCourse;
-        }
-    }
-    $course = $course;
+    $course = $objResult["total"];
 
     //==========Webinar
-    $sqlWebinar = "SELECT ifnull((SUM(orders_item.subtotal)),0) as total
-    FROM `orders` 
-    LEFT JOIN orders_item ON orders.id_orders = orders_item.id_orders
-    LEFT JOIN webinar ON orders_item.id_course = webinar.id_webinar
-    WHERE orders.delete_datetime IS null 
-    AND MONTH(orders.orders_datetime) = MONTH(CURRENT_DATE())
-    AND YEAR(orders.orders_datetime) = YEAR(CURRENT_DATE()) 
-    AND orders_item.type  = 2";
-    $objWebinar = $db->Query($sqlWebinar);
-    
-    $arrWebinar = array();
-    $webinar = "";
-   
-    if (isset($objWebinar)) {
-        $num = $objWebinar->num_rows;
-        while ($result = mysqli_fetch_array($objWebinar, MYSQLI_ASSOC)) {
-            if ($num > 1) {
-                array_push($arrWebinar, $result["total"]);
-            } else {
-                $webinar = $result["total"];
-            }
-        }
+    //==========Course
+    $sql = "SELECT SUM(`amount`) as total FROM `card` WHERE `status` = 1 ";
+    $objResult = $db->QueryFetchArray($sql);
+    $webinar = $objResult["total"];
 
-        if ($num > 1) {
-            $webinar = count($arrWebinar) > 1?implode(",", $arrWebinar):$arrWebinar;
-        }
-    }
-    $webinar = $webinar;
-    
-    $total = $course + $webinar;
-    $course = $total==0?0:(($course / $total) * 100);
-    $webinar = $total==0?0:(($webinar / $total) * 100);
 
-    echo json_encode(array('course'=> $course,'webinar'=> $webinar));
+    echo json_encode(array('course' => $course, 'webinar' => $webinar));
 }
