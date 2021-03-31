@@ -48,3 +48,9 @@ $(document).on("click", ".approval_btn_product", function() {
 		}
 	  });
   });
+
+  $(document).on("click", ".print_btn", function() {
+	id = $(this).attr("data-id");
+	date_action = $(this).attr("data-date_action");
+	window.open(`print_history_cashier.php?id=${id}&date_action=${date_action}`, '_bank');     
+  });
