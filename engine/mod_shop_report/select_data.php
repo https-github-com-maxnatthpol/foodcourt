@@ -137,7 +137,7 @@ $objQuery = $db->Query($strSQL);
           <?php } else { ?>
               <button type="button" class="btn btn-success btn-sm" style="<?php echo $button_approval ?>"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;อนุมัติการจ่ายเงินแล้ว</button>
                 
-              <button type="button" style="<?php echo $button_update ?>"  class="btn btn-info btn-sm print_btn" data-id="<?php echo $objResult['id_customer'] ?>" onclick="print()" ><i class="fas fa-print"></i> ปริ้นเอกสาร</button>
+              <button type="button" style="<?php echo $button_update ?>" class="btn btn-info btn-sm print_btn" data-id="<?php echo $objResult['id_customer'] ?>" ><i class="fas fa-print"></i> ปริ้นเอกสาร</button>
             
           <?php } ?>    
         </td>  
@@ -148,12 +148,9 @@ $objQuery = $db->Query($strSQL);
 ?>      
     </tbody>
   </table>
+
   <input type="hidden" name="hdnCount" value="<?php echo $num ?>">
 <?php   
   }
   ?>
-<script type="text/javascript">
-function func_print() {
-  window.print();
-}
-</script>
+

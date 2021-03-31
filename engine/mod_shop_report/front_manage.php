@@ -38,7 +38,7 @@ $db = new DB();
 							<div class="">
                                 <button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
                             </div>
-        <form id="form_search" name="form_search" >
+        <form id="form_search" name="form_search">
 			<div class="row"> 
     			<div class="col-md-12 col-lg-12 col-sm-12">   
          			<div class="ribbon-wrapper card">
@@ -93,8 +93,8 @@ $db = new DB();
                                         <div class="col-md-8 col-sm-8" >
                                           <input type="text" class="form-control" name="search_key" id="search_key" placeholder="ค้นหาสินค้าที่ต้องการ">
                                         </div>
-                                        <div class="col-md-4 col-sm-4" align=""  >
-                                         <button class="btn btn-success css-search-product" id="btn_search">ค้นหา <i class="fa fa-search" aria-hidden="true"></i></button>
+                                        <div class="col-md-4 col-sm-4" align="">
+                                          <button type="button" class="btn btn-success" id="btn_search"><i class="fa fa-search"></i> ค้นหา</button>    
                                         </div>
                                       </div>
                                     </div>
@@ -315,27 +315,6 @@ function fetch_data_table() {
       return output;
     }
     
-   function print() {
-    var formData = new FormData($('#form_search')[0]);
-     $.ajax({
-          method: "POST",
-          url: "pdf.php",
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-          success: function(data) {
-//            $('#div_pdf').html('<iframe  src="example_test.pdf" id="myFrame" frameborder="0" style="border:0; display: none;" width="300"height="300" ></iframe>');
-//
-//            var objFra = document.getElementById('myFrame');
-//            objFra.contentWindow.focus();
-//            objFra.contentWindow.print();
-          },
-        }).fail(function (data) {
-            // คือไม่สำรเ็จ
-             swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
-            });
-  
-    }    
+   
      
 </script>

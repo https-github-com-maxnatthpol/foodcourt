@@ -47,3 +47,8 @@ $(document).on("click", ".approval_btn_product", function() {
       }
     });
 });
+
+$(document).on("click", ".print_btn", function() {
+  id = $(this).attr("data-id");
+  window.open(`print_history_shop.php?id=${id}`, '_bank');      
+});
