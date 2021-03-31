@@ -25,6 +25,17 @@ $email = $email == ""?HEAD_LOGO_MINI:$email;
 $id_customer = $_GET['id'];
 $date_action = $_GET['date_action'];
 
+if (isset($_SESSION["id_data"])) {
+	$id_data = $_SESSION["id_data"];
+}else{
+	$id_data = '';
+}
+
+$strSQL_address = "SELECT `address`,`district`,`amphur`,`province`,`postcode` FROM `user_address` WHERE `delete_datetime` IS null AND id_user = '".$id_customer."' AND status = '1' ";
+$objQuery_address = $db->Query($strSQL_address);
+$objResult_address = mysqli_fetch_array($objQuery_address);
+$objResult_num_address = mysqli_num_rows($objQuery_address);
+
 $strSQL = "SELECT `id_customer`,`forename` FROM `mod_customer` WHERE `delete_datetime` IS null AND id_customer = '".$id_customer."' ";
 $objQuery = $db->Query($strSQL);
 $objResult = mysqli_fetch_array($objQuery);
@@ -227,8 +238,7 @@ navcssa4();
                     <td align="right" colspan="2"><div class="thick23"><?php echo $_POST["Document"]; ?></div></td>
                 </tr>
                 <tr>
-                    <td align="right">เลขที่</td>
-                    <td align="right"><div class="s13"><?php echo substr($objResult_histor_shop['sales_store_id'], 0 ,11); ?></div></td>
+                    <span style="font-size: 26px; font-weight: bold;">ใบสำคัญจ่าย</span></br></br>
                 </tr>
                 <tr>
                     <td align="right">วันที่</td>
@@ -267,34 +277,34 @@ navcssa4();
         </tr>
         <tr>
             <td align="left"><table width="100%" cellpadding="0" cellspacing="0" border="1">
-                    <tr class="borderbot">
-                        <td width="55%" align="left"><div class="thick15">รายการ</div></td>
-                        <td width="15%" align="right"><div class="thick15">ยอดรวม</div></td>
-                        <td width="15%" align="right"><div class="thick15">ยอดหัก</div></td>
-                        <td width="15%" align="right"><div class="thick15">ยอดสุทธิ</div></td>
+                    <tr class="borderbot" style="border: 1px solid black;">
+                        <td width="55%" align="left"><div class="thick15" style="padding-left: 5px;">รายการ</div></td>
+                        <td width="15%" align="right"><div class="thick15" style="padding-right: 5px;">ยอดรวม</div></td>
+                        <td width="15%" align="right"><div class="thick15" style="padding-right: 5px;">ยอดหัก</div></td>
+                        <td width="15%" align="right"><div class="thick15" style="padding-right: 5px;">ยอดสุทธิ</div></td>
                     </tr>
                     <div class="s15">
-                        <tr class="height40">
-                            <td align="left">ยอดขายวันที่ <?php echo setdatetime($objResult_histor_shop["date_action"],"DD MM YYYY"); ?></td>
-                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo number_format($objResult_histor_shop['sales_store_shop'],2); ?></div></td>
-                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo number_format($objResult_histor_shop['sales_store_percent'],2); ?></div></td>
-                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo number_format($objResult_histor_shop['sales_store_total'],2); ?></div></td>
+                        <tr class="height40" style="border: 1px solid black;">
+                            <td align="left" style="padding-left: 5px;">ยอดขายวันที่ <?php echo setdatetime($objResult_histor_shop["date_action"],"DD MM YYYY"); ?></td>
+                            <td align="right"><div class="s12" style="margin-right: 5px;"><?php echo number_format($objResult_histor_shop['sales_store_shop'],2); ?></div></td>
+                            <td align="right"><div class="s12" style="margin-right: 5px;"><?php echo number_format($objResult_histor_shop['sales_store_percent'],2); ?></div></td>
+                            <td align="right"><div class="s12" style="margin-right: 5px;"><?php echo number_format($objResult_histor_shop['sales_store_total'],2); ?></div></td>
                         </tr>
                     </div>
                     <tr class="height40 bordertop">
-                        <td align="left" colspan="2">อ้างอิง : <div class="s13"><?php echo substr($objResult_histor_shop['sales_store_id'], 0 ,35); ?></br></div></td>
-                        <td align="right">รวม</td>
+                        <td align="left" colspan="2" style="padding-left: 5px;">อ้างอิง : <div class="s13"><?php echo substr($objResult_histor_shop['sales_store_id'], 0 ,35); ?></br></div></td>
+                        <td align="right"></td>
                         <?php
                             for($j=1; $j<=10; $j++) {
                                 $sum += $_POST['work_item_price'.$j];
                             }
                         ?>
-                        <td align="right"><div class="s15"><?php echo number_format($objResult_histor_shop['sales_store_total'],2); ?></div></td>
+                        <td align="right"><div class="s15"></div></td>
                     </tr>
-                    <tr class="height40 borderbot">
+                    <tr class="height40 borderbot" style="border: 1px solid black;">
                         <td align="center" colspan="2"><div class="thick17"><?php echo Convert($objResult_histor_shop['sales_store_total']); ?></div></td>
-                        <td align="right">รวมทั้งสิ้น</td>
-                        <td align="right"><div class="thick17"><?php echo number_format($objResult_histor_shop['sales_store_total'],2); ?></div></td>
+                        <td align="right" style="padding-right: 5px;">รวมทั้งสิ้น</td>
+                        <td align="right" style="padding-right: 5px;"><div class="thick17">฿<?php echo number_format($objResult_histor_shop['sales_store_total'],2); ?></div></td>
                     </tr>
 
                 </table></td>
@@ -303,13 +313,13 @@ navcssa4();
             <td align="left">&nbsp;</td>
         </tr>
         </table>
-        <div ><img align="right" src="Assets/images/sig.png" width="165"></div>
+<!--        <div><img align="right" src="Assets/images/sig.png" width="165"></div>--><br><br>
       <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" >
             <tr>
-                <td align="left" width="40%">(...................................................)</br>ผู้รับ ลงวันที่.../...../..........</td>
+                <td align="left" width="40%" style="text-align: center;">(...................................................)</br>ผู้รับ ลงวันที่.../...../..........</td>
                 </td>
-                <td align="right" width="40%">&nbsp;</td>
-                <td align="right" style="padding-right:25px;" width="20%">(เลิศศักดิ์ หงษ์จันทร์)</br>ผู้ส่ง &nbsp; &nbsp; &nbsp; </td>
+                <td align="right" width="20%">&nbsp;</td>
+                <td align="right" style="text-align: center;" width="40%"><br>()</br>ผู้จ่าย</td>
             </tr>
         </table>
 
