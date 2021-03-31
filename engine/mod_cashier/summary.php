@@ -45,25 +45,6 @@ $db = new DB();
                     <li class="breadcrumb-item active">สรุปข้อมูลทางการเงิน</li>
                 </ol>
             </div>
-            <div class="col-md-7 col-4 align-self-center">
-                <div class="d-flex m-t-10 justify-content-end">
-                    <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                        <div class="chart-text m-r-10">
-                            <h6 class="m-b-0"><small>ยอดเติมเงิน วันนี้</small></h6>
-                            <h4 class="m-t-0 text-info">$58,356</h4>
-                        </div>
-                    </div>
-                    <div class="d-flex m-r-20 m-l-10 hidden-md-down">
-                        <div class="chart-text m-r-10">
-                            <h6 class="m-b-0"><small>ยอดเติมเงิน เดือนนี้</small></h6>
-                            <h4 class="m-t-0 text-primary">$48,356</h4>
-                        </div>
-                    </div>
-                    <div class="">
-                        <button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
-                    </div>
-                </div>
-            </div>
         </div>
         <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->

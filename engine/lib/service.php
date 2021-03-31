@@ -268,7 +268,7 @@ function doLogin()
                                 $result_img = mysqli_fetch_array($query);
                                 $date_img  = $result_img['date'];
                                 $date_img = explode("-", $date_img);
-                                $image = "../../uploads/$date_img[0]/customer/" . $result_img['name'];
+                                $image = "../../uploads/$date_img[0]/mod_customer/" . $result_img['name'];
                                 if (@getimagesize($image)) {
                                     $_SESSION['avatar'] = $image;
                                 }

@@ -354,6 +354,30 @@ if (isset($role_tag)) {
                                             } else {
                                                 print'';
                                             }?>>
+                                                      
+                                        <?php if ($role_tag == 'mod_customer') {  ?>              
+                                    <div class="card card-inverse card-danger callout-primary-box" >
+                            <div class="card-body" style="padding: 0.48rem;">
+								<h4 class="card-title"> <a href="#code1" data-toggle="collapse"><i class="fas fa-chevron-circle-down" style="color: #FFFFFF;" data-toggle="tooltip" title="อ่านรายละเอียด"></i> <span style="color: #FBFBFB">คำแนะนำการเพิ่ม ผู้ใช้งาน (ร้านค้า)</span> </a></h4>
+                        <div id="code1" class="collapse" >
+                            <div class="highlight" style="border-radius: 5px; margin: 0rem 0px;">
+                              <p > <i class="fa fa-caret-right"></i> ร้าน User แนะนำให้กรอก เลข IP ของเครื่อง เช่น 192.xxx.xx.xxx</p>
+                              <p > <i class="fa fa-caret-right"></i> ร้าน Pass แนะนำให้กรอก เป็นตัวเลขเท่านั้น เช่น xxxxxx</p>                                   
+                            </div>
+                        </div>
+							</div>	
+                        </div>
+						<div class="card card-inverse card-warning callout-warning-new-box" style="display: none;">
+                            <div class="card-body" style="padding: 0.48rem;">
+								<h4 class="card-title"> <a href="#code2" data-toggle="collapse"><i class="fas fa-chevron-circle-down" style="color: #FFFFFF;" data-toggle="tooltip" title="อ่านรายละเอียด"></i> <span style="color: #FBFBFB">คำแนะนำการแก้ไขระบบเมนู</span> </a></h4>
+                        <div id="code2" class="collapse">
+                            <div class="highlight" style="border-radius: 5px; margin: 0rem 0px;">
+                              <p > <i class="fa fa-caret-right"></i> ถ้าไม่ต้องการให้มี icon ให้ลบชื่อที่กล่อง icon              </p><p > <i class="fa fa-caret-right"></i> เมื่อเข้าสู่โหมดการแก้ไขเมนู จะไม่สามารถลบระบบเมนูอื่นๆ ได้         </p><p class="font"> <i class="fa fa-caret-right"></i> สามารถเลือกที่จะเป็นหัวข้อหลักหรือหัวข้อย่อยได้ *            </p><p class="font">&nbsp;&nbsp;*ถ้าต้องการให้เป็นหัวข้อหลัก หรือหัวข้อนั้นๆ มีซับย่อยอีก กรุณาเลือก root folder เป็น #             </p>
+                            </div>
+                        </div>
+							</div>	
+                        </div>
+                        <?php } ?>
                                     <div class="form-group row">
                                         <label for="exampleInputuname3" class="col-sm-3 control-label"><?=lang('ชื่อผู้ใช้งาน', 'Username')?>
                                             <font class="text-warning" id="employee-user-text">*</font>
