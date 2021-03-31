@@ -23,6 +23,7 @@ $email = getSetting('email');
 $email = $email == ""?HEAD_LOGO_MINI:$email;
 
 $id_customer = $_GET['id'];
+$date_action = $_GET['date_action'];
 
 $strSQL = "SELECT `id_customer`,`forename` FROM `mod_customer` WHERE `delete_datetime` IS null AND id_customer = '".$id_customer."' ";
 $objQuery = $db->Query($strSQL);
@@ -34,11 +35,12 @@ $objQuery_address = $db->Query($strSQL_address);
 $objResult_address = mysqli_fetch_array($objQuery_address);
 $objResult_num_address = mysqli_num_rows($objQuery_address);
 
-$str_histor_shop = "SELECT `sales_store_id`,`sales_store_shop`,`sales_store_percent`,`sales_store_total`,`date_action`,`id_customer`,`create_datetime` FROM `mod_sales_store` WHERE id_customer = '".$id_customer."' ";
+$str_histor_shop = "SELECT `sales_store_id`,`sales_store_shop`,`sales_store_percent`,`sales_store_total`,`date_action`,`id_customer`,`create_datetime` FROM `mod_sales_store` WHERE id_customer = '".$id_customer."' AND date_action = '".$date_action."'  ";
 $objQuery_histor_shop = $db->Query($str_histor_shop);
 $objResult_histor_shop = mysqli_fetch_array($objQuery_histor_shop);
+$objResult_num_histor_shop = mysqli_num_rows($objQuery_histor_shop);
 
-if($objResult_num == '0'){
+if($objResult_num == '0' || $objResult_num_histor_shop == '0' ){
  ?> 
 <script>
 	window.location.href = "front_manage.php";
@@ -274,9 +276,9 @@ navcssa4();
                     <div class="s15">
                         <tr class="height40">
                             <td align="left">ยอดขายวันที่ <?php echo setdatetime($objResult_histor_shop["date_action"],"DD MM YYYY"); ?></td>
-                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo $objResult_histor_shop['sales_store_shop']; ?></div></td>
-                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo $objResult_histor_shop['sales_store_percent']; ?></div></td>
-                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo $objResult_histor_shop['sales_store_total']; ?></div></td>
+                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo number_format($objResult_histor_shop['sales_store_shop'],2); ?></div></td>
+                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo number_format($objResult_histor_shop['sales_store_percent'],2); ?></div></td>
+                            <td align="right"><div class="s12" style="margin-right: 1px;"><?php echo number_format($objResult_histor_shop['sales_store_total'],2); ?></div></td>
                         </tr>
                     </div>
                     <tr class="height40 bordertop">
@@ -287,17 +289,12 @@ navcssa4();
                                 $sum += $_POST['work_item_price'.$j];
                             }
                         ?>
-                        <td align="right"><div class="s15"><?php echo number_format($sum, 2, '.', ','); ?></div></td>
-                    </tr>
-                    <tr class="height40">
-                        <td align="left" colspan="2"></td>
-                        <td align="right">ส่วนลด</td>
-                        <td align="right"><div class="s15"><?php echo number_format($_POST['discount'], 2, '.', ','); ?></div></td>
+                        <td align="right"><div class="s15"><?php echo number_format($objResult_histor_shop['sales_store_total'],2); ?></div></td>
                     </tr>
                     <tr class="height40 borderbot">
-                        <td align="center" colspan="2"><div class="thick17"><?php echo Convert(($sum-$_POST['discount'])); ?></div></td>
+                        <td align="center" colspan="2"><div class="thick17"><?php echo Convert($objResult_histor_shop['sales_store_total']); ?></div></td>
                         <td align="right">รวมทั้งสิ้น</td>
-                        <td align="right"><div class="thick17"><?php echo number_format(($sum-$_POST['discount']), 2, '.', ','); ?></div></td>
+                        <td align="right"><div class="thick17"><?php echo number_format($objResult_histor_shop['sales_store_total'],2); ?></div></td>
                     </tr>
 
                 </table></td>

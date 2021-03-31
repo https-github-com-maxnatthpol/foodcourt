@@ -50,5 +50,6 @@ $(document).on("click", ".approval_btn_product", function() {
 
 $(document).on("click", ".print_btn", function() {
   id = $(this).attr("data-id");
-  window.open(`print_history_shop.php?id=${id}`, '_bank');      
+  date_action = $(this).attr("data-date_action");    
+  window.open(`print_history_shop.php?id=${id}&date_action=${date_action}`, '_bank');      
 });
