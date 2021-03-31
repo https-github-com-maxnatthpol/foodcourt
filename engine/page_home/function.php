@@ -30,9 +30,11 @@ function chart_summary()
     date_default_timezone_set("Asia/Bangkok");
 
 
-    $date_regdate = date("Y-m-d");
-                                    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
-                                    $objResult = $db->QueryFetchArray($sql);
+    $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM(amount) AS amount 
+  FROM history_payment_shop 
+  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
+  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
+  ORDER BY date_action ASC";
 
     $query = $db->Query($sql);
     $summary_date = "";
@@ -124,5 +126,5 @@ function sales()
     }
 
 
-    echo json_encode(array('course' => $amount, 'webinar' => $amount_Profit));
+    echo json_encode(array('course' => $amount, 'webinar' => $webinar));
 }
