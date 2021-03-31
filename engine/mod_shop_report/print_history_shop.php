@@ -95,7 +95,7 @@ function navcssa4() {
 -->
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
-                            <li><a href="#" onClick="window.history.back()"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Back</a></li>
+                            <li><a href="#" onClick="window.close()"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Back</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a>View 1/1</a></li>
@@ -332,3 +332,4 @@ navcssa4();
 <?php
     closecssa4();
     }
+?>
