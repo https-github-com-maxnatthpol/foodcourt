@@ -30,6 +30,8 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
 $title = getSetting('head_title');
 $title = $title == ""?TITLE:$title;
 
+$logo_img2 = getSetting('logo_img2');
+$logo_img2 = $logo_img2 == ""?logo_img2:$logo_img2;
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -173,8 +175,9 @@ $title = $title == ""?TITLE:$title;
 					</span>
 					   
 				</form>
-
-				<div class="login100-more" style="background-image: url('../images/bg-02.jpg');">
+                <?php $show_images = explode("/",$logo_img2);?>
+                <?php $show_images_index = $show_images[1].'/'.$show_images[2].'/'.$show_images[3].'/'.$show_images[4].'/'.$show_images[5] ?>
+				<div class="login100-more" style="background-image: url('<?php echo $show_images_index; ?>');">
 				</div>
 			</div>
 		</div>
