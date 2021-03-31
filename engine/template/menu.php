@@ -767,6 +767,9 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
     <!-- End Sidebar scroll-->
     <!-- Bottom points-->
     <div class="sidebar-footer">
+                <!-- item--><a href="javascript:history.back()" class="link" data-toggle="tooltip" title="" data-original-title="Settings"><i class="fas fa-arrow-left"></i></a>
+                <!-- item--><a href="javascript:history.forward()" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="fas fa-arrow-right"></i></a>
+                <!-- item--><a href="javascript:location.reload()" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="mdi mdi-refresh"></i></a>
     </div>
     <!-- End Bottom points-->
 </aside>
