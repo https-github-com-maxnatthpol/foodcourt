@@ -92,7 +92,7 @@ $logo = $logo == ""?HEAD_LOGO_MINI:$logo;
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="<?php echo BASE_HOST; ?>" target="_blank">
+                    <div class="navbar-brand">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
@@ -111,7 +111,7 @@ $logo = $logo == ""?HEAD_LOGO_MINI:$logo;
                         <span style="color: #ffffff !important">
                             <?php echo $title_mini; ?> </span>
                         <!-- Light Logo text -->
-                    </a>
+                    </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
