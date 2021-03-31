@@ -42,8 +42,8 @@ $db = new DB();
             <div class="col-md-12 col-lg-12 col-sm-12">
                 <div class="ribbon-wrapper card">
                     <div class="ribbon ribbon-bookmark ribbon-info"><i class="mdi mdi-credit-card-scan"></i> ค้นหา</div>
-                    <form id="form_search" name="form_search">
-                        <input type="hidden" name="btn_search_status" id="btn_search_status" value="btn_search_all">
+                    <form id="form_search" name="form_search" method="post" action="">
+                        <input type="hidden" name="form" value="select_table">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -121,13 +121,11 @@ $db = new DB();
         }(jQuery));
 
         $(document).on('click', '#btn_search', function() {
-            var employee_date = $('#employee_date').val();
+            var employee_date = $('#datepicker-autoclose').val();
             var button_update = $('#per_button_edit').val();
             var button_delete = $('#per_button_del').val();
             var button_create = $('#per_button_open').val();
             var button_view = $('#per_input_read').val();
-            var id_cashier = $('#id_cashier').val();
-            $('#btn_search_status').val('btn_search');
 
             $.ajax({
                 url: "select_data.php",

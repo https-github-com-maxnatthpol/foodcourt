@@ -1,49 +1,50 @@
-fetch_data_table()
-    
-function fetch_data_table() {
-          var button_update = $('#per_button_edit').val();
-          var button_delete = $('#per_button_del').val();
-          var button_create = $('#per_button_open').val();
-          var button_view = $('#per_input_read').val();
-        $.ajax({
-            url: "select_data.php",
-            method: "POST",
-            data: {
-                form: "select_table_front_manage",button_update:button_update,button_delete:button_delete,button_create:button_create,button_view:button_view
-            },
-            success: function(data) {
-                $('#div_table_list').html(data);
-                $('#table_front_manage').DataTable({
-                	scrollY: true,
-                	scrollCollapse: true,
-                	scrollX: true,
-                	 "order": [[ 2, 'DESC' ]]
-					,
-            language: {
-                sEmptyTable: "ไม่มีข้อมูลในตาราง",
-				sInfo: "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
-				sInfoEmpty: "แสดง 0 ถึง 0 จาก 0 แถว",
-				sInfoFiltered: "(กรองข้อมูล _MAX_ ทุกแถว)",
-				sInfoPostFix: "",
-				sInfoThousands: ",",
-				sLengthMenu: "แสดง _MENU_ แถว",
-				sLoadingRecords: "กำลังโหลดข้อมูล...",
-				sProcessing: "กำลังดำเนินการ...",
-				sSearch: "ค้นหา: ",
-				sZeroRecords: "ไม่พบข้อมูล",
-				oPaginate: {
-				sFirst: "หน้าแรก",
-				sPrevious: "ก่อนหน้า",
-				sNext: "ถัดไป",
-				sLast: "หน้าสุดท้าย",	
-				},
-				oAria: {
-				sSortAscending: ": เปิดใช้งานการเรียงข้อมูลจากน้อยไปมาก",
-				sSortDescending: ": เปิดใช้งานการเรียงข้อมูลจากมากไปน้อย",
-				},
-            }
-					
-				});
-            }
-        });
-    } 
+$(document).on("click", ".approval_btn_product", function() {
+	id = $(this).attr("data-id");
+	sales_store = $(this).attr("data-sales_store");
+	sales_store_transfer = $(this).attr("data-sales_store_transfer");
+	sales_store_paid = $(this).attr("data-sales_store_paid");
+	sales_store_total = $(this).attr("data-sales_store_total");
+	date_action = $(this).attr("data-date_action");    
+	form = "approval_one";
+	swal
+	  .fire({
+		title: "ยืนยัน?",
+		text: "ยืนยันอนุมัติการจ่ายเงิน ร้านค้านี้ หรือไม่?",
+		icon: "info",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		cancelButtonText: "ยกเลิก!",
+		confirmButtonText: "ยืนยัน",
+		reverseButtons: true
+	  })
+	  .then(result => {
+		if (result.value) {
+		  $.ajax({
+			url: "function_m.php",
+			method: "POST",
+			data: {
+			  form: form,
+			  id: id,
+			  sales_store:sales_store,
+			  sales_store_transfer:sales_store_transfer,
+			  sales_store_paid:sales_store_paid,
+			  sales_store_total:sales_store_total,
+			  date_action:date_action  
+			},
+			success: function(data) {
+			  if (data.status == "0") {
+				swal.fire("สำเร็จ", "อนุมัติการรับเงิน เรียบร้อยแล้ว", "success");
+				fetch_data_table();
+				
+			  } else {
+				swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
+			  }
+			}
+		  }).fail(function(data) {
+			// คือไม่สำรเ็จ
+			swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "error");
+		  });
+		}
+	  });
+  });
