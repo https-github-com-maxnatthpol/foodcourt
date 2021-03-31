@@ -60,8 +60,8 @@ $db = new DB();
                                 <?php
                                 if ($button_create == '') {
                                 ?>
-                                    <button data-toggle="modal" data-target="#modal_add" type="button" class="btn btn-success pull-right m-r-10" style="transition: 0.4s; <?php echo $button_create; ?>" id="add_btn"> เพิ่มบัตรใหม่ </button>
-                                    <button data-toggle="modal" data-target="#modal_transfer" type="button" class="btn btn-info pull-right m-r-10" style="transition: 0.4s; <?php echo $button_create; ?> " id="transfer_btn"> โอนเงิน </button>
+                                    <button data-toggle="modal" data-target="#modal_add" type="button" class="btn btn-success pull-right m-r-10" style="transition: 0.4s; <?php echo $button_create; ?>" id="add_btn"><i class="fas fa-plus"></i> เพิ่มบัตรใหม่ </button>
+                                    <button data-toggle="modal" data-target="#modal_transfer" type="button" class="btn btn-info pull-right m-r-10" style="transition: 0.4s; <?php echo $button_create; ?> " id="transfer_btn"><i class="fas fa-piggy-bank"></i> โอนเงิน </button>
                                 <?php
                                 }
 
