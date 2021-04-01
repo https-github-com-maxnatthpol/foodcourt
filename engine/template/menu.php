@@ -171,7 +171,7 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
                             $numQuery1 = mysqli_num_rows($objQuery1);
                             if ($numQuery1 <= 0) {
                                 ?>
-                                <?php if(($objResult['id_system'] == '19' || $objResult['id_system'] == '20' || $objResult['id_system'] == '21' || $objResult['id_system'] == '22' || $objResult['id_system'] == '23' || $objResult['id_system'] == '24' ) && $result_member['admin'] != '1'){?>
+                                <?php if(($objResult['id_system'] == '19' || $objResult['id_system'] == '20' || $objResult['id_system'] == '21' || $objResult['id_system'] == '22' || $objResult['id_system'] == '23' || $objResult['id_system'] == '24' ) && $result_member['admin'] != '1' && $_SESSION['role_tag'] != 'mod_customer'){?>
                                 
                                 <?php } else { ?>
                                 <a class="setcookie check_system_level1
