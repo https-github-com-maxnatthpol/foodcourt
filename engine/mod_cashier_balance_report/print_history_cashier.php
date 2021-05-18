@@ -15,7 +15,7 @@ $name_th = $name_th == ""?HEAD_LOGO_MINI:$name_th;
 
 $address_th = getSetting('address_th');
 $address_th = $address_th == ""?HEAD_LOGO_MINI:$address_th;
-    
+
 $telephone = getSetting('telephone');
 $telephone = $telephone == ""?HEAD_LOGO_MINI:$telephone;
 
@@ -41,14 +41,14 @@ $objResult_histor = mysqli_fetch_array($objQuery_histor);
 $objResult_num_histor = mysqli_num_rows($objQuery_histor);
 
 if($objResult_num == '0' || $objResult_num_histor == '0'){
-    ?> 
+    ?>
     <script>
         window.location.href = "front_manage.php";
     </script>
-    <?php    
+    <?php
     }
     else { ?>
-    
+
         <!DOCTYPE html>
         <html lang="th">
             <head>
@@ -62,7 +62,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                 <link href="cssa4/CssCustom.css" rel="stylesheet">
             </head>
             <body>
-    
+
             <div class="bodystarter"></div>
     <?php
     function navcssa4() {
@@ -92,7 +92,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                 </nav>
                 <?php
             }
-    
+
     function closecssa4() {
                 ?>
                 <script src="../../plugins_b/jquery/jquery.min.js"></script>
@@ -101,7 +101,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
         </html>
         <?php
     }
-    
+
     function Convert($amount_number)
     {
         $amount_number = number_format($amount_number, 2, ".","");
@@ -114,12 +114,12 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
             $number = substr($amount_number, 0, $pt);
             $fraction = substr($amount_number, $pt + 1);
         }
-    
+
         $ret = "";
         $baht = ReadNumber ($number);
         if ($baht != "")
             $ret .= $baht . "บาท";
-    
+
         $satang = ReadNumber($fraction);
         if ($satang != "")
             $ret .=  $satang . "สตางค์";
@@ -127,7 +127,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
             $ret .= "ถ้วน";
         return $ret;
     }
-    
+
     function ReadNumber($number)
     {
         $position_call = array("แสน", "หมื่น", "พัน", "ร้อย", "สิบ", "");
@@ -140,7 +140,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
             $ret .= ReadNumber(intval($number / 1000000)) . "ล้าน";
             $number = intval(fmod($number, 1000000));
         }
-    
+
         $divider = 100000;
         $pos = 0;
         while($number > 0)
@@ -156,7 +156,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
         }
         return $ret;
     }
-    
+
     global $ary_month;
     $ary_month = array(
             "TH_ABBR" => array(1=>"ม.ค.", 2=>"ก.พ.", 3=>"มี.ค.", 4=>"เม.ย.", 5=>"พ.ค.", 6=>"มิ.ย.", 7=>"ก.ค.", 8=>"ส.ค.", 9=>"ก.ย.", 10=>"ต.ค.", 11=>"พ.ย.", 12=>"ธ.ค."),
@@ -164,7 +164,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
             "EN_ABBR" => array(1=>"Jan", 2=>"Feb", 3=>"Mar", 4=>"Apr", 5=>"May", 6=>"Jun",7=>"Jul", 8=>"Aug",9=>"Sep", 10=>"Oct", 11=>"Nov", 12=>"Dec"),
             "EN_FULL" => array(1=>"January", 2=>"Febuary", 3=>"March", 4=>"April", 5=>"May", 6=>"June", 7=>"July", 8=>"August", 9=>"September", 10=>"October", 11=>"November", 12=>"December"),
     );
-    
+
     function setdatetime($input, $output, $digit_only = false, $month_idx="TH_ABBR"){
         global $ary_month;
         if($input == "0000-00-00 00:00" or $input == "0000-00-00" or $input == "") return "";
@@ -175,7 +175,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
         $thai = (strtoupper(substr($month_idx,0,2)) == "TH")? true : false;
         $year = ($thai)? ($year+543) : $year;
         $ary_tmp = array();
-    
+
         $ary_tmp['YYYY'] = $year;
         $ary_tmp['YY'] = substr($year, 2, 2);
         $ary_tmp['MM'] = ($digit_only)? $month : "</div><span class='s17'>".$ary_month[$month_idx][intval($month)]."</span><div class='s13'>";
@@ -187,9 +187,9 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
     }
     //opencssa4();
     navcssa4();
-    
+
     ?>
-    
+
     <page size="A4" class="page" >
         <div class="page-padding">
             <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -198,7 +198,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                             <tr>
                                 <td width="17%"><table table width="100%">
     <!--                            <img src="Assets/plugins/cssa4/logo_b.png" width="125" />-->
-                                <img src="<?php echo $logo; ?>" alt="homepage" class="dark-logo" style="height:135px; padding: 5px;"/>      
+                                <img src="<?php echo $logo; ?>" alt="homepage" class="dark-logo" style="height:135px; padding: 5px;"/>
                             </tr>
                             <tr>
                                 <td align="left">&nbsp;</td>
@@ -207,7 +207,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                                 <td align="left">&nbsp;</td>
                             </tr>
                         </table></td>
-    
+
                     <td  align="left" width="63%"><table table width="100%">
                             <tr>
                             <tr>
@@ -222,7 +222,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                     <td align="left">&nbsp;</td>
                 </tr>
             </table></td>
-    
+
             <td  align="right" width="20%"><table table width="100%" border="0" cellpadding="0" cellspacing="0" >
                     <tr>
                         <td align="right" colspan="2"><div class="thick23">ใบเสร็จรับเงิน</div></td>
@@ -236,7 +236,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                         <td align="right"><div class="s13"><?php echo setdatetime($objResult_histor["create_datetime"],"DD MM YYYY"); ?></div></td>
                     </tr>
                     <tr>
-    
+
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
@@ -245,7 +245,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
             </tr>
             </table></td>
             </tr>
-    
+
             <tr>
                 <td align="left"><table width="100%" align="left" cellpadding="0" cellspacing="0">
                         <tr>
@@ -253,7 +253,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                         </tr>
                         <tr>
                             <td align="left"><div class="s15">ชื่อ-สกุล : <?php echo $objResult["forename"]." ".$objResult["surename"]; ?>
-                                     &nbsp; | ที่อยู่ : 
+                                     &nbsp; | ที่อยู่ :
                                 <?php if ($objResult_num_address == '0') {
                                     echo 'ยังไม่ได้ระบุ';
                                 } else { ?>
@@ -267,6 +267,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                 <td>&nbsp;</td>
             </tr>
             <tr>
+              
                 <td align="left"><table width="100%" cellpadding="0" cellspacing="0" border="1">
                         <tr class="borderbot" style="border: 1px solid black;">
                             <td width="45%" align="left" colspan="2" style="padding-left: 5px;"><div class="thick15">รายการ</div></td>
@@ -288,7 +289,7 @@ if($objResult_num == '0' || $objResult_num_histor == '0'){
                             <td align="right"><div class="thick17" style="margin-right: 5px;">ยอดเงินสุทธิ</div></td>
                             <td align="right"><div class="thick17" style="margin-right: 5px;"><?php echo number_format($objResult_histor['sales_store_total'],2); ?></div></td>
                         </tr>
-    
+
                     </table></td>
             </tr>
             <tr>

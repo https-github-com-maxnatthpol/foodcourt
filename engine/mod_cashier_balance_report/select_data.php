@@ -96,21 +96,21 @@ function select_table()
           <?php echo number_format(($result_sum_0["sum_amount"] + $result_sum_2["sum_amount"]) -$result_sum_1["sum_amount"],2); ?>
           </td>
           <td>
-          <?php if ($row_sales_store == 0) { ?>    
-              <button type="button" class="btn btn-warning btn-sm approval_btn_product" style="<?php echo $button_approval ?>" 
-              data-id="<?php echo $objResult["id_cashier"] ?>" 
-              data-sales_store="<?php echo number_format(($result_sum_0["sum_amount"])); ?>" 
-              data-sales_store_transfer="<?php echo number_format(($result_sum_2["sum_amount"])); ?>" 
-              data-sales_store_paid="<?php echo number_format(($result_sum_1["sum_amount"])); ?>" 
-              data-sales_store_total="<?php echo number_format(($result_sum_0["sum_amount"] + $result_sum_2["sum_amount"]) -$result_sum_1["sum_amount"],2); ?>"
+          <?php if ($row_sales_store == 0) { ?>
+              <button type="button" class="btn btn-warning btn-sm approval_btn_product" style="<?php //echo $button_approval ?>"
+              data-id="<?php echo $objResult["id_cashier"] ?>"
+              data-sales_store="<?php echo ($result_sum_0["sum_amount"]); ?>"
+              data-sales_store_transfer="<?php ($result_sum_2["sum_amount"]); ?>"
+              data-sales_store_paid="<?php echo ($result_sum_1["sum_amount"]); ?>"
+              data-sales_store_total="<?php echo (($result_sum_0["sum_amount"] + $result_sum_2["sum_amount"]) -$result_sum_1["sum_amount"]); ?>"
               data-date_action="<?php echo $date_now; ?>" >
               <i class="fas fa-question-circle"></i>&nbsp;อนุมัติการรับเงิน</button>
           <?php } else { ?>
               <button type="button" class="btn btn-success btn-sm" style="<?php echo $button_approval ?>"><i class="mdi mdi-check-circle" style="color: #b3fdac;"></i>&nbsp;อนุมัติการรับเงินแล้ว</button>
-                
+
               <button type="button" style="<?php echo $button_update ?>" class="btn btn-info btn-sm print_btn" data-id="<?php echo $objResult["id_cashier"] ?>" data-date_action="<?php echo $objResult_sales_store["date_action"]; ?>"><i class="fas fa-print"></i> ปริ้นเอกสาร</button>
-            
-          <?php } ?>  
+
+          <?php } ?>
           </td>
         </tr>
       <?php
