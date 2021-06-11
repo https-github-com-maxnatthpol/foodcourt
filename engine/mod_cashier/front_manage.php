@@ -76,7 +76,6 @@ $db = new DB();
                                         <small id="a_card_number" style="color: #fafafa;"></small>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -96,7 +95,7 @@ $db = new DB();
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">หมายเลขบัตร </label>
                                             <div class="input-group">
@@ -104,11 +103,19 @@ $db = new DB();
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">เงินคงเหลือ </label>
                                             <div class="input-group">
                                                 <h2><p id="amount" class="form-control-static"> - </p></h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">วันหมดอายุ </label>
+                                            <div class="input-group">
+                                                <h3><p id="expiry_date" class="form-control-static"> - </p></h3>
                                             </div>
                                         </div>
                                     </div>

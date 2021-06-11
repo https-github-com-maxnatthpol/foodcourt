@@ -327,6 +327,7 @@ for ($i=0; $i < count($string) ; $i++) {
     $id_category = $db->clear($_POST["id_category_edit"]);
 	$id_edit = $db->clear($_POST["id_edit"]);
 	$directory_ed = $db->clear($_POST["directory_ed"]);
+	$level = $db->clear($_POST["level_edit"]);
 
 
 $str = "";
@@ -338,6 +339,7 @@ $str .=",`telephone`='".$telaphone."' ";
 $str .=",`id_catagory`='".$id_category."' ";    
 $str .=",`update_id`='".$id_data."' ";
 $str .=",`update_datetime`='".$date_regdate."' ";
+$str .=",`level`='".$level."' ";
 $str .=" WHERE `id_customer`= '".$id_edit."' ";
 $objQuery = $db->Query($str);
 

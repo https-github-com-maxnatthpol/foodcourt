@@ -8,6 +8,35 @@ $db = new DB();
 $str_tbl = "SHOW TABLES LIKE 'users'";
 $query_tbl = $db->Query($str_tbl);
 if ($num = mysqli_num_rows($query_tbl) == 1) {
+
+  //เช็ควันหมดอายุของบัตร
+	$db = new DB();
+	$date_regdate = date("Y-m-d");
+	$last_update = date("Y-m-d H:i:s");
+	$str = "SELECT * FROM `card` WHERE `expiry_date` <= '2021-06-12' AND `expiry_date` != '0000-00-00'";
+	$query = $db->Query($str);
+
+	if ($query) {
+
+		while ($row = mysqli_fetch_array($query)) {
+			$id = setMD5();
+			$str = "INSERT INTO `expiry_history`(`id`, `card_number`, `amount`, `expiry_date`) 
+				VALUES ('" . $id . "','" . $row["card_number"] . "','" . $row["amount"] . "','" . $row["expiry_date"] . "')";
+			$objQuery = $db->Query($str);
+		}
+	}
+
+	$str = "SELECT * FROM `card` WHERE `expiry_date` <= '2021-06-12' AND `expiry_date` != '0000-00-00'";
+	$query = $db->Query($str);
+
+	if ($query) {
+
+		while ($row = mysqli_fetch_array($query)) {
+			$str = "UPDATE card SET amount = '0',last_update = '" . $last_update . "' ,expiry_date = '' WHERE id = '" . $row["id"] . "'";
+			$objQuery = $db->Query($str);
+		}
+	}
+  
     if (isset($_SESSION["user_id"])) {
         $user_id = $db->clear($_SESSION["user_id"]);
         $str = "SELECT * FROM users WHERE id_user= '" . $user_id . "'";

@@ -261,6 +261,7 @@ $('#card_number').keyup(function () {
 
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount").innerHTML = "฿ " + response.message[1];
+        document.getElementById("expiry_date").innerHTML = response.message[3];
 
         setTimeout(function () {
           $("#card_number").attr("style", "");
@@ -275,6 +276,7 @@ $('#card_number').keyup(function () {
         $("#a_card_number").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
         document.getElementById("amount").innerHTML = "-";
+        document.getElementById("expiry_date").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
@@ -289,6 +291,7 @@ $('#card_number').keyup(function () {
         $("#a_card_number").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
         document.getElementById("amount").innerHTML = "-";
+        document.getElementById("expiry_date").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
@@ -331,6 +334,7 @@ $('#card_number_r').keyup(function () {
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount_r").value = response.message[1];
         document.getElementById("amount_t").innerHTML = response.message[1];
+        document.getElementById("expiry_date").innerHTML = response.message[3];
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "");
@@ -345,6 +349,7 @@ $('#card_number_r').keyup(function () {
         $("#a_card_number_r").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
         document.getElementById("amount_t").innerHTML = "-";
+        document.getElementById("expiry_date").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
@@ -359,6 +364,7 @@ $('#card_number_r').keyup(function () {
         $("#a_card_number_r").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
         document.getElementById("amount_t").innerHTML = "-";
+        document.getElementById("expiry_date").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
@@ -373,6 +379,7 @@ $('#card_number_r').keyup(function () {
         $("#a_card_number_r").attr("style", "color: #fafafa;");
         document.getElementById("number").innerHTML = "-";
         document.getElementById("amount_t").innerHTML = "-";
+        document.getElementById("expiry_date").innerHTML = "-";
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "height: 35px !important; font-size: 14px; border-radius: 10px;");
