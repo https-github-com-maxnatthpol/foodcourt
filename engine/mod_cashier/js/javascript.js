@@ -261,7 +261,7 @@ $('#card_number').keyup(function () {
 
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount").innerHTML = "฿ " + response.message[1];
-        document.getElementById("expiry_date").innerHTML = Date(response.message[3]);
+        document.getElementById("expiry_date").innerHTML = response.message[3];
 
         setTimeout(function () {
           $("#card_number").attr("style", "");
