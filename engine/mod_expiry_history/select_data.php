@@ -22,10 +22,10 @@ $button_update  = $_POST["button_update"];
 $button_delete  = $_POST["button_delete"];
 $button_create  = $_POST["button_create"];
 $button_view    = $_POST["button_view"];
-$id_customer    = $_POST["id_customer"];
+$id_cashier    = $_POST["id_cashier"];
     
 $strSQL = "";
-$strSQL .= "SELECT id_history_pay,id_customer,amount,card_number,create_datetime,date_action FROM `history_payment_shop` WHERE id_customer = '$id_customer'";
+$strSQL .= "SELECT * FROM `expiry_history` WHERE 1";
 
 if (isset($_POST["start_to_end_date"]) && $_POST["start_to_end_date"] != '' ) {
   $date_start_end = explode("-", $_POST["start_to_end_date"]);
@@ -41,25 +41,26 @@ if (isset($_POST["start_to_end_date"]) && $_POST["start_to_end_date"] != '' ) {
   $date_start_clear = preg_replace('/[[:space:]]+/','', trim($date_start1));
   $date_end_clear = preg_replace('/[[:space:]]+/','', trim($date_end1));
   
-  $strSQL .= " AND (date_action BETWEEN '".$date_start_clear."' AND '".$date_end_clear."' )";
+  $strSQL .= " AND (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' )";
 }
 
-$strSQL .= " ORDER BY create_datetime DESC ";
+$strSQL .= " ORDER BY expiry_date DESC ";
 //echo $strSQL;
 $objQuery = $db->Query($strSQL);
     
     $str_num = "SELECT amount
-    FROM `history_payment_shop`
-    WHERE `id_customer` = '".$id_customer."' AND (date_action BETWEEN '".$date_start_clear."' AND '".$date_end_clear."' )";
+    FROM `expiry_history`
+    WHERE (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' )";
     $objQuery_num = $db->Query($str_num); 
     $objResult_num = mysqli_fetch_array($objQuery_num);
     $num_sum =  mysqli_num_rows($objQuery_num);
     
-    $strSQL_sum = "SELECT SUM(`amount`) as amount_sum
-    FROM `history_payment_shop`
-    WHERE `id_customer` = '".$id_customer."' AND (date_action BETWEEN '".$date_start_clear."' AND '".$date_end_clear."' )";
-    $objQuery_sum = $db->Query($strSQL_sum); 
-    $objResult_sum = mysqli_fetch_array($objQuery_sum);    
+    $strSQL_sum_0 = "SELECT SUM(`amount`) as amount_sum
+    FROM `expiry_history`
+    WHERE (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' )";
+    $objQuery_sum_0 = $db->Query($strSQL_sum_0); 
+    $objResult_sum_0 = mysqli_fetch_array($objQuery_sum_0);
+
   
 ?>
 
@@ -80,8 +81,8 @@ $objQuery = $db->Query($strSQL);
                                     <div class="card-body">
                                         <div class="d-flex flex-row">
                                             <div class="col-8 p-0 align-self-center">
-                                                <h3 class="m-b-0 text-info">฿ <?php echo number_format($objResult_sum['amount_sum'],2); ?></h3>
-                                                <h5 class="text-muted m-b-0">ยอดเงินรวม</h5> </div>
+                                                <h3 class="m-b-0 text-info">฿ <?php echo number_format(($objResult_sum_0['amount_sum']),2); ?></h3>
+                                                <h5 class="text-muted m-b-0">ยอดเงินสุทธิ</h5> </div>
                                             <div class="col-4 text-right">
                                                 <div class="round align-self-center round"><i class="mdi mdi-numeric"></i></div>
                                             </div>
@@ -93,17 +94,16 @@ $objQuery = $db->Query($strSQL);
   <table class="table" id="table_front_manage" width="100%">
     <thead >
       <th>ลำดับ</th>
-      <th>วันที่เวลา</th>
-      <th>รหัสอ้างอิง</th>
-      <th>หมายเลขบัตร</th>
-      <th>ยอดเงินรวม</th>    
+      <th>รหัสบัตร</th>
+      <th>จำนวนเงิน</th>
+      <th>วันหมดอายุ</th>
     </thead>
     <tbody>
 <?php
   $num=0;
   while ($objResult = mysqli_fetch_array($objQuery, MYSQLI_ASSOC)) {
       
-        $strSQL_card = "SELECT number,card_number FROM `card` WHERE `card_number` = '".$objResult['card_number']."' ";
+        $strSQL_card = "SELECT * FROM `expiry_history` WHERE (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' )";
         $objQuery_card = $db->Query($strSQL_card);
         $objResult_card = mysqli_fetch_array($objQuery_card); 
       
@@ -114,16 +114,13 @@ $objQuery = $db->Query($strSQL);
           <?php echo $num; ?>
         </td>
         <td>
-          <?php echo DateThai_time($objResult['create_datetime']);?>
+          <?php echo $objResult['card_number'];?>
         </td>
         <td>
-          <?php echo substr($objResult['id_history_pay'], 0 ,4); ?>
+          <?php echo $objResult['amount']; ?>
         </td>
         <td>
-          <?php echo str_pad($objResult_card['number'],4,"0",STR_PAD_LEFT); ?>
-        </td>
-        <td>
-          <span style="color: #04b104;"><?php echo '+ ฿ '.number_format($objResult['amount'],2); ?></span>
+          <?php echo DateThai_time($objResult['expiry_date']); ?>
         </td>
         
       </tr>
