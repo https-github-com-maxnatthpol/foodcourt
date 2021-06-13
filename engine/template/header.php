@@ -62,6 +62,7 @@ $logo = $logo == ""?HEAD_LOGO_MINI:$logo;
     <link href="../../plugins_b/ion-rangeslider/css/ion.rangeSlider.skinModern.css" rel="stylesheet">
     <link href="../../plugins_b/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
     <link href="../../plugins_b/icheck/skins/all.css" rel="stylesheet">
+
 <!-- roon off -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

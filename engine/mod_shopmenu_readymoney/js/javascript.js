@@ -215,7 +215,7 @@ function fetch_data_table() {
                 	scrollY: true,
                 	scrollCollapse: true,
                 	scrollX: true,
-                	 "order": [[ 2, 'ASC' ]]
+                	 "order": [[ 2, 'DESC' ]]
 					,
             language: {
                 sEmptyTable: "ไม่มีข้อมูลในตาราง",

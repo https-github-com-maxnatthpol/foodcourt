@@ -31,7 +31,7 @@ function CHECK_card_number()
 	header('Content-Type: application/json');
 	$card_number = $_POST['card_number'];
 
-	$sql = "SELECT card.number,card.amount,card.Issue_date,mod_employee.username,mod_employee.surname,
+	$sql = "SELECT card.number,card.amount,card.Issue_date,card.expiry_date,mod_employee.username,mod_employee.surname,
 			IF(card.status = 0, 'ระงับการใช้งาน', 'ใช้งานได้') AS status
 			FROM card 
 			INNER JOIN mod_employee 
@@ -76,6 +76,8 @@ function form_buy_card()
 		$id_cashier = $db->clear($id_data);
 
 		$number = $result["number"];
+		
+		$expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($data_date)));
 
 		$id = setMD5();
 
@@ -84,7 +86,7 @@ function form_buy_card()
 		$objQuery = $db->Query($str);
 
 		if ($objQuery) {
-			$str = "UPDATE card SET amount = amount + '" . $amount_f . "',last_update = '" . $data_date . "'  WHERE id = '" . $db->clear($result[0]) . "'";
+			$str = "UPDATE card SET amount = amount + '" . $amount_f . "',last_update = '" . $data_date . "' ,expiry_date = '" . $expiry_date . "' WHERE id = '" . $db->clear($result[0]) . "'";
 			$query = $db->Query($str);
 			if ($query) {
 				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!", 'number' => $number, 'ref' => $id));
@@ -134,7 +136,7 @@ function form_return_card()
 		$objQuery = $db->Query($str);
 
 		if ($objQuery) {
-			$str = "UPDATE card SET amount = amount - '" . $amount_r . "',last_update = '" . $data_date . "'  WHERE id = '" . $db->clear($result[0]) . "'";
+			$str = "UPDATE card SET amount = amount - '" . $amount_r . "',last_update = '" . $data_date . "' ,expiry_date = '' WHERE id = '" . $db->clear($result[0]) . "'";
 			$query = $db->Query($str);
 			if ($query) {
 				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!", 'number' => $number, 'ref' => $id));
