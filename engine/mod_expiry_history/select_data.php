@@ -103,7 +103,7 @@ $objQuery = $db->Query($strSQL);
   $num=0;
   while ($objResult = mysqli_fetch_array($objQuery, MYSQLI_ASSOC)) {
       
-        $strSQL_card = "SELECT * FROM `expiry_history` WHERE (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' )";
+        $strSQL_card = "SELECT * FROM `expiry_history` WHERE (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' ) ORDER BY expiry_date DESC";
         $objQuery_card = $db->Query($strSQL_card);
         $objResult_card = mysqli_fetch_array($objQuery_card); 
       
