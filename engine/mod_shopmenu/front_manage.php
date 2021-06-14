@@ -73,7 +73,11 @@ $db = new DB();
                                 <!--ตั้งค่าการพิมพ์ -->    
                         <div class="form-group">
                           <label for="example" class="text-themecolor"><i class="mdi mdi-credit-card"></i> เลขบัตรชำระสินค้า </label>
+<<<<<<< HEAD
                           <input type="text" class="form-control" name="idcard" id="idcard" placeholder="กรุณากรอกเลขบัตรชำระสินค้า" maxlength="18" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
+=======
+                          <input type="text" class="form-control" name="idcard" id="idcard" placeholder="กรุณากรอกเลขบัตรชำระสินค้า" maxlength="18" OnKeyPress="return chkNumber(this)"  autocomplete="off" autofocus>
+>>>>>>> b6caea8df305a74819afb96f296e59e275ae335c
                           <div class="col-md-12" id="idcard_alert" >
                             <small id="a_idcard"  style="color: #FFFFFF;"></small>
                           </div>    
