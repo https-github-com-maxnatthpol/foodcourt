@@ -15,7 +15,7 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
 	$db = new DB();
 	$date_regdate = date("Y-m-d");
 	$last_update = date("Y-m-d H:i:s");
-	$str = "SELECT * FROM `card` WHERE `expiry_date` <= '2021-06-12' AND `expiry_date` != '0000-00-00'";
+	$str = "SELECT * FROM `card` WHERE `expiry_date` <= '" . $date_regdate . "' AND `expiry_date` != '0000-00-00'";
 	$query = $db->Query($str);
 
 	if ($query) {
@@ -28,7 +28,7 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
 		}
 	}
 
-	$str = "SELECT * FROM `card` WHERE `expiry_date` <= '2021-06-12' AND `expiry_date` != '0000-00-00'";
+	$str = "SELECT * FROM `card` WHERE `expiry_date` <= '" . $date_regdate . "' AND `expiry_date` != '0000-00-00'";
 	$query = $db->Query($str);
 
 	if ($query) {
