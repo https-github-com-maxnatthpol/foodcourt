@@ -645,3 +645,4 @@ function getFreedomPage($link)
      $strMonthThai = $strMonthCut[$strMonth];
      return "$strDay $strMonthThai $strYear";
  }
+

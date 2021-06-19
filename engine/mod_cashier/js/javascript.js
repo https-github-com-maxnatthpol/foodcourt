@@ -7,8 +7,6 @@ function leftPad(number, targetLength) {
   return output;
 }
 
-
-
 function chkNumber(ele) {
   var vchar = String.fromCharCode(event.keyCode);
   if ((vchar < '0' || vchar > '9') && (vchar != '.')) return false;
@@ -261,7 +259,22 @@ $('#card_number').keyup(function () {
 
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount").innerHTML = "฿ " + response.message[1];
-        document.getElementById("expiry_date").innerHTML = response.message[3];
+
+        function toThaiDateString(date) {
+          let monthNames = [
+            "ม.ค.", "ก.พ.", "มี.ค", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
+          ];
+      
+          let year = date.getFullYear() + 543;
+          let month = monthNames[date.getMonth()];
+          let numOfDay = date.getDate();
+      
+          return `${numOfDay} ${month} ${year} `;
+      }  
+
+        let date_show = new Date(response.message[3]);
+
+        document.getElementById("expiry_date").innerHTML = toThaiDateString(date_show);
 
         setTimeout(function () {
           $("#card_number").attr("style", "");
