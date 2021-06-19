@@ -27,7 +27,7 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
       showConfirmButton: true,
       timer: 2000
     })
-    
+
   } else if (sum_amount_f == "") {
     document.getElementById("amount_f").focus();
     Swal.fire({
@@ -115,7 +115,7 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
               //.print
               $.ajax({
                 method: "POST",
-                url: document.getElementById("PRINT_HOST").value + "functions.php?ref="+data.ref+"&number="+data.number,
+                url: document.getElementById("PRINT_HOST").value + "functions.php?ref=" + data.ref + "&number=" + data.number,
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -182,7 +182,7 @@ $(document).on('click', '#btnSendReturnCard', function () {
       cancelButtonText: 'ยกเลิก!',
       confirmButtonText: 'ยืนยัน',
       reverseButtons: true
-  
+
     }).then((result) => {
       if (result.value) {
         $.ajax({
@@ -200,23 +200,23 @@ $(document).on('click', '#btnSendReturnCard', function () {
                 showConfirmButton: false,
                 timer: 1000
               })
-  
+
               document.getElementById("form_return_card").reset();
-  
+
               setTimeout(function () {
                 location.reload();
               }, 1000);
-  
+
               //.print
               $.ajax({
                 method: "POST",
-                url: document.getElementById("PRINT_HOST").value + "functions.php?ref="+data.ref+"&number="+data.number,
+                url: document.getElementById("PRINT_HOST").value + "functions.php?ref=" + data.ref + "&number=" + data.number,
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
               });
-  
+
             } else {
               swal.fire("ไม่สำเร็จ", "เกิดปัญหากับระบบ", "warning");
             }
@@ -227,7 +227,7 @@ $(document).on('click', '#btnSendReturnCard', function () {
       }
     });
   }
-  
+
 });
 
 //CHECK------------------------------------------------------
@@ -260,21 +260,25 @@ $('#card_number').keyup(function () {
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount").innerHTML = "฿ " + response.message[1];
 
-        function toThaiDateString(date) {
-          let monthNames = [
-            "ม.ค.", "ก.พ.", "มี.ค", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
-          ];
-      
-          let year = date.getFullYear() + 543;
-          let month = monthNames[date.getMonth()];
-          let numOfDay = date.getDate();
-      
-          return `${numOfDay} ${month} ${year} `;
-      }  
+        if (response.message[3] != "0000-00-00") {
+          function toThaiDateString(date) {
+            let monthNames = [
+              "ม.ค.", "ก.พ.", "มี.ค", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
+            ];
 
-        let date_show = new Date(response.message[3]);
+            let year = date.getFullYear() + 543;
+            let month = monthNames[date.getMonth()];
+            let numOfDay = date.getDate();
 
-        document.getElementById("expiry_date").innerHTML = toThaiDateString(date_show);
+            return `${numOfDay} ${month} ${year} `;
+          }
+
+          let date_show = new Date(response.message[3]);
+
+          document.getElementById("expiry_date").innerHTML = toThaiDateString(date_show);
+        } else {
+          document.getElementById("expiry_date").innerHTML = "-";
+        }
 
         setTimeout(function () {
           $("#card_number").attr("style", "");
@@ -347,7 +351,25 @@ $('#card_number_r').keyup(function () {
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount_r").value = response.message[1];
         document.getElementById("amount_t").innerHTML = response.message[1];
-        document.getElementById("expiry_date").innerHTML = response.message[3];
+        if (response.message[3] != "0000-00-00") {
+          function toThaiDateString(date) {
+            let monthNames = [
+              "ม.ค.", "ก.พ.", "มี.ค", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
+            ];
+
+            let year = date.getFullYear() + 543;
+            let month = monthNames[date.getMonth()];
+            let numOfDay = date.getDate();
+
+            return `${numOfDay} ${month} ${year} `;
+          }
+
+          let date_show = new Date(response.message[3]);
+
+          document.getElementById("expiry_date").innerHTML = toThaiDateString(date_show);
+        } else {
+          document.getElementById("expiry_date").innerHTML = "-";
+        }
 
         setTimeout(function () {
           $("#card_number_r").attr("style", "");

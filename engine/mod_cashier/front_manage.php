@@ -115,7 +115,7 @@ $db = new DB();
                                         <div class="form-group">
                                             <label class="control-label">วันหมดอายุ </label>
                                             <div class="input-group">
-                                                <h3><p id="expiry_date" class="form-control-static"> - </p></h3>
+                                                <h4><p id="expiry_date" class="form-control-static"> - </p></h4>
                                             </div>
                                         </div>
                                     </div>
