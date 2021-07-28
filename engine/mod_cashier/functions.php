@@ -77,7 +77,7 @@ function form_buy_card()
 
 		$number = $result["number"];
 		
-		$expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($data_date)));
+		$expiry_date = date("Y-m-d", strtotime("+2 month", strtotime($data_date)));
 
 		$id = setMD5();
 
