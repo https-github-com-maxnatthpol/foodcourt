@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'connect.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -22,7 +22,7 @@ function checkAdminUser()
 {
 	
 	//กำหนดเวลาที่สามารถอยู่ในระบบ
-$sessionlifetime = 60; //กำหนดเป็นนาที
+$sessionlifetime = 180; //กำหนดเป็นนาที
 	
     $db = new DB();
     /*if (isset($_SESSION["admin"])) {
