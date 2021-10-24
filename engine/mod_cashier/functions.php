@@ -32,7 +32,7 @@ function CHECK_card_number()
 	$card_number = $_POST['card_number'];
 
 	$sql = "SELECT card.number,card.amount,card.Issue_date,card.expiry_date,mod_employee.username,mod_employee.surname,
-			IF(card.status = 0, 'ระงับการใช้งาน', 'ใช้งานได้') AS status
+			IF(card.status = 1, 'บัตรปกติ', 'giftcard') AS status
 			FROM card 
 			INNER JOIN mod_employee 
 			ON card.id_employee = mod_employee.id_employee

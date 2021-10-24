@@ -33,7 +33,8 @@ function select_table_front_manage()
   $id_cashier = $db->clear($id_data);
 
   $strSQL = "SELECT data_working_card.id,data_working_card.id_cashier,data_working_card.data_date,data_working_card.Identity,
-  IF(data_working_card.Identity = 0, 'ซื้อบัตร / เติมเงิน', 'คืนบัตร') AS text_Identity,data_working_card.amount,
+  IF(data_working_card.Identity = 0, 'ซื้อบัตร', 'คืนบัตร') AS text_Identity,data_working_card.amount,
+  IF(card.status = 1, 'บัตรปกติ', 'giftcard') AS text_status,
   card.number
   FROM `data_working_card` 
   INNER JOIN `card`
@@ -57,6 +58,7 @@ function select_table_front_manage()
       <th>รหัสอ้างอิง</th>
       <th>เลขบัตร</th>
       <th>ธุรกรรม</th>
+      <th>ประเภทบัตร</th>
       <th>จำนวนเงิน</th>
     </thead>
     <tbody>
@@ -79,6 +81,9 @@ function select_table_front_manage()
           </td>
           <td>
             <?php echo $objResult["text_Identity"]; ?>
+          </td>
+          <td>
+            <?php echo $objResult["text_status"]; ?>
           </td>
           <?php
           if ($objResult["Identity"] == 0) {

@@ -11,9 +11,6 @@ if (isset($_POST['form'])) {
 	if ($_POST['form'] == "form_buy_card") {
 		form_buy_card();
 		exit;
-	} elseif ($_POST['form'] == "form_return_card") {
-		form_return_card();
-		exit;
 	}
 }
 
@@ -30,9 +27,16 @@ function CHECK_card_number()
 	$db = new DB();
 	header('Content-Type: application/json');
 	$card_number = $_POST['card_number'];
-
+/*
 	$sql = "SELECT card.number,card.amount,card.Issue_date,card.expiry_date,mod_employee.username,mod_employee.surname,
 			IF(card.status = 0, 'ระงับการใช้งาน', 'ใช้งานได้') AS status
+			FROM card 
+			INNER JOIN mod_employee 
+			ON card.id_employee = mod_employee.id_employee
+			WHERE card.card_number = '" . $card_number . "' ";
+*/	
+	$sql = "SELECT card.number,card.amount,card.Issue_date,card.expiry_date,mod_employee.username,mod_employee.surname,
+			IF(card.status = 1, 'บัตรปกติ', 'giftcard') AS status
 			FROM card 
 			INNER JOIN mod_employee 
 			ON card.id_employee = mod_employee.id_employee
@@ -68,75 +72,29 @@ function form_buy_card()
 	if ($query) {
 		$result = mysqli_fetch_array($query);
 
-		$amount_f = $db->clear($_POST['amount_f']);
-		$receive_money = $db->clear($_POST['receive_money']);
+		$amount = $db->clear($_POST['amount']);
+		$receive_money = $db->clear("0");
 		$Identity = $db->clear("0");
 		$data_date = $db->clear($date_regdate);
 		$id_card = $db->clear($result["id"]);
 		$id_cashier = $db->clear($id_data);
-
-		$number = $result["number"];
-		
-		$expiry_date = date("Y-m-d", strtotime("+2 month", strtotime($data_date)));
-
-		$id = setMD5();
-
-		$str = "INSERT INTO `data_working_card`(`id`, `amount`, `receive_money`, `Identity`, `data_date`,`id_card`, `id_cashier`) 
-			VALUES ('" . $id . "','" . $amount_f . "','" . $receive_money . "','" . $Identity . "','" . $data_date . "','" . $id_card . "','" . $id_cashier . "')";
-		$objQuery = $db->Query($str);
-
-		if ($objQuery) {
-			$str = "UPDATE card SET amount = amount + '" . $amount_f . "',last_update = '" . $data_date . "' ,expiry_date = '" . $expiry_date . "' WHERE id = '" . $db->clear($result[0]) . "'";
-			$query = $db->Query($str);
-			if ($query) {
-				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!", 'number' => $number, 'ref' => $id));
-			} else {
-				echo json_encode(array('status' => '1', 'message' => $str));
-			}
-		} else {
-			echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
-		}
-	} else {
-		echo json_encode(array('status' => '1', 'message' => 'ไม่สำเร็จ'));
-	}
-}
-
-function form_return_card()
-{
-	$db = new DB();
-
-	header('Content-Type: application/json');
-	date_default_timezone_set("Asia/Bangkok");
-	$date_regdate = date("Y-m-d H:i:s");
-
-	if (isset($_SESSION["id_data"])) {
-		$id_data = $_SESSION["id_data"];
-	} else {
-		$id_data = '';
-	}
-
-	$sql = "SELECT id,number FROM card WHERE `card_number` =  '" . $db->clear($_POST['card_number_r']) . "'";
-	$query = $db->Query($sql);
-	if ($query) {
-		$result = mysqli_fetch_array($query);
-
-		$amount_r = $db->clear($_POST['amount_r']);
-		$receive_money = $db->clear("0");
-		$Identity = $db->clear("1");
-		$data_date = $db->clear($date_regdate);
-		$id_card = $db->clear($result[0]);
-		$id_cashier = $db->clear($id_data);
+     
+    	$explode_date = explode("-", trim($db->clear($_POST['start_to_end_date'])));
+		$date=date_create($explode_date[0]);
+		$start_date =  date_format($date,"Y-m-d");
+		$date=date_create($explode_date[1]);
+		$expiry_date =  date_format($date,"Y-m-d");
 
 		$number = $result["number"];
 
 		$id = setMD5();
 
 		$str = "INSERT INTO `data_working_card`(`id`, `amount`, `receive_money`, `Identity`, `data_date`,`id_card`, `id_cashier`) 
-			VALUES ('" . $id . "','" . $amount_r . "','" . $receive_money . "','" . $Identity . "','" . $data_date . "','" . $id_card . "','" . $id_cashier . "')";
+			VALUES ('" . $id . "','" . $amount . "','" . $receive_money . "','" . $Identity . "','" . $data_date . "','" . $id_card . "','" . $id_cashier . "')";
 		$objQuery = $db->Query($str);
 
 		if ($objQuery) {
-			$str = "UPDATE card SET amount = amount - '" . $amount_r . "',last_update = '" . $data_date . "' ,expiry_date = '' WHERE id = '" . $db->clear($result[0]) . "'";
+			$str = "UPDATE card SET amount = amount + '" . $amount . "',last_update = '" . $data_date . "' ,status = '2' ,start_date = '" . $start_date . "' ,expiry_date = '" . $expiry_date . "' WHERE id = '" . $db->clear($result[0]) . "'";
 			$query = $db->Query($str);
 			if ($query) {
 				echo json_encode(array('status' => '0', 'message' => "สำเร็จ!", 'number' => $number, 'ref' => $id));

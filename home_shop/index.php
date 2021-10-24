@@ -32,7 +32,7 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
 	if ($query) {
 
 		while ($row = mysqli_fetch_array($query)) {
-			$str = "UPDATE card SET amount = '0',last_update = '" . $last_update . "' ,expiry_date = '' WHERE id = '" . $row["id"] . "'";
+			$str = "UPDATE card SET amount = '0',last_update = '" . $last_update . "' ,status = '1' ,expiry_date = '' WHERE id = '" . $row["id"] . "'";
 			$objQuery = $db->Query($str);
 		}
 	}

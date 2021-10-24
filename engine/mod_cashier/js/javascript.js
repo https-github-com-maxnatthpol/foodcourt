@@ -19,6 +19,7 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
   var card_number = document.getElementById("card_number").value;
   var sum_amount_f = document.getElementById("amount_f").value;
   var sum_receive_money = document.getElementById("receive_money").value;
+  var status_r = document.getElementById("status_r").value;
   if (card_number == "") {
     document.getElementById("card_number").focus();
     Swal.fire({
@@ -49,6 +50,13 @@ $(document).on('click', '#btnSendฺBuyCard', function () {
     Swal.fire({
       icon: 'error',
       title: 'เงินที่ได้รับต้องไม่น้อยกว่าจำนวนเงิน',
+      showConfirmButton: true,
+      timer: 2000
+    })
+  } else if (status_r == "giftcard") {
+    Swal.fire({
+      icon: 'warning',
+      title: 'บัตรใบนี้มีประเภทเป็น Gift Card ไม่สามารถ เติมเงินในหน้านี้ได้ !!',
       showConfirmButton: true,
       timer: 2000
     })
@@ -138,6 +146,7 @@ $(document).on('click', '#btnSendReturnCard', function () {
   var formData = new FormData($('#form_return_card')[0]);
   var amount_r = document.getElementById("amount_r").value;
   var card_number_r = document.getElementById("card_number_r").value;
+  var status_r = document.getElementById("status_r").value;
   if (card_number_r == "") {
     document.getElementById("card_number_r").focus();
     Swal.fire({
@@ -150,6 +159,13 @@ $(document).on('click', '#btnSendReturnCard', function () {
     Swal.fire({
       icon: 'warning',
       title: 'ไม่มีจำนวนเงินในบัตร',
+      showConfirmButton: true,
+      timer: 2000
+    })
+  } else if (status_r == "giftcard") {
+    Swal.fire({
+      icon: 'warning',
+      title: 'บัตรใบนี้มีประเภทเป็น Gift Card ไม่สามารถ ถอนเป็นเงินสดได้ !!',
       showConfirmButton: true,
       timer: 2000
     })
@@ -259,6 +275,7 @@ $('#card_number').keyup(function () {
 
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount").innerHTML = "฿ " + response.message[1];
+        document.getElementById("status_r").value = response.message[6];
 
         if (response.message[3] != "0000-00-00") {
           function toThaiDateString(date) {
@@ -351,6 +368,9 @@ $('#card_number_r').keyup(function () {
         document.getElementById("number").innerHTML = leftPad(response.message[0], 4);
         document.getElementById("amount_r").value = response.message[1];
         document.getElementById("amount_t").innerHTML = response.message[1];
+
+        document.getElementById("status").innerHTML = response.message[6];
+        document.getElementById("status_r").value = response.message[6];
         if (response.message[3] != "0000-00-00") {
           function toThaiDateString(date) {
             let monthNames = [

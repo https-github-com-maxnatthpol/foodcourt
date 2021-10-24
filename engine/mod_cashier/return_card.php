@@ -112,6 +112,17 @@ $db = new DB();
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">ประเภทบัตร </label>
+                                            <div class="input-group">
+                                                <h2>
+                                                    <p id="status" class="form-control-static"> - </p>
+                                                    <input type="hidden" id="status_r" name="status_r" value="">
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">

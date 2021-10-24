@@ -82,7 +82,7 @@ $db = new DB();
                                         <div class="form-group">
                                             <label class="control-label">จำนวนเงิน </label>
                                             <div class="input-group">
-                                                <input type="number" id="amount_f" name="amount_f" class="form-control" placeholder="">
+                                                <input type="number" id="amount" name="amount" class="form-control" placeholder="" autocomplete="off" value="100">
                                             </div>
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@ $db = new DB();
                                             <label class="control-label">วันที่เริ่มต้น - วันที่สิ้นสุด</label>
                                             <div class="input-group">
 
-                                                <input type="text" class="form-control daterange" name="start_to_end_date" id="start_to_end_date" value="03/10/2021 - 09/10/2021">
+                                                <input type="text" class="form-control daterange" name="start_to_end_date" id="start_to_end_date">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <span class="ti-calendar"></span>
@@ -119,7 +119,17 @@ $db = new DB();
                                             <label class="control-label">เงินคงเหลือ </label>
                                             <div class="input-group">
                                                 <h2>
-                                                    <p id="amount" class="form-control-static"> - </p>
+                                                    <p id="amount_r" class="form-control-static"> - </p>
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">ประเภทบัตร </label>
+                                            <div class="input-group">
+                                                <h2>
+                                                    <p id="status" class="form-control-static"> - </p>
                                                 </h2>
                                             </div>
                                         </div>
@@ -183,21 +193,17 @@ $db = new DB();
         $('.daterange').daterangepicker({
 
             showDropdowns: true,
-            maxDate: '<?php echo date("d/m/Y"); ?>',   
-            "locale": {
-                format: 'DD/MM/YYYY'
-            },
             alwaysShowCalendars: true,
-            startDate:moment().subtract(6, 'days'),
-            endDate:  moment(),
+            startDate:moment(),
+            endDate:  moment().add(1, 'days'),
             autoApply : true,
             ranges: {
-                'วันนี้': [moment(), moment()],
-                'เมื่อวาน': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                '7 วันก่อน': [moment().subtract(6, 'days'), moment()],
-                '30 วันก่อน': [moment().subtract(29, 'days'), moment()],
-                'เดือนนี้': [moment().startOf('month'), moment().endOf('month')],
-                'เดือนที่ผ่ามา': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                '2 วัน': [moment(), moment().add(2, 'days')],
+                '3 วัน': [moment(), moment().add(3, 'days')],
+                '4 วัน': [moment(), moment().add(4, 'days')],
+                '5 วัน': [moment(), moment().add(5, 'days')],
+                '6 วัน': [moment(), moment().add(6, 'days')],
+                '7 วัน': [moment(), moment().add(7, 'days')]
             }
         });
     });

@@ -70,6 +70,7 @@ $db = new DB();
 
                                 <input type="hidden" name="SESSION_name" value="<?= $_SESSION['name'] ?>">
                                 <!--ตั้งค่าการพิมพ์ -->
+                                <input type="hidden" id="status_r" name="status_r" value="">
                                 <div class="form-group">
                                     <input type="text" id="card_number" name="card_number" class="form-control" maxlength="18" placeholder="" OnKeyPress="return chkNumber(this)" autocomplete="off" autofocus>
                                     <div class="col-md-12" id="card_number_alert">

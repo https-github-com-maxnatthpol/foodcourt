@@ -263,10 +263,10 @@ function select_div_edit_front_manage()
                   <?php
                   if ($objResult['status'] == 1) {
                     echo "<option value='1' selected>ใช้งานได้</option>";
-                    echo "<option value='0'>ระงับการใช้งาน</option>";
+                    echo "<option value='1'>ระงับการใช้งาน</option>";
                   } elseif ($objResult['status'] == 0) {
                     echo "<option value='1'>ใช้งานได้</option>";
-                    echo "<option value='0' selected>ระงับการใช้งาน</option>";
+                    echo "<option value='1' selected>ระงับการใช้งาน</option>";
                   }
                   ?>
                 </select>
