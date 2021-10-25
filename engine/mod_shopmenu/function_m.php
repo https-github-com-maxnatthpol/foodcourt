@@ -61,6 +61,7 @@ function form_card(){
     $balance     = $db->clear($_POST['balance']);
     $total_card  = $db->clear($_POST['total_card_s']);
 	$status =  $db->clear($_POST['status']);
+	$gift_action  = '0';
 	if ($status == 1) {
 		$gift_action  = '0';
 	} 
