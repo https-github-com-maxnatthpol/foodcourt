@@ -195,7 +195,7 @@ $db = new DB();
             showDropdowns: true,
             alwaysShowCalendars: true,
             startDate:moment(),
-            endDate:  moment().add(1, 'days'),
+            endDate:  moment().add(2, 'days'),
             autoApply : true,
             ranges: {
                 '2 วัน': [moment(), moment().add(2, 'days')],
