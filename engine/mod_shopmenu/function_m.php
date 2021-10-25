@@ -63,7 +63,8 @@ function form_card(){
 	$status =  $db->clear($_POST['status']);
 	if ($status == 1) {
 		$gift_action  = '0';
-	} else {
+	} 
+	if ($status == 2){
 		$gift_action = '1';
 	}
 
