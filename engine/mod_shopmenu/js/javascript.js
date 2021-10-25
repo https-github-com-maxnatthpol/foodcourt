@@ -166,7 +166,8 @@ $( '#idcard' ).keyup(function() {
                             $("#total_card_s").attr("value" , response.message[2]);
                             $("#card_code").attr("value" , response.message[0]);  
                             document.getElementById("number_card").innerHTML = ": " + leftPad(response.message[0], 4);
-                            document.getElementById("total_card").innerHTML = ": ฿ " + response.message[2];  
+                            document.getElementById("total_card").innerHTML = ": ฿ " + response.message[2];
+                            document.getElementById("status").value = response.message[3];   
 
 							setTimeout(function() {
                               $("#idcard").attr("style" ,"height: 35px !important; font-size: 16px; border-radius: 5px;");

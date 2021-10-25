@@ -104,17 +104,20 @@ $(function() {
     dataType: "json",
     success: function(data) {
       var course = data.course,
+      course2 = data.course2,
         webinar = data.webinar;
 
       console.log(course);
+      console.log(course2);
       console.log(webinar);
 
       var chart = c3.generate({
         bindto: "#sales",
         data: {
           columns: [
-            ["Course", course],
-            ["Webinar", webinar]
+            ["บัตรปกติ", course],
+            ["ยอดกำไร", course2],
+            ["บัตรGiftCard", webinar]
           ],
 
           type: "donut",
@@ -142,7 +145,7 @@ $(function() {
           //or hide: ['data1', 'data2']
         },
         color: {
-          pattern: ["#1e88e5", "#ffb22b", "#eceff1", "#745af2"]
+          pattern: ["#1e88e5", "#ffb22b", "#66FFFF", "#745af2"]
         }
       });
     },

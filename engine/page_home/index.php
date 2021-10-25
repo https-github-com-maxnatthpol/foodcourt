@@ -88,10 +88,10 @@ $db = new DB();
                         <div class="d-flex flex-row">
                             <div class="round round-lg align-self-center round-info"><i class="ti-wallet"></i></div>
                             <div class="m-l-10 align-self-center">
-                                <h3 class="m-b-0 font-light">
+                                <h5 class="m-b-0 font-light">
                                     <?php
                                     $date_regdate = date("Y-m-d");
-                                    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
+                                    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `gift_action` = '0' AND `date_action` = '" . $date_regdate . "' ";
                                     $objResult = $db->QueryFetchArray($sql);
                                     if ($objResult["total"] == "") {
                                         echo "฿ 0";
@@ -99,8 +99,22 @@ $db = new DB();
                                         echo "฿ ".number_format($objResult["total"],2);
                                     }
                                     ?>
-                                </h3>
-                                <h5 class="text-muted m-b-0">ยอดขายร้านค้า</h5>
+                                </h5>
+                                <h5 class="text-muted m-b-0">ยอดขายบัตรปกติ</h5>
+                                <hr>
+                                <h5 class="m-b-0 font-light">
+                                    <?php
+                                    $date_regdate = date("Y-m-d");
+                                    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `gift_action` = '1' AND `date_action` = '" . $date_regdate . "' ";
+                                    $objResult = $db->QueryFetchArray($sql);
+                                    if ($objResult["total"] == "") {
+                                        echo "฿ 0";
+                                    } else {
+                                        echo "฿ ".number_format($objResult["total"],2);
+                                    }
+                                    ?>
+                                </h5>
+                                <h5 class="text-muted m-b-0">บัตร GiftCard</h5>
                             </div>
                         </div>
                     </div>
@@ -183,14 +197,14 @@ $db = new DB();
             </div>
             <!-- Column -->
             <!-- Column -->
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-8">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row">
                             <div class="round round-lg align-self-center round-danger"><i class="mdi mdi-credit-card"></i>
                             </div>
                             <div class="m-l-10 align-self-center">
-                                <h3 class="m-b-0 font-lgiht">
+                                <h5 class="m-b-0 font-lgiht">
                                 <?php
                                     $date_regdate = date("Y-m-d");
                                     $sql = "SELECT SUM(`amount`) as total FROM `card` WHERE `status` = 1 ";
@@ -201,14 +215,30 @@ $db = new DB();
                                         echo "฿ ".number_format($objResult["total"],2);
                                     }
                                     ?>
-                                </h3>
-                                <h5 class="text-muted m-b-0">ยอดเงินในบัตร</h5>
+                                </h5>
+                                <h5 class="text-muted m-b-0">ยอดเงินในบัตรปกติ</h5>
+                                <hr>
+                                <h5 class="m-b-0 font-lgiht">
+                                <?php
+                                    $date_regdate = date("Y-m-d");
+                                    $sql = "SELECT SUM(`amount`) as total FROM `card` WHERE `status` = 2 ";
+                                    $objResult = $db->QueryFetchArray($sql);
+                                    if ($objResult["total"] == "") {
+                                        echo "฿ 0";
+                                    } else {
+                                        echo "฿ ".number_format($objResult["total"],2);
+                                    }
+                                    ?>
+                                </h5>
+                                <h5 class="text-muted m-b-0">ในบัตร GiftCard</h5>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Column -->
+            
         </div>
         <!-- Row -->
 
@@ -244,7 +274,11 @@ $db = new DB();
                     <div class="card-body text-center ">
                         <ul class="list-inline m-b-0">
                             <li>
-                                <h6 class="text-muted  text-info"><i class="fa fa-circle font-10 m-r-10"></i>ยอดขาย
+                                <h6 class="text-muted  text-info"><i class="fa fa-circle font-10 m-r-10"></i>บัตรปกติ
+                                </h6>
+                            </li>
+                            <li>
+                                <h6 class="text-muted  text-Success"><i class="fa fa-circle font-10 m-r-10"></i>บัตรGiftCard
                                 </h6>
                             </li>
                             <li>

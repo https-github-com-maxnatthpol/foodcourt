@@ -71,6 +71,8 @@ $db = new DB();
                                 <input type="hidden" name="ip" value="<?= $result[0] ?>">
                                 <input type="hidden" name="printname" value="<?= $result[1] ?>">
                                 <!--ตั้งค่าการพิมพ์ -->    
+
+                        <input type="hidden" id="status" name="status" value="">
                         <div class="form-group">
                           <label for="example" class="text-themecolor"><i class="mdi mdi-credit-card"></i> เลขบัตรชำระสินค้า </label>
 

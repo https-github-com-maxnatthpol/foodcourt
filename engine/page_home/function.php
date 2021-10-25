@@ -32,7 +32,7 @@ function chart_summary()
 
     $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM(amount) AS amount 
   FROM history_payment_shop 
-  WHERE date(date_action)>=date_add(NOW(),interval -1 week)
+  WHERE date(date_action)>=date_add(NOW(),interval -1 week) AND gift_action = '0'
   GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
   ORDER BY date_action ASC";
 
@@ -43,6 +43,21 @@ function chart_summary()
         $summary_date .= '"' . DateThai($objResult["summary_date"]) . '",';
         $amount .= $objResult["amount"] . ",";
     }
+    $sql = "";
+    $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM(amount) AS amount 
+  FROM history_payment_shop 
+  WHERE date(date_action)>=date_add(NOW(),interval -1 week) AND gift_action = '1'
+  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
+  ORDER BY date_action ASC";
+
+    $query = $db->Query($sql);
+    $summary_date = "";
+    $amount_gift = "";
+    while ($objResult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+        $summary_date .= '"' . DateThai($objResult["summary_date"]) . '",';
+        $amount_gift .= $objResult["amount"] . ",";
+    }
+
     $sql = "";
     $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM((amount*percent_customer)/100) AS amount 
   FROM history_payment_shop 
@@ -71,12 +86,18 @@ function chart_summary()
                     type: 'line',
                     data: {
                         labels: [<?= $summary_date ?>],
-                        datasets: [{
+                        datasets: [
+                        {
                             data: [<?= $amount ?>],
-                            label: "ยอดขาย",
+                            label: "ยอดขายบัตรปกติ",
                             borderColor: "#1e88e5",
                             fill: false
-                        }, {
+                        },{
+                            data: [<?= $amount_gift ?>],
+                            label: "ยอดขายบัตรGiftCard",
+                            borderColor: "#66FFFF",
+                            fill: false
+                        },{
                             data: [<?= $amount_Profit ?>],
                             label: "ยอดกำไร",
                             borderColor: "#ffb22b",
@@ -103,13 +124,17 @@ function sales()
 
     $date_regdate = date("Y-m-d");
 
-    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
+    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' AND gift_action = '0' ";
     $objResult = $db->QueryFetchArray($sql);
     $amount = $objResult["total"];
+
+    $sql = "SELECT SUM(`amount`) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' AND gift_action = '1' ";
+    $objResult = $db->QueryFetchArray($sql);
+    $amount2 = $objResult["total"];
 
     $sql = "SELECT SUM((amount*percent_customer)/100) as total FROM `history_payment_shop` WHERE `date_action` = '" . $date_regdate . "' ";
     $objResult = $db->QueryFetchArray($sql);
     $amount_Profit = $objResult["total"];
 
-    echo json_encode(array('course' => $amount, 'webinar' => $amount_Profit));
+    echo json_encode(array('course' => $amount, 'course2' => $amount_Profit, 'webinar' => "$amount2"));
 }

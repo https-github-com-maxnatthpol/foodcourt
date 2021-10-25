@@ -29,9 +29,9 @@ function CHECK_IDCARD(){
 	header('Content-Type: application/json');
 	$card_number = $_POST['idcard'];
 
-	$sql = "SELECT number,status,amount
+	$sql = "SELECT number,status,amount,status
 			FROM card 
-			WHERE status = '1' and card_number = '".$card_number."' ";
+			WHERE status != '0' and card_number = '".$card_number."' ";
 
 	$query = $db->Query($sql);
 	$result = mysqli_fetch_array($query);
@@ -60,6 +60,12 @@ function form_card(){
 	$card_number = $db->clear($_POST['idcard']);
     $balance     = $db->clear($_POST['balance']);
     $total_card  = $db->clear($_POST['total_card_s']);
+	$status =  $db->clear($_POST['status']);
+	if ($status == 1) {
+		$gift_action  = '0';
+	} else {
+		$gift_action = '1';
+	}
 
 	$sql = "SELECT id_customer,id_catagory,percent_customer
 			FROM mod_customer 
@@ -82,10 +88,11 @@ function form_card(){
     $id_catagory = $result["id_catagory"];
     
     $percent_customer = $result["percent_customer"];
+	
     
     $id_history_pay = setMD5();
     
-    $str = "INSERT INTO `history_payment_shop`(`id_history_pay`, `id_customer`, `amount`, `card_number`, `id_catagory`, `percent_customer`, `create_datetime`, `date_action`) VALUES ('".$id_history_pay."','".$id_data."','".$balance."','".$card_number."','".$id_catagory."','".$percent_customer."','".$date_regdate."','".$date_action."')";
+    $str = "INSERT INTO `history_payment_shop`(`id_history_pay`, `id_customer`, `amount`, `card_number`, `id_catagory`, `percent_customer`, `create_datetime`, `date_action`, `gift_action`) VALUES ('".$id_history_pay."','".$id_data."','".$balance."','".$card_number."','".$id_catagory."','".$percent_customer."','".$date_regdate."','".$date_action."','".$gift_action."')";
     $objQuery = $db->Query($str);
     
     $str_c = "UPDATE `card` SET `amount`='".$totalsum."',`last_update`='".$date_regdate."' WHERE `card_number`='".$card_number."' ";
