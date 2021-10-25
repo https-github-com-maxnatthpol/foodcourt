@@ -25,7 +25,7 @@ $button_view    = $_POST["button_view"];
 $id_cashier    = $_POST["id_cashier"];
     
 $strSQL = "";
-$strSQL .= "SELECT * FROM `expiry_history` WHERE 1";
+$strSQL .= "SELECT * ,IF(status = 1, 'บัตรปกติ', 'บัตร Gift Card') AS status FROM `expiry_history` WHERE 1";
 
 if (isset($_POST["start_to_end_date"]) && $_POST["start_to_end_date"] != '' ) {
   $date_start_end = explode("-", $_POST["start_to_end_date"]);
@@ -57,9 +57,15 @@ $objQuery = $db->Query($strSQL);
     
     $strSQL_sum_0 = "SELECT SUM(`amount`) as amount_sum
     FROM `expiry_history`
-    WHERE (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' )";
+    WHERE (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' ) AND status = '1'";
     $objQuery_sum_0 = $db->Query($strSQL_sum_0); 
     $objResult_sum_0 = mysqli_fetch_array($objQuery_sum_0);
+
+    $strSQL_sum_0 = "SELECT SUM(`amount`) as amount_sum
+    FROM `expiry_history`
+    WHERE (expiry_date BETWEEN '".$date_start_clear." 00:00:00' AND '".$date_end_clear." 23:59:59' ) AND status = '2'";
+    $objQuery_sum_0 = $db->Query($strSQL_sum_0); 
+    $objResult_sum_1 = mysqli_fetch_array($objQuery_sum_0);
 
   
 ?>
@@ -82,9 +88,18 @@ $objQuery = $db->Query($strSQL);
                                         <div class="d-flex flex-row">
                                             <div class="col-8 p-0 align-self-center">
                                                 <h3 class="m-b-0 text-info">฿ <?php echo number_format(($objResult_sum_0['amount_sum']),2); ?></h3>
-                                                <h5 class="text-muted m-b-0">ยอดเงินสุทธิ</h5> </div>
+                                                <h5 class="text-muted m-b-0">ยอดเงินบัตรปกติ</h5> </div>
                                             <div class="col-4 text-right">
-                                                <div class="round align-self-center round"><i class="mdi mdi-numeric"></i></div>
+                                                
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex flex-row">
+                                            <div class="col-8 p-0 align-self-center">
+                                                <h3 class="m-b-0 text-info">฿ <?php echo number_format(($objResult_sum_1['amount_sum']),2); ?></h3>
+                                                <h5 class="text-muted m-b-0">ยอดเงินบัตร Gift Card</h5> </div>
+                                            <div class="col-4 text-right">
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -96,6 +111,7 @@ $objQuery = $db->Query($strSQL);
       <th>ลำดับ</th>
       <th>รหัสบัตร</th>
       <th>จำนวนเงิน</th>
+      <th>ประเภทบัตร</th>
       <th>วันหมดอายุ</th>
     </thead>
     <tbody>
@@ -118,6 +134,9 @@ $objQuery = $db->Query($strSQL);
         </td>
         <td>
           <?php echo $objResult['amount']; ?>
+        </td>
+        <td>
+          <?php echo $objResult['status']; ?>
         </td>
         <td>
           <?php echo DateThai_time($objResult['expiry_date']); ?>

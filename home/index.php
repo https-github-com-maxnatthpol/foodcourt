@@ -22,9 +22,9 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
 
 		while ($row = mysqli_fetch_array($query)) {
 			$id = setMD5();
-			$str = "INSERT INTO `expiry_history`(`id`, `card_number`, `amount`, `expiry_date`) 
-				VALUES ('" . $id . "','" . $row["card_number"] . "','" . $row["amount"] . "','" . $row["expiry_date"] . "')";
-			$objQuery = $db->Query($str);
+			$str = "INSERT INTO `expiry_history`(`id`, `card_number`, `amount`, `expiry_date`, `status`) 
+				VALUES ('" . $id . "','" . $row["card_number"] . "','" . $row["amount"] . "','" . $row["expiry_date"] . "','" . $row["status"] . "')";
+        $objQuery = $db->Query($str);
 		}
 	}
 
@@ -34,7 +34,7 @@ if ($num = mysqli_num_rows($query_tbl) == 1) {
 	if ($query) {
 
 		while ($row = mysqli_fetch_array($query)) {
-			$str = "UPDATE card SET amount = '0',last_update = '" . $last_update . "' ,expiry_date = '' WHERE id = '" . $row["id"] . "'";
+			$str = "UPDATE card SET amount = '0',last_update = '" . $last_update . "' ,`status` = '1' ,start_date = '',expiry_date = '' WHERE id = '" . $row["id"] . "'";
 			$objQuery = $db->Query($str);
 		}
 	}
