@@ -62,12 +62,6 @@ function form_card(){
     $total_card  = $db->clear($_POST['total_card_s']);
 	$status =  $db->clear($_POST['status']);
 	$gift_action  = '0';
-	if ($status == 1) {
-		$gift_action  = '0';
-	} 
-	if ($status == 2){
-		$gift_action = '1';
-	}
 
 	$sql = "SELECT id_customer,id_catagory,percent_customer
 			FROM mod_customer 
