@@ -35,18 +35,15 @@
 			    <!-- footer -->
 			    <!-- ============================================================== -->
 			    <center>
-			        <footer class="footer">Copyright © <?php echo Copyright_Year; ?> - 
-<?php if (Copyright_Year === date('Y')) {
+			        <footer class="footer">Copyright © <?php echo '2020'; //echo Copyright_Year; ?> - 
+<?php if ('2020' === date('Y')) {
     echo 'Present.';
 } else {
     echo date('Y');
 } ?>
 			            <?php echo "สโมสร กก. ตชด. 22"; ?> , All Right
-			            Reserved.
-			            <?php if (Mikesuwan_present === true) { ?> 
+			            Reserved. 
 						    Developed by <a href="#" target="_blank">Suwan Dev.</a>
-
-			            <?php } ?>
 			        </footer>
 			    </center>
 			    <!-- ============================================================== -->

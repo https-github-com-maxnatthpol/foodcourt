@@ -43,20 +43,6 @@ function chart_summary()
         $summary_date .= '"' . DateThai($objResult["summary_date"]) . '",';
         $amount .= $objResult["amount"] . ",";
     }
-    $sql = "";
-    $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM(amount) AS amount 
-  FROM history_payment_shop 
-  WHERE date(date_action)>=date_add(NOW(),interval -1 week) AND gift_action = '1'
-  GROUP BY DATE_FORMAT(date_action, '%Y-%m-%d') 
-  ORDER BY date_action ASC";
-
-    $query = $db->Query($sql);
-    $summary_date = "";
-    $amount_gift = "";
-    while ($objResult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-        $summary_date .= '"' . DateThai($objResult["summary_date"]) . '",';
-        $amount_gift .= $objResult["amount"] . ",";
-    }
 
     $sql = "";
     $sql = "SELECT DATE_FORMAT(date_action, '%Y-%m-%d') as summary_date,SUM((amount*percent_customer)/100) AS amount 
@@ -91,11 +77,6 @@ function chart_summary()
                             data: [<?= $amount ?>],
                             label: "ยอดขายบัตรปกติ",
                             borderColor: "#1e88e5",
-                            fill: false
-                        },{
-                            data: [<?= $amount_gift ?>],
-                            label: "ยอดขายบัตรGiftCard",
-                            borderColor: "#66FFFF",
                             fill: false
                         },{
                             data: [<?= $amount_Profit ?>],
