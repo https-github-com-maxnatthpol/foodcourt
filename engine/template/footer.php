@@ -147,3 +147,76 @@ $(function() {
            });  
       }); 
 </script>
+<script type="text/javascript">
+<?php if ($_SESSION['role_tag'] == 'mod_customer') { ?>
+	function checkUserTime()
+	{
+		$.ajax({
+			url:"../lib/service.php",
+			type: "POST",
+			data: {
+            _method:'checktimeout'
+        },
+			success: function(data) {
+				if(data=='Logout')
+				{
+				let logout = new FormData();
+				logout.append('actionlogout','logout');
+				   //var logout = "logout";  
+				   $.ajax({  
+						url: "../lib/service.php",  
+						method: "POST",  
+						data: logout,  
+						processData: false,
+						contentType: false,
+						success:function(data)  
+						{  
+						  //console.log(data);
+						  //alert(data.message);
+						location.href='../../home_shop/'; 
+						}  
+				   });  
+				}
+			}
+		});	
+	}
+	setInterval(function(){
+		checkUserTime();
+	},10000);
+<?php } else { ?>
+	function checkUserTime()
+	{
+		$.ajax({
+			url:"../lib/service.php",
+			type: "POST",
+			data: {
+            _method:'checktimeout'
+        },
+			success: function(data) {
+				if(data=='Logout')
+				{
+				let logout = new FormData();
+				logout.append('actionlogout','logout');
+				   //var logout = "logout";  
+				   $.ajax({  
+						url: "../lib/service.php",  
+						method: "POST",  
+						data: logout,  
+						processData: false,
+						contentType: false,
+						success:function(data)  
+						{  
+						  //console.log(data);
+						  //alert(data.message);
+						location.href='../../home/'; 
+						}  
+				   });  
+				}
+			}
+		});	
+	}
+	setInterval(function(){
+		checkUserTime();
+	},10000);
+<?php } ?>	
+</script>

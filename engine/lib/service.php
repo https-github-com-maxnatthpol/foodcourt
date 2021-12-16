@@ -17,6 +17,27 @@ if (isset($_POST['username'])) {
 	exit;
 }
 
+if(isset($_POST['_method'])){
+	if ($_POST['_method']=='checktimeout') {
+		checktimelogout();
+		exit;
+	}
+}
+
+function checktimelogout(){
+
+	$userlogintime = $_SESSION['login_user_time'];
+	$settimeoutmax = 3600; //เวลาวินาทีที่กำหนด
+
+	if (isset($userlogintime)) {
+		$difference = time() - $userlogintime;
+		if ($difference>$settimeoutmax) 
+		{
+			echo 'Logout';
+		}
+	}
+}
+
 
 function checkAdminUser()
 {
@@ -402,7 +423,7 @@ function doLogin()
             $query = $db->Query($sql);
             $_SESSION["token"] = $token;
 
-
+			$_SESSION['login_user_time'] = time();
 
             echo json_encode(array('status' => '1', 'message' => 'ยินดีต้อนรับ ' . $name ,'role_tag' => $_SESSION['role_tag'] ));
         } else {
@@ -437,7 +458,7 @@ function doLogout()
 	    $sql = "UPDATE users SET last_logout = NOW() WHERE id_user = '" . $user_id . "' ";
         $query = $db->Query($sql);
 			echo json_encode(array('status' => '1', 'message' => 'ออกจากระบบสำเร็จ' ));
-			unset($_SESSION["id_facebook"],$_SESSION['user_id'],$_SESSION['permission'],$_SESSION['admin'],$_SESSION['user_member'],$_SESSION['task_view'],$_SESSION['task_authen'],$_SESSION['id_customer'],$_SESSION['id_partner']);
+			unset($_SESSION["id_facebook"],$_SESSION['user_id'],$_SESSION['permission'],$_SESSION['admin'],$_SESSION['user_member'],$_SESSION['task_view'],$_SESSION['task_authen'],$_SESSION['id_customer'],$_SESSION['id_partner'],$_SESSION['login_user_time']);
 			
 					header('Location: ../../home/');
         			exit;
