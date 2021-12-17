@@ -44,10 +44,14 @@
 				<script src="../../plugins_b/daterangepicker/daterangepicker.js"></script>
 				<!-- bootstrap datepicker -->
 				<script src="../../plugins_b/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-				 <!-- jQuery file upload -->
-				 <script src="../../plugins_b/dropify/dist/js/dropify.min.js"></script>
+				<!-- jQuery file upload -->
+				<script src="../../plugins_b/dropify/dist/js/dropify.min.js"></script>
 				<!-- jQuery Multi select -->
-				 <script type="text/javascript" src="../../plugins_b/multiselect/js/jquery.multi-select.js"></script>
+				<script type="text/javascript" src="../../plugins_b/multiselect/js/jquery.multi-select.js"></script>
+
+				<!-- Session-timeout -->
+				<script src="../../plugins_b/session-timeout/jquery.sessionTimeout.min.js"></script>
+				<script src="../../plugins_b/session-timeout/session-timeout-init.js"></script>
 
 				 <!-- roon open -->
 				<script src="../../plugins_b/address_th/jquery.Thailand.min.js"></script>
