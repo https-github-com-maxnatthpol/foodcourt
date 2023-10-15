@@ -123,7 +123,7 @@ $logo_img = $logo_img == "" ? logo_img : $logo_img;
 						<span id="a_pass" onclick="showPass()"><i class="fa fa-eye-slash"></i> <?php echo lang('แสดงรหัสผ่าน', 'Show password'); ?></span>
 					</div>
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" id="login">
+						<button class="btn btn-block btn-lg btn-info" id="login">
 							<?php echo lang('เข้าสู่ระบบ', 'Login'); ?>
 						</button>
 					</div>
